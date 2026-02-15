@@ -1,0 +1,208 @@
+
+import { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
+import Sidebar from '../components/Sidebar';
+import { Wallet, CreditCard, Shield, Zap, Lock, MoreHorizontal, Power, Copy, ExternalLink, Plus, Eye, EyeOff } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
+const Accounts = () => {
+    const { user } = useAuth();
+    const [showBalance, setShowBalance] = useState(true);
+    const [activeTab, setActiveTab] = useState('overview'); // overview, details, settings
+
+    const copyToClipboard = (text) => {
+        navigator.clipboard.writeText(text);
+        alert('Copied to clipboard!');
+    };
+
+    return (
+        <div className="flex bg-black min-h-screen text-white font-sans selection:bg-brand-yellow selection:text-black">
+            <Sidebar />
+            <div className="flex-1 md:ml-64 p-8 transition-all duration-300">
+                <header className="mb-10 animate-fade-in-up">
+                    <h1 className="text-3xl font-black text-white">My Accounts</h1>
+                    <p className="text-gray-400 text-sm">Manage your banking portfolios and settings.</p>
+                </header>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {/* Main Account Area - Left Col */}
+                    <div className="lg:col-span-2 space-y-8 animate-fade-in-up">
+                        {/* Primary Account Card - Detailed */}
+                        <div className="bg-brand-card rounded-3xl border border-white/5 p-8 relative overflow-hidden group hover:border-brand-yellow/30 transition-all duration-500">
+                            <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
+                                <Wallet className="w-64 h-64 text-brand-yellow" />
+                            </div>
+
+                            <div className="relative z-10">
+                                <div className="flex justify-between items-start mb-8">
+                                    <div className="flex items-center">
+                                        <div className="p-4 bg-brand-yellow rounded-2xl mr-4 shadow-[0_0_15px_rgba(252,207,8,0.4)]">
+                                            <Wallet className="w-8 h-8 text-black" />
+                                        </div>
+                                        <div>
+                                            <h2 className="text-2xl font-black text-white">Primary Savings</h2>
+                                            <div className="flex items-center space-x-2 mt-1">
+                                                <span className="text-xs font-bold px-2 py-0.5 rounded bg-green-500/10 text-green-500 border border-green-500/20 flex items-center">
+                                                    <Zap className="w-3 h-3 mr-1" /> Active
+                                                </span>
+                                                <span className="text-xs font-bold px-2 py-0.5 rounded bg-white/5 text-gray-400 border border-white/10 uppercase tracking-wider">
+                                                    {user?.accountType || 'Savings'}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button onClick={() => setShowBalance(!showBalance)} className="p-2 hover:bg-white/5 rounded-full transition text-gray-400 hover:text-white">
+                                        {showBalance ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                                    </button>
+                                </div>
+
+                                <div className="mb-8">
+                                    <p className="text-gray-400 text-sm font-bold uppercase tracking-widest mb-2">Available Balance</p>
+                                    <div className="text-5xl md:text-6xl font-black text-white tracking-tight flex items-baseline">
+                                        <span className="text-3xl md:text-4xl text-brand-yellow mr-2">₹</span>
+                                        {showBalance ? parseFloat(user?.balance || 0).toLocaleString('en-IN') : '••••••'}
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 bg-black/40 rounded-2xl border border-white/5 backdrop-blur-sm">
+                                    <div>
+                                        <p className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">Account Number</p>
+                                        <div className="flex items-center space-x-2 group/copy cursor-pointer" onClick={() => copyToClipboard(user?.accountNumber || '4582123456788842')}>
+                                            <span className="text-lg font-mono font-bold text-white">{user?.accountNumber || '4582 1234 5678 8842'}</span>
+                                            <Copy className="w-4 h-4 text-gray-600 group-hover/copy:text-brand-yellow transition" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">IFSC Code</p>
+                                        <div className="flex items-center space-x-2">
+                                            <span className="text-lg font-mono font-bold text-white">FINC0004582</span>
+                                            <Copy className="w-4 h-4 text-gray-600 hover:text-brand-yellow transition cursor-pointer" onClick={() => copyToClipboard('FINC0004582')} />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">Branch</p>
+                                        <span className="text-white font-bold">Mumbai Main Branch</span>
+                                    </div>
+                                    <div>
+                                        <p className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">Opened Since</p>
+                                        <span className="text-white font-bold">Aug 2024</span>
+                                    </div>
+                                </div>
+
+                                <div className="mt-8 flex flex-wrap gap-4">
+                                    <Link to="/transfer" className="flex-1 min-w-[140px] bg-brand-yellow text-black font-bold py-3 px-6 rounded-xl flex items-center justify-center hover:bg-yellow-400 hover:scale-[1.02] transition-all shadow-[0_0_15px_rgba(252,207,8,0.3)]">
+                                        <ExternalLink className="w-4 h-4 mr-2" /> Transfer Funds
+                                    </Link>
+                                    <button className="flex-1 min-w-[140px] bg-white/5 text-white font-bold py-3 px-6 rounded-xl flex items-center justify-center hover:bg-white/10 border border-white/10 transition">
+                                        <Shield className="w-4 h-4 mr-2" /> Statements
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Secondary / Other Accounts List */}
+                        <div>
+                            <div className="flex justify-between items-center mb-6">
+                                <h3 className="text-xl font-bold text-white">Other Accounts</h3>
+                                <button className="text-sm font-bold text-brand-yellow flex items-center hover:underline">
+                                    <Plus className="w-4 h-4 mr-1" /> Open New Account
+                                </button>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {/* Mock Investment Account */}
+                                <div className="bg-brand-card p-6 rounded-3xl border border-white/5 hover:border-white/10 transition group cursor-pointer relative overflow-hidden">
+                                    <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition duration-500"></div>
+                                    <div className="flex justify-between items-start mb-4 relative z-10">
+                                        <div className="p-3 bg-purple-500/20 rounded-xl text-purple-400">
+                                            <CreditCard className="w-6 h-6" />
+                                        </div>
+                                        <MoreHorizontal className="text-gray-500 hover:text-white transition" />
+                                    </div>
+                                    <div className="relative z-10">
+                                        <h4 className="font-bold text-white text-lg">Investment Portfolio</h4>
+                                        <p className="text-xs text-gray-500 uppercase tracking-widest mt-1">Growth Fund</p>
+                                        <div className="mt-4 text-2xl font-black text-white">₹0.00</div>
+                                        <div className="mt-4 pt-4 border-t border-white/5 flex items-center text-xs font-bold text-gray-400">
+                                            <Lock className="w-3 h-3 mr-1" /> Activation Pending
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Mock Loan Account */}
+                                <div className="bg-brand-card p-6 rounded-3xl border border-white/5 hover:border-white/10 transition group cursor-pointer relative overflow-hidden">
+                                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition duration-500"></div>
+                                    <div className="flex justify-between items-start mb-4 relative z-10">
+                                        <div className="p-3 bg-blue-500/20 rounded-xl text-blue-400">
+                                            <Wallet className="w-6 h-6" />
+                                        </div>
+                                        <MoreHorizontal className="text-gray-500 hover:text-white transition" />
+                                    </div>
+                                    <div className="relative z-10">
+                                        <h4 className="font-bold text-white text-lg">Personal Loan</h4>
+                                        <p className="text-xs text-gray-500 uppercase tracking-widest mt-1">Pre-Approved</p>
+                                        <div className="mt-4 text-2xl font-black text-white">Up to ₹5L</div>
+                                        <button className="mt-4 w-full py-2 bg-blue-500/20 text-blue-400 text-xs font-bold rounded-lg border border-blue-500/30 hover:bg-blue-500/30 transition">
+                                            Apply Now
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Right Col - Settings & Actions */}
+                    <div className="space-y-8 animate-fade-in-up delay-100">
+                        <div className="bg-brand-card rounded-3xl border border-white/5 p-6">
+                            <h3 className="text-lg font-bold text-white mb-6">Account Settings</h3>
+                            <div className="space-y-2">
+                                <button className="w-full flex items-center justify-between p-4 rounded-xl hover:bg-white/5 transition group">
+                                    <div className="flex items-center text-gray-300 font-medium group-hover:text-white">
+                                        <CreditCard className="w-5 h-5 mr-3 text-gray-500" /> Manage Cards
+                                    </div>
+                                    <Shield className="w-4 h-4 text-gray-600" />
+                                </button>
+                                <button className="w-full flex items-center justify-between p-4 rounded-xl hover:bg-white/5 transition group">
+                                    <div className="flex items-center text-gray-300 font-medium group-hover:text-white">
+                                        <Shield className="w-5 h-5 mr-3 text-gray-500" /> Security & Limits
+                                    </div>
+                                    <Shield className="w-4 h-4 text-gray-600" />
+                                </button>
+                                <button className="w-full flex items-center justify-between p-4 rounded-xl hover:bg-white/5 transition group border border-red-500/10 hover:border-red-500/30 hover:bg-red-500/5">
+                                    <div className="flex items-center text-red-500 font-medium">
+                                        <Power className="w-5 h-5 mr-3" /> Freeze Account
+                                    </div>
+                                    <div className="relative inline-flex h-5 w-9 items-center rounded-full bg-red-500/20">
+                                        <span className="translate-x-1 inline-block h-3 w-3 transform rounded-full bg-red-500" />
+                                    </div>
+                                </button>
+                            </div>
+
+                            <div className="mt-6 p-4 bg-brand-yellow/10 rounded-xl border border-brand-yellow/20">
+                                <p className="text-xs text-brand-yellow font-bold flex items-start">
+                                    <Shield className="w-3 h-3 mr-2 mt-0.5 flex-shrink-0" />
+                                    Your account is fully secured with 256-bit encryption.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="bg-gradient-to-br from-brand-yellow to-yellow-600 rounded-3xl p-6 relative overflow-hidden">
+                            <div className="relative z-10 text-black">
+                                <h3 className="text-2xl font-black mb-2">Upgrade to Pro</h3>
+                                <p className="font-medium text-sm mb-6 opacity-80">Get 2% cashback via FinCoins on every transaction.</p>
+                                <button className="bg-black text-white px-6 py-3 rounded-xl font-bold text-sm w-full shadow-lg hover:bg-gray-900 transition">
+                                    Check Eligibility
+                                </button>
+                            </div>
+                            <div className="absolute -bottom-4 -right-4 opacity-20">
+                                <Zap className="w-32 h-32" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default Accounts;
