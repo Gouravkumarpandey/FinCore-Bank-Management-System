@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const crypto = require('crypto');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
@@ -9,7 +8,6 @@ const Account = require('../models/Account');
 // @route   GET /api/transactions
 // @access  Private
 exports.getTransactions = asyncHandler(async (req, res, next) => {
-    // Find account for user
     const account = await Account.findOne({ userId: req.user.id });
 
     if (!account) {
@@ -35,71 +33,89 @@ exports.getTransactions = asyncHandler(async (req, res, next) => {
 // @access  Private
 exports.transferFunds = asyncHandler(async (req, res, next) => {
     const { amount, recipientAccountNumber, description } = req.body;
+    const transferAmount = parseFloat(amount);
 
-    if (!amount || !recipientAccountNumber) {
-        return next(new ErrorResponse('Please provide amount and recipient account', 400));
+    if (!transferAmount || isNaN(transferAmount) || transferAmount <= 0) {
+        return next(new ErrorResponse('Please provide a valid amount', 400));
+    }
+    if (!recipientAccountNumber) {
+        return next(new ErrorResponse('Please provide recipient account number', 400));
     }
 
-    const session = await mongoose.startSession();
-    session.startTransaction();
+    // Atomically deduct from sender (only if sufficient balance)
+    const senderAccount = await Account.findOneAndUpdate(
+        {
+            userId: req.user.id,
+            balance: { $gte: transferAmount },
+            status: { $ne: 'frozen' }
+        },
+        { $inc: { balance: -transferAmount } },
+        { new: true }
+    );
 
-    try {
-        const senderAccount = await Account.findOne({ userId: req.user.id }).session(session);
-        if (!senderAccount) throw new ErrorResponse('Account not found', 404);
-        if (senderAccount.status === 'frozen') throw new ErrorResponse('Account is frozen', 403);
-        if (senderAccount.balance < parseFloat(amount)) throw new ErrorResponse('Insufficient funds', 400);
-
-        const receiverAccount = await Account.findOne({ accountNumber: recipientAccountNumber }).session(session);
-        if (!receiverAccount) throw new ErrorResponse('Recipient account not found', 404);
-
-        if (senderAccount.accountNumber === receiverAccount.accountNumber) {
-            throw new ErrorResponse('Cannot transfer to self', 400);
-        }
-
-        // Atomically update balances
-        senderAccount.balance -= parseFloat(amount);
-        receiverAccount.balance += parseFloat(amount);
-
-        await senderAccount.save({ session });
-        await receiverAccount.save({ session });
-
-        // Generate Transaction ID
-        const transactionId = 'TXN' + crypto.randomBytes(8).toString('hex').toUpperCase();
-
-        const transaction = await Transaction.create([{
-            transactionId,
-            fromAccount: senderAccount._id,
-            toAccount: receiverAccount._id,
-            amount,
-            transactionMode: 'BANK',
-            type: 'transfer',
-            status: 'success',
-            description: description || `Transfer to ${recipientAccountNumber}`
-        }], { session });
-
-        await session.commitTransaction();
-        session.endSession();
-
-        res.status(200).json({ success: true, data: transaction[0] });
-
-    } catch (error) {
-        await session.abortTransaction();
-        session.endSession();
-        next(error);
+    if (!senderAccount) {
+        // Check why it failed
+        const check = await Account.findOne({ userId: req.user.id });
+        if (!check) return next(new ErrorResponse('Account not found', 404));
+        if (check.status === 'frozen') return next(new ErrorResponse('Account is frozen', 403));
+        return next(new ErrorResponse('Insufficient funds', 400));
     }
+
+    if (senderAccount.accountNumber === recipientAccountNumber) {
+        // Rollback
+        await Account.findOneAndUpdate({ userId: req.user.id }, { $inc: { balance: transferAmount } });
+        return next(new ErrorResponse('Cannot transfer to yourself', 400));
+    }
+
+    // Credit receiver
+    const receiverAccount = await Account.findOneAndUpdate(
+        { accountNumber: recipientAccountNumber },
+        { $inc: { balance: transferAmount } },
+        { new: true }
+    );
+
+    if (!receiverAccount) {
+        // Rollback sender deduction
+        await Account.findOneAndUpdate({ userId: req.user.id }, { $inc: { balance: transferAmount } });
+        return next(new ErrorResponse('Recipient account not found', 404));
+    }
+
+    const transactionId = 'TXN' + crypto.randomBytes(8).toString('hex').toUpperCase();
+
+    const transaction = await Transaction.create({
+        transactionId,
+        fromAccount: senderAccount._id,
+        toAccount: receiverAccount._id,
+        amount: transferAmount,
+        transactionMode: 'BANK',
+        type: 'transfer',
+        status: 'success',
+        description: description || `Transfer to ${recipientAccountNumber}`
+    });
+
+    res.status(200).json({ success: true, data: transaction });
 });
 
 // @desc    Deposit funds
 // @route   POST /api/transactions/deposit
 // @access  Private
 exports.depositFunds = asyncHandler(async (req, res, next) => {
-    const { amount } = req.body;
+    const amount = parseFloat(req.body.amount);
 
-    const account = await Account.findOne({ userId: req.user.id });
-    if (!account) return next(new ErrorResponse('Account not found', 404));
+    if (isNaN(amount) || amount <= 0) {
+        return next(new ErrorResponse('Please provide a valid deposit amount', 400));
+    }
 
-    account.balance += parseFloat(amount);
-    await account.save();
+    // Atomically add to balance
+    const account = await Account.findOneAndUpdate(
+        { userId: req.user.id },
+        { $inc: { balance: amount } },
+        { new: true }
+    );
+
+    if (!account) {
+        return next(new ErrorResponse('Account not found', 404));
+    }
 
     const transactionId = 'DEP' + crypto.randomBytes(8).toString('hex').toUpperCase();
 
@@ -120,19 +136,29 @@ exports.depositFunds = asyncHandler(async (req, res, next) => {
 // @route   POST /api/transactions/withdraw
 // @access  Private
 exports.withdrawFunds = asyncHandler(async (req, res, next) => {
-    const { amount } = req.body;
+    const amount = parseFloat(req.body.amount);
 
-    const account = await Account.findOne({ userId: req.user.id });
-    if (!account) return next(new ErrorResponse('Account not found', 404));
+    if (isNaN(amount) || amount <= 0) {
+        return next(new ErrorResponse('Please provide a valid withdrawal amount', 400));
+    }
 
-    if (account.balance < parseFloat(amount)) {
+    // Atomically deduct (only if balance sufficient)
+    const account = await Account.findOneAndUpdate(
+        {
+            userId: req.user.id,
+            balance: { $gte: amount }
+        },
+        { $inc: { balance: -amount } },
+        { new: true }
+    );
+
+    if (!account) {
+        const check = await Account.findOne({ userId: req.user.id });
+        if (!check) return next(new ErrorResponse('Account not found', 404));
         return next(new ErrorResponse('Insufficient funds', 400));
     }
 
-    account.balance -= parseFloat(amount);
-    await account.save();
-
-    const transactionId = 'WDL' + crypto.randomBytes(8).toString('hex').toUpperCase();
+    const transactionId = 'WTH' + crypto.randomBytes(8).toString('hex').toUpperCase();
 
     const transaction = await Transaction.create({
         transactionId,
@@ -141,7 +167,7 @@ exports.withdrawFunds = asyncHandler(async (req, res, next) => {
         transactionMode: 'BANK',
         type: 'withdraw',
         status: 'success',
-        description: 'Atm Withdrawal'
+        description: 'Cash Withdrawal'
     });
 
     res.status(200).json({ success: true, data: transaction });
@@ -151,57 +177,68 @@ exports.withdrawFunds = asyncHandler(async (req, res, next) => {
 // @route   POST /api/transactions/upi-transfer
 // @access  Private
 exports.upiTransfer = asyncHandler(async (req, res, next) => {
-    const { amount, receiverUpiId, upiPin, description } = req.body;
+    const { receiverUpiId, upiPin, description } = req.body;
+    const amount = parseFloat(req.body.amount);
 
-    if (!amount || !receiverUpiId) {
-        return next(new ErrorResponse('Please provide amount and receiver UPI ID', 400));
+    if (!amount || isNaN(amount) || amount <= 0) {
+        return next(new ErrorResponse('Please provide a valid amount', 400));
+    }
+    if (!receiverUpiId) {
+        return next(new ErrorResponse('Please provide receiver UPI ID', 400));
     }
 
-    const session = await mongoose.startSession();
-    session.startTransaction();
+    // Atomically deduct from sender
+    const senderAccount = await Account.findOneAndUpdate(
+        {
+            userId: req.user.id,
+            balance: { $gte: amount },
+            status: { $ne: 'frozen' }
+        },
+        { $inc: { balance: -amount } },
+        { new: true }
+    );
 
-    try {
-        const senderAccount = await Account.findOne({ userId: req.user.id }).session(session);
-        if (!senderAccount) throw new ErrorResponse('Account not found', 404);
-        if (senderAccount.status === 'frozen') throw new ErrorResponse('Account is frozen', 403);
-        if (senderAccount.balance < parseFloat(amount)) throw new ErrorResponse('Insufficient funds', 400);
-
-        // Verification of UPI PIN would go here (omitted for simple demo but in a real app, hash and check)
-
-        const receiverAccount = await Account.findOne({ upiId: receiverUpiId }).session(session);
-        if (!receiverAccount) throw new ErrorResponse('Receiver UPI ID not found', 404);
-
-        senderAccount.balance -= parseFloat(amount);
-        receiverAccount.balance += parseFloat(amount);
-
-        await senderAccount.save({ session });
-        await receiverAccount.save({ session });
-
-        const transactionId = 'UPI' + crypto.randomBytes(8).toString('hex').toUpperCase();
-
-        const transaction = await Transaction.create([{
-            transactionId,
-            fromAccount: senderAccount._id,
-            toAccount: receiverAccount._id,
-            amount,
-            transactionMode: 'UPI',
-            type: 'transfer',
-            upiDetails: {
-                senderUpi: senderAccount.upiId,
-                receiverUpi: receiverUpiId
-            },
-            status: 'success',
-            description: description || `UPI Transfer to ${receiverUpiId}`
-        }], { session });
-
-        await session.commitTransaction();
-        session.endSession();
-
-        res.status(200).json({ success: true, data: transaction[0] });
-
-    } catch (error) {
-        await session.abortTransaction();
-        session.endSession();
-        next(error);
+    if (!senderAccount) {
+        const check = await Account.findOne({ userId: req.user.id });
+        if (!check) return next(new ErrorResponse('Account not found', 404));
+        if (check.status === 'frozen') return next(new ErrorResponse('Account is frozen', 403));
+        return next(new ErrorResponse('Insufficient funds', 400));
     }
+
+    if (senderAccount.upiId === receiverUpiId) {
+        await Account.findOneAndUpdate({ userId: req.user.id }, { $inc: { balance: amount } });
+        return next(new ErrorResponse('Cannot transfer to your own UPI ID', 400));
+    }
+
+    // Credit receiver
+    const receiverAccount = await Account.findOneAndUpdate(
+        { upiId: receiverUpiId },
+        { $inc: { balance: amount } },
+        { new: true }
+    );
+
+    if (!receiverAccount) {
+        // Rollback
+        await Account.findOneAndUpdate({ userId: req.user.id }, { $inc: { balance: amount } });
+        return next(new ErrorResponse('Receiver UPI ID not found', 404));
+    }
+
+    const transactionId = 'UPI' + crypto.randomBytes(8).toString('hex').toUpperCase();
+
+    const transaction = await Transaction.create({
+        transactionId,
+        fromAccount: senderAccount._id,
+        toAccount: receiverAccount._id,
+        amount,
+        transactionMode: 'UPI',
+        type: 'transfer',
+        upiDetails: {
+            senderUpi: senderAccount.upiId,
+            receiverUpi: receiverUpiId
+        },
+        status: 'success',
+        description: description || `UPI Transfer to ${receiverUpiId}`
+    });
+
+    res.status(200).json({ success: true, data: transaction });
 });

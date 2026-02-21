@@ -22,11 +22,11 @@ const Transactions = () => {
     }, [user]);
 
     const filteredTransactions = transactions.filter(tx => {
-        const matchesSearch = tx.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            tx.amount.toString().includes(searchTerm);
+        const matchesSearch = (tx.description?.toLowerCase().includes(searchTerm.toLowerCase())) ||
+            tx.amount?.toString().includes(searchTerm);
 
-        const isIncome = ['Deposit', 'Income'].includes(tx.type) || (tx.type === 'Transfer' && tx.recipientAccount === user?.accountNumber);
-        const isExpense = ['Withdrawal', 'Expense'].includes(tx.type) || (tx.type === 'Transfer' && tx.recipientAccount !== user?.accountNumber);
+        const isIncome = ['deposit'].includes(tx.type) || (tx.type === 'transfer' && String(tx.toAccount) === String(user?.account?._id));
+        const isExpense = ['withdraw'].includes(tx.type) || (tx.type === 'transfer' && String(tx.fromAccount) === String(user?.account?._id));
 
         let matchesFilter = true;
         if (filterType === 'Income') matchesFilter = isIncome;
@@ -97,10 +97,10 @@ const Transactions = () => {
                             </thead>
                             <tbody className="divide-y divide-white/5">
                                 {filteredTransactions.length > 0 ? filteredTransactions.map((tx) => {
-                                    const isIncome = ['Deposit', 'Income'].includes(tx.type) || (tx.type === 'Transfer' && tx.recipientAccount === user?.accountNumber);
+                                    const isIncome = ['deposit'].includes(tx.type) || (tx.type === 'transfer' && String(tx.toAccount) === String(user?.account?._id));
 
                                     return (
-                                        <tr key={tx.id} className="hover:bg-white/5 transition-colors group">
+                                        <tr key={tx.transactionId} className="hover:bg-white/5 transition-colors group">
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <div className="flex items-center">
                                                     <div className={`p-2 rounded-full mr-3 ${isIncome ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'}`}>
@@ -110,13 +110,13 @@ const Transactions = () => {
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
-                                                {new Date(tx.date).toLocaleDateString()}
+                                                {new Date(tx.createdAt).toLocaleDateString()}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
-                                                <span className="text-sm text-gray-400 font-medium">{tx.type}</span>
+                                                <span className="text-sm text-gray-400 font-medium uppercase">{tx.type} | {tx.transactionMode}</span>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
-                                                <span className="px-2 py-1 inline-flex text-xs leading-5 font-bold rounded-lg bg-green-500/10 text-green-500 border border-green-500/20">
+                                                <span className={`px-2 py-1 inline-flex text-xs leading-5 font-bold rounded-lg border uppercase ${tx.status === 'success' ? 'bg-green-500/10 text-green-500 border-green-500/20' : 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20'}`}>
                                                     {tx.status}
                                                 </span>
                                             </td>

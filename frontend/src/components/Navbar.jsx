@@ -19,20 +19,25 @@ const Navbar = () => {
 
                     {/* Desktop Menu */}
                     <div className="hidden md:flex items-center space-x-8">
-                        <Link to="/" className="text-gray-300 hover:text-white font-medium transition-colors">Home</Link>
-                        <a href="#features" className="text-gray-300 hover:text-white font-medium transition-colors">Features</a>
-                        <a href="#about" className="text-gray-300 hover:text-white font-medium transition-colors">About</a>
+                        <Link to="/" className="text-gray-300 hover:text-white font-black uppercase text-xs tracking-widest transition-colors flex items-center gap-2">
+                            UPI 2.0
+                            <span className="bg-[#FF007A]/20 text-[#FF007A] text-[8px] px-2 py-0.5 rounded-full border border-[#FF007A]/30">new!</span>
+                        </Link>
+                        <Link to="/" className="text-gray-300 hover:text-white font-black uppercase text-xs tracking-widest transition-colors">About</Link>
+                        <Link to="/" className="text-gray-300 hover:text-white font-black uppercase text-xs tracking-widest transition-colors">Blog</Link>
+
+                        <button className="bg-white text-black px-6 py-2.5 rounded-full font-black uppercase text-xs tracking-widest hover:bg-brand-yellow transition-all shadow-lg active:scale-95">
+                            Download
+                        </button>
+
                         {user ? (
-                            <Link to="/dashboard" className="btn-yellow btn-yellow-glow px-6 py-2.5 rounded-full">
-                                Dashboard
+                            <Link to="/dashboard" className="bg-brand-yellow text-black px-6 py-2.5 rounded-full font-black uppercase text-xs tracking-widest hover:bg-yellow-400 transition-all">
+                                My Account
                             </Link>
                         ) : (
-                            <>
-                                <Link to="/login" className="text-white hover:text-brand-yellow font-medium transition-colors">Sign In</Link>
-                                <Link to="/signup" className="btn-yellow btn-yellow-glow px-6 py-2.5 rounded-full">
-                                    Get Started
-                                </Link>
-                            </>
+                            <Link to="/login" className="bg-brand-yellow text-black px-6 py-2.5 rounded-full font-black uppercase text-xs tracking-widest hover:bg-yellow-400 transition-all">
+                                Sign In
+                            </Link>
                         )}
                     </div>
 

@@ -54,7 +54,6 @@ const AccountSchema = new mongoose.Schema({
     },
     cardTheme: {
         type: String,
-        enum: ['default', 'space', 'shopping', 'travel', 'cartoon', 'food'],
         default: 'default'
     },
     cardHolderName: {

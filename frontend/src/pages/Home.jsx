@@ -45,6 +45,73 @@ const AnimatedSecurityBadge = () => {
     );
 };
 
+const ReviewsSection = () => {
+    const reviews = [
+        { id: 1, handle: "krishh_17", text: "turning 18 this week!! i love using Fam, bring bank account linking 🙏", pos: "top-10 left-[5%]" },
+        { id: 2, handle: "suhana._", text: "okay serious question — does famapp upi work with bank account?", pos: "top-40 left-[15%]" },
+        { id: 3, handle: "iamvihaan", text: "about to start college... can i use famapp for hostel rent?", pos: "top-20 right-[25%]" },
+        { id: 4, handle: "dhruvsings", text: "fam 18+ ke liye bhi kuch banao. Mere saare friends use karenge.", pos: "bottom-20 left-[10%]" },
+        { id: 5, handle: "soniaaa", text: "mom said yes to spotify premium 😭 Get autopay feature please.", pos: "bottom-40 right-[15%]" },
+        { id: 6, handle: "iamvihaan", text: "about to start college... can i use famapp for hostel rent?", pos: "bottom-10 right-[5%]" },
+    ];
+
+    return (
+        <section className="py-32 bg-black relative overflow-hidden min-h-[800px] flex items-center justify-center">
+            {/* Background Text */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
+                <h2 className="text-[12vw] font-black leading-none text-center uppercase tracking-tighter">
+                    Now you <br /> have to le...
+                </h2>
+            </div>
+
+            {/* Floating Review Cards */}
+            <div className="absolute inset-0 z-10">
+                {reviews.map((review) => (
+                    <motion.div
+                        key={review.id}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        className={`absolute ${review.pos} bg-[#1A1A1A] p-6 rounded-[2rem] border border-white/5 shadow-2xl max-w-[300px] group hover:border-brand-yellow/30 transition-all cursor-default scale-90 md:scale-100`}
+                        animate={{
+                            y: [0, -10, 0],
+                            rotate: review.id % 2 === 0 ? [0, 1, 0] : [0, -1, 0]
+                        }}
+                        transition={{
+                            duration: 4 + (review.id % 3),
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                        }}
+                    >
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 border border-white/10 overflow-hidden">
+                                <img src={`https://ui-avatars.com/api/?name=${review.handle}&background=random&color=fff`} alt="" />
+                            </div>
+                            <div className="flex-1">
+                                <p className="text-sm font-bold text-gray-300">@{review.handle}</p>
+                            </div>
+                            <Star className="w-4 h-4 text-gray-500" />
+                        </div>
+                        <p className="text-lg font-bold leading-tight text-white mb-4">
+                            {review.text}
+                        </p>
+                        <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-gray-500">
+                            <span>Reply</span>
+                            <span>See translation</span>
+                        </div>
+                    </motion.div>
+                ))}
+            </div>
+
+            <div className="relative z-20 text-center">
+                <button className="bg-white text-black px-12 py-5 rounded-full font-black uppercase tracking-widest hover:bg-brand-yellow transition-all transform hover:scale-110 active:scale-95 shadow-[0_0_50px_rgba(255,255,255,0.2)]">
+                    Download App
+                </button>
+            </div>
+        </section>
+    );
+};
+
 const Home = () => {
     const [scrollY, setScrollY] = useState(0);
 
@@ -58,82 +125,137 @@ const Home = () => {
         <div className="font-sans antialiased bg-black text-white selection:bg-brand-yellow selection:text-black min-h-screen overflow-x-hidden">
             <Navbar />
 
-            {/* Hero Section */}
-            <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
-                {/* Background Gradients */}
-                <div className="absolute inset-0 z-0 pointer-events-none">
-                    <div className="absolute top-0 left-1/4 w-96 h-96 bg-brand-yellow/20 rounded-full blur-[128px]"></div>
-                    <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-[128px]"></div>
-                </div>
+            {/* Hero Section - FamX Style */}
+            <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden min-h-screen flex items-center">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col md:flex-row items-center gap-10">
+                    {/* Left Content */}
+                    <div className="flex-1 text-left z-10">
+                        <div className="flex items-center gap-2 mb-8 animate-fade-in-up">
+                            <span className="text-3xl font-black tracking-tighter">fincore</span>
+                            <span className="text-gray-500 text-sm font-bold uppercase tracking-widest">by triō</span>
+                        </div>
 
-                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
-                    {/* Animated Badge */}
-                    <div className="inline-flex items-center px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-brand-yellow text-sm font-bold uppercase tracking-widest mb-8 animate-fade-in-up">
-                        <Zap className="w-4 h-4 mr-2 fill-current animate-pulse-slow" />
-                        Next Generation Digital Banking
-                    </div>
+                        <div className="mb-12 animate-fade-in-up delay-100">
+                            <h1 className="text-7xl md:text-[10rem] font-black tracking-tighter leading-[0.8] uppercase italic mb-6">
+                                fin<span className="text-brand-yellow italic">X</span>
+                            </h1>
+                            <p className="text-gray-500 text-sm font-black uppercase tracking-[0.3em] mb-8">by triō</p>
+                            <h2 className="text-4xl md:text-7xl font-black tracking-tighter leading-[1] text-white">
+                                spending account <br /> for <span className="text-brand-yellow">adults</span>
+                            </h2>
+                        </div>
 
-                    <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-white mb-8 leading-[0.9] animate-fade-in-up delay-100">
-                        BANKING FOR <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-yellow to-orange-500 animate-pulse-slow">THE FUTURE.</span>
-                    </h1>
-
-                    <p className="mt-4 max-w-2xl mx-auto text-xl md:text-2xl text-gray-400 mb-12 leading-relaxed font-medium animate-fade-in-up delay-200">
-                        Experience a full-featured bank account with high-yield savings, instant loans, and seamless global payments.
-                    </p>
-
-                    <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 animate-fade-in-up delay-300">
-                        <Link to="/signup" className="btn-yellow btn-yellow-glow px-8 py-4 text-lg rounded-full inline-flex items-center justify-center">
-                            Open Your Account
-                            <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                        <Link
+                            to="/signup"
+                            className="inline-block bg-brand-yellow text-black px-12 py-6 text-2xl rounded-full font-black uppercase tracking-widest hover:bg-yellow-400 hover:scale-105 transition-all shadow-[0_0_40px_rgba(252,207,8,0.3)] active:scale-95 animate-fade-in-up delay-200"
+                        >
+                            Open Account
                         </Link>
                     </div>
-                </div>
 
-                {/* Hero Visual - Floating Cards/Phone */}
-                <div className="mt-20 relative w-full max-w-5xl h-[500px] perspective-1000 mx-auto">
-                    {/* Central Phone Mockup */}
-                    <div className="absolute left-1/2 top-0 transform -translate-x-1/2 w-72 h-[550px] bg-gray-900 border-8 border-gray-800 rounded-[3rem] shadow-2xl z-20 overflow-hidden ring-1 ring-white/10" style={{ transform: `translateX(-50%) translateY(${scrollY * -0.1}px)` }}>
-                        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black rounded-b-xl z-30"></div>
-                        <div className="w-full h-full bg-gradient-to-b from-gray-800 to-black flex flex-col items-center justify-center p-6 text-center">
-                            <div className="w-16 h-16 bg-brand-yellow rounded-2xl mb-4 flex items-center justify-center shadow-[0_0_20px_rgba(252,207,8,0.5)] animate-bounce-slow">
-                                <Zap className="text-black w-8 h-8 fill-current" />
-                            </div>
-                            <h3 className="text-white font-bold text-2xl">FinCore</h3>
-                            <p className="text-gray-400 text-sm mt-2">Global Banking.</p>
-
-                            {/* Mock UI Elements */}
-                            <div className="mt-8 w-full bg-white/10 rounded-xl p-4 backdrop-blur-md border border-white/5">
-                                <div className="flex justify-between items-center mb-2">
-                                    <div className="w-8 h-8 bg-purple-500 rounded-full"></div>
-                                    <div className="w-16 h-4 bg-gray-600 rounded"></div>
+                    {/* Right Visuals */}
+                    <div className="flex-1 relative flex justify-center items-center h-[600px] w-full mt-20 md:mt-0">
+                        <motion.div
+                            initial={{ x: 100, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ duration: 1, ease: "easeOut" }}
+                            className="relative z-20"
+                        >
+                            {/* Phone Mockup */}
+                            <div className="relative w-64 h-[520px] bg-[#121212] rounded-[3rem] border-[8px] border-[#1A1A1A] shadow-2xl overflow-hidden ring-1 ring-white/10 rotate-[-5deg] hover:rotate-0 transition-transform duration-700 group">
+                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-black rounded-b-xl z-30"></div>
+                                {/* App Content Mockup */}
+                                <div className="p-6 h-full flex flex-col">
+                                    <div className="flex justify-between items-center mb-10 mt-4">
+                                        <div className="w-8 h-8 rounded-full bg-white/10"></div>
+                                        <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10"></div>
+                                    </div>
+                                    <div className="text-center mb-8">
+                                        <p className="text-gray-500 text-[10px] font-black uppercase tracking-widest mb-1">Account balance</p>
+                                        <p className="text-3xl font-black">₹ 234 <span className="text-brand-yellow">+</span></p>
+                                    </div>
+                                    <div className="bg-white/5 rounded-2xl p-4 border border-white/5 mb-4">
+                                        <div className="flex justify-between mb-4">
+                                            <div className="w-20 h-2 bg-white/10 rounded"></div>
+                                            <div className="w-8 h-2 bg-white/10 rounded"></div>
+                                        </div>
+                                        <div className="space-y-3">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-6 h-6 rounded bg-brand-yellow"></div>
+                                                <div className="flex-1 h-2 bg-white/10 rounded"></div>
+                                                <div className="w-8 h-2 bg-white/10 rounded"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="w-full h-2 bg-gray-700 rounded mb-2"></div>
-                                <div className="w-2/3 h-2 bg-gray-700 rounded"></div>
                             </div>
-                        </div>
-                    </div>
 
-                    {/* Floating Cards */}
-                    <div className="absolute left-10 md:left-20 top-20 transform -rotate-12 bg-gradient-to-br from-brand-card to-black border border-white/10 p-6 rounded-2xl w-64 h-40 shadow-2xl z-10 backdrop-blur-xl animate-float-slow hidden md:block hover:scale-105 transition-transform duration-300">
-                        <div className="flex justify-between items-start">
-                            <div className="w-10 h-6 bg-yellow-400/20 rounded"></div>
-                            <CreditCard className="text-white/50" />
-                        </div>
-                        <div className="mt-8 text-xl font-mono text-white tracking-widest">•••• 4582</div>
-                        <div className="mt-2 text-xs text-gray-400 uppercase">Platinum Debit</div>
-                    </div>
-
-                    <div className="absolute right-10 md:right-20 top-40 transform rotate-6 bg-gradient-to-br from-purple-900 to-black border border-white/10 p-6 rounded-2xl w-64 h-40 shadow-2xl z-10 backdrop-blur-xl animate-float-reverse hidden md:block hover:scale-105 transition-transform duration-300">
-                        <div className="flex justify-between items-start">
-                            <div className="w-10 h-6 bg-purple-400/20 rounded"></div>
-                            <Zap className="text-white/50" />
-                        </div>
-                        <div className="mt-8 text-xl font-mono text-white tracking-widest">•••• 9921</div>
-                        <div className="mt-2 text-xs text-gray-400 uppercase">Elite Banking</div>
+                            {/* Floating Card */}
+                            <motion.div
+                                animate={{
+                                    y: [0, -20, 0],
+                                    rotate: [15, 12, 15]
+                                }}
+                                transition={{
+                                    duration: 5,
+                                    repeat: Infinity,
+                                    ease: "easeInOut"
+                                }}
+                                className="absolute -right-20 top-20 w-80 h-48 bg-gradient-to-br from-gray-200 to-gray-400 rounded-2xl shadow-2xl p-6 flex flex-col justify-between overflow-hidden group hover:scale-110 transition-transform cursor-pointer"
+                            >
+                                <div className="absolute top-0 right-0 w-40 h-40 bg-brand-yellow/30 rounded-full blur-3xl -mr-20 -mt-20"></div>
+                                <div className="flex justify-between items-start">
+                                    <div className="flex items-center gap-1">
+                                        <span className="font-black text-black">fincore</span>
+                                        <span className="text-black/60 text-[8px] font-black italic">X</span>
+                                    </div>
+                                    <div className="w-10 h-7 bg-brand-yellow rounded shadow-inner"></div>
+                                </div>
+                                <div>
+                                    <p className="text-[10px] text-black/60 font-medium tracking-widest mb-1 italic">KIARA KAPOOR</p>
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex gap-2 items-center">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" className="h-2" alt="Visa" />
+                                            <span className="text-[10px] text-black font-black italic tracking-widest">PREPAID</span>
+                                        </div>
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" className="h-3" alt="UPI" />
+                                    </div>
+                                </div>
+                            </motion.div>
+                        </motion.div>
                     </div>
                 </div>
             </section>
+
+            {/* Trust Section */}
+            <div className="bg-[#111] py-12 border-y border-white/5">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap justify-between items-center gap-8 md:gap-4">
+                    <div className="flex items-center gap-4">
+                        <div className="relative">
+                            <Shield className="w-12 h-12 text-gray-800" />
+                            <Check className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+                        </div>
+                        <div>
+                            <p className="text-2xl font-black leading-none">10 million+</p>
+                            <p className="text-gray-500 text-xs font-black uppercase tracking-widest">users love FinCore</p>
+                        </div>
+                    </div>
+
+                    <div className="h-10 w-px bg-white/10 hidden md:block"></div>
+
+                    <div className="flex flex-wrap items-center gap-12 opacity-50">
+                        <div className="flex items-center gap-2">
+                            <span className="text-sm font-black uppercase tracking-tight text-gray-400">Powered by</span>
+                            <div className="flex items-center gap-1">
+                                <span className="font-black">triō</span>
+                            </div>
+                        </div>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" className="h-5 grayscale invert" alt="Visa" />
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d1/RuPay.svg" className="h-5 grayscale invert" alt="RuPay" />
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" className="h-6 grayscale invert" alt="UPI" />
+                    </div>
+                </div>
+            </div>
 
             {/* Marquee Section */}
             <section className="py-10 border-y border-white/10 bg-brand-dark overflow-hidden">
@@ -264,64 +386,90 @@ const Home = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-16 relative z-10">
                     {/* Left Content */}
                     <div className="flex-1">
-                        <h2 className="text-5xl md:text-6xl font-black text-white mb-8 leading-tight">
-                            Secure payments across <br /> <span className="text-brand-yellow">the globe.</span>
+                        <div className="inline-flex items-center px-4 py-2 rounded-full border border-brand-yellow/20 bg-brand-yellow/5 text-brand-yellow text-xs font-black uppercase tracking-widest mb-6">
+                            Unified Payments Interface
+                        </div>
+                        <h2 className="text-5xl md:text-7xl font-black text-white mb-8 leading-tight italic uppercase tracking-tighter">
+                            Lightning fast <br /> <span className="text-brand-yellow">UPI Payments.</span>
                         </h2>
                         <ul className="space-y-6 mb-10">
                             {[
-                                "Instant International Transfers",
-                                "Zero Forex Markup",
-                                "Seamless UPI & QR Payments"
+                                "Personal @fincore UPI ID",
+                                "Scan any QR code to pay",
+                                "Seamless bank-to-bank transfers"
                             ].map((item, i) => (
-                                <li key={i} className="flex items-center text-lg text-gray-300 font-medium bg-white/5 p-4 rounded-2xl border border-white/5 hover:border-brand-yellow/50 transition-colors cursor-default">
-                                    <div className="bg-brand-yellow flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mr-4">
-                                        <Check className="w-4 h-4 text-black stroke-[3]" />
+                                <li key={i} className="flex items-center text-lg text-gray-300 font-medium bg-white/5 p-5 rounded-[2rem] border border-white/5 hover:border-brand-yellow/30 transition-all cursor-default group">
+                                    <div className="bg-brand-yellow flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+                                        <Check className="w-5 h-5 text-black stroke-[4]" />
                                     </div>
-                                    {item}
+                                    <span className="font-bold">{item}</span>
                                 </li>
                             ))}
                         </ul>
-                        <button className="btn-yellow btn-yellow-glow px-10 py-5 text-xl rounded-full font-bold inline-flex items-center">
-                            Start Transferring
-                            <ArrowRight className="ml-2 w-5 h-5" />
+                        <button className="bg-brand-yellow text-black px-12 py-5 text-xl rounded-full font-black uppercase tracking-widest hover:bg-yellow-400 hover:scale-105 transition-all shadow-2xl active:scale-95 group">
+                            Pay Anyone Now
+                            <ArrowRight className="inline-block ml-2 w-6 h-6 group-hover:translate-x-2 transition-transform" />
                         </button>
                     </div>
 
-                    {/* Right Visuals */}
-                    <div className="flex-1 relative h-[500px] w-full flex items-center justify-center">
-                        {/* Circle 1 - Phone Scan */}
-                        <div className="absolute top-0 right-12 w-40 h-40 bg-gray-900/80 backdrop-blur-xl rounded-full border border-green-500/30 flex items-center justify-center animate-float-slow shadow-[0_0_30px_rgba(34,197,94,0.1)] z-10">
-                            <div className="relative">
-                                <Smartphone className="w-16 h-16 text-green-400" />
-                                <div className="absolute inset-0 bg-green-400/20 blur-xl rounded-full"></div>
-                            </div>
-                        </div>
+                    {/* Right Visuals - FamApp Style */}
+                    <div className="flex-1 relative flex items-center justify-center">
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            className="relative w-full max-w-lg"
+                        >
+                            <img
+                                src="https://www.famapp.in/assets/images/images/pages/index/upiImage.svg"
+                                alt="UPI Payments"
+                                className="w-full h-auto drop-shadow-[0_0_50px_rgba(252,207,8,0.2)] animate-float-slow"
+                            />
 
-                        {/* Circle 2 - Speed Zap */}
-                        <div className="absolute top-1/4 left-10 w-48 h-48 bg-gray-900/80 backdrop-blur-xl rounded-full border border-brand-yellow/30 flex items-center justify-center animate-pulse-slow shadow-[0_0_40px_rgba(252,207,8,0.1)] z-20">
-                            <div className="relative">
-                                <Zap className="w-20 h-20 text-brand-yellow fill-current" />
-                                <div className="absolute inset-0 bg-brand-yellow/20 blur-xl rounded-full"></div>
-                            </div>
-                        </div>
+                            {/* Decorative Blur */}
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-brand-yellow/10 blur-[100px] -z-10"></div>
+                        </motion.div>
+                    </div>
+                </div>
+            </section>
 
-                        {/* Circle 3 - QR Code */}
-                        <div className="absolute bottom-20 right-28 w-44 h-44 bg-gray-900/80 backdrop-blur-xl rounded-full border border-purple-500/30 flex items-center justify-center animate-float-reverse shadow-[0_0_30px_rgba(168,85,247,0.1)] z-10">
-                            <div className="bg-white p-2 rounded-xl">
-                                <QrCode className="w-20 h-20 text-black" />
-                            </div>
-                        </div>
+            <ReviewsSection />
 
-                        {/* QR Download Badge */}
-                        <div className="absolute bottom-10 -right-4 bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-3xl flex items-center space-x-4 animate-fade-in-up delay-300 hover:scale-105 transition-transform cursor-pointer shadow-2xl">
-                            <div className="text-right">
-                                <p className="text-white text-xs font-bold uppercase tracking-wider">Download</p>
-                                <p className="text-gray-400 text-[10px]">FinCore Bank</p>
+            {/* Support Section - New */}
+            <section className="py-32 bg-[#121212] relative overflow-hidden">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-20">
+                    <div className="flex-1 relative">
+                        <motion.div
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="relative"
+                        >
+                            <img
+                                src="https://www.famapp.in/assets/images/images/pages/index/supportChatGif.gif"
+                                alt="Support Chat"
+                                className="w-full max-w-md rounded-[2.5rem] shadow-2xl border border-white/5"
+                            />
+                            {/* Float elements */}
+                            <div className="absolute -top-10 -right-10 bg-brand-yellow text-black font-black p-4 rounded-3xl animate-bounce-slow shadow-xl">
+                                Active 24/7
                             </div>
-                            <div className="w-14 h-14 bg-white rounded-xl p-1 shadow-inner">
-                                <QrCode className="w-full h-full text-black" />
+                        </motion.div>
+                    </div>
+
+                    <div className="flex-1 text-left">
+                        <h2 className="text-5xl md:text-7xl font-black text-white mb-6 leading-[0.9] italic uppercase tracking-tighter">
+                            Our support team <br /> <span className="text-brand-yellow">active 24x7.</span>
+                        </h2>
+                        <p className="text-xl text-gray-400 mb-10 leading-relaxed font-medium">
+                            Got a question? Need a hand? Our humans are standing by 24/7 to help you out. No bots, just pure support.
+                        </p>
+                        <button className="bg-white/5 border border-white/10 text-white px-10 py-5 rounded-full font-black uppercase tracking-widest hover:bg-white/10 transition-all flex items-center gap-4 group">
+                            Contact Us
+                            <div className="w-10 h-10 bg-brand-yellow rounded-full flex items-center justify-center group-hover:rotate-45 transition-transform">
+                                <ArrowRight className="text-black w-6 h-6" />
                             </div>
-                        </div>
+                        </button>
                     </div>
                 </div>
             </section>

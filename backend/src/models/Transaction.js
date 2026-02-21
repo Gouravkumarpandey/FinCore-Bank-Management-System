@@ -48,12 +48,4 @@ const TransactionSchema = new mongoose.Schema({
     }
 });
 
-// Transactions should never be edited or deleted
-TransactionSchema.pre('save', function (next) {
-    if (!this.isNew) {
-        throw new Error('Transactions cannot be modified once created.');
-    }
-    next();
-});
-
 module.exports = mongoose.model('Transaction', TransactionSchema);

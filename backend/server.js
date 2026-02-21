@@ -9,15 +9,19 @@ const errorHandler = require('./src/middleware/error');
 dotenv.config();
 
 process.on('uncaughtException', (err) => {
-    console.log(`Error: ${err.message}`);
-    process.exit(1);
+    console.warn(`⚠️ Uncaught Exception: ${err.message}`);
+    // Don't exit on non-fatal errors
 });
 
 const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // Routes
 app.use('/api/auth', require('./src/routes/authRoutes'));
@@ -32,29 +36,33 @@ const { simulateMarket } = require('./src/controllers/stockController');
 const Stock = require('./src/models/Stock');
 
 const seedStocks = async () => {
-    const stockCount = await Stock.countDocuments();
-    if (stockCount === 0) {
-        const stocks = [
-            { symbol: 'FINC', companyName: 'FinCore Technologies', currentPrice: 500, volatility: 0.05, sector: 'FinTech' },
-            { symbol: 'RELI', companyName: 'Reliance Industries', currentPrice: 2450, volatility: 0.02, sector: 'Energy' },
-            { symbol: 'TCS', companyName: 'Tata Consultancy Services', currentPrice: 3500, volatility: 0.015, sector: 'IT Services' },
-            { symbol: 'HDFC', companyName: 'HDFC Bank', currentPrice: 1600, volatility: 0.02, sector: 'Banking' },
-            { symbol: 'ZOMA', companyName: 'Zomato Ltd', currentPrice: 120, volatility: 0.08, sector: 'Food Delivery' },
-            { symbol: 'TATA', companyName: 'Tata Motors', currentPrice: 900, volatility: 0.04, sector: 'Automobile' },
-            { symbol: 'ADAN', companyName: 'Adani Enterprises', currentPrice: 3200, volatility: 0.07, sector: 'Infrastructure' }
-        ];
-        await Stock.insertMany(stocks);
-        console.log('Virtual Stocks Seeded! 📈');
+    try {
+        const stockCount = await Stock.countDocuments();
+        if (stockCount === 0) {
+            const stocks = [
+                { symbol: 'FINC', companyName: 'FinCore Technologies', currentPrice: 500, volatility: 0.05, sector: 'FinTech' },
+                { symbol: 'RELI', companyName: 'Reliance Industries', currentPrice: 2450, volatility: 0.02, sector: 'Energy' },
+                { symbol: 'TCS', companyName: 'Tata Consultancy Services', currentPrice: 3500, volatility: 0.015, sector: 'IT Services' },
+                { symbol: 'HDFC', companyName: 'HDFC Bank', currentPrice: 1600, volatility: 0.02, sector: 'Banking' },
+                { symbol: 'ZOMA', companyName: 'Zomato Ltd', currentPrice: 120, volatility: 0.08, sector: 'Food Delivery' },
+                { symbol: 'TATA', companyName: 'Tata Motors', currentPrice: 900, volatility: 0.04, sector: 'Automobile' },
+                { symbol: 'ADAN', companyName: 'Adani Enterprises', currentPrice: 3200, volatility: 0.07, sector: 'Infrastructure' }
+            ];
+            await Stock.insertMany(stocks);
+            console.log('Virtual Stocks Seeded! 📈');
+        }
+    } catch (e) {
+        console.warn('⚠️ Stock seeding failed (DB may not be ready):', e.message);
     }
 };
 
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 // Connect to DB
 const startServer = async () => {
-    const server = app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    const server = app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
 
     await connectDB();
     await seedStocks();
@@ -66,9 +74,8 @@ const startServer = async () => {
     }, 60000);
 
     process.on('unhandledRejection', (err, promise) => {
-        console.log(`Error: ${err.message}`);
-        // Close server & exit process
-        server.close(() => process.exit(1));
+        console.warn(`⚠️ Unhandled Rejection: ${err.message}`);
+        // server.close(() => process.exit(1)); // Keep server alive
     });
 };
 
