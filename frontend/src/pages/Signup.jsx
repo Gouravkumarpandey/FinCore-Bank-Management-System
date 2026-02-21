@@ -69,7 +69,7 @@ const Signup = () => {
                 <div className="max-w-md w-full space-y-6">
                     <div className="text-center lg:text-left">
                         <h2 className="text-3xl font-black text-white mb-2">Create Account</h2>
-                        <p className="text-gray-400">Join 10M+ users getting financially smart.</p>
+                        <p className="text-gray-400">Join 10M users getting financially smart.</p>
                         {error && <div className="mt-4 p-3 bg-red-500/10 border border-red-500/50 rounded-lg text-red-500 text-sm">{error}</div>}
                     </div>
 

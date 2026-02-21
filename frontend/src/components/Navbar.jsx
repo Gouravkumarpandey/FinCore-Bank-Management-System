@@ -8,37 +8,45 @@ const Navbar = () => {
     const { user } = useAuth();
 
     return (
-        <nav className="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/10 transition-all duration-300">
+        <nav className="fixed w-full z-50 bg-black/80 backdrop-blur-xl border-b border-white/10 transition-all duration-300">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-20 items-center">
                     {/* Logo */}
                     <Link to="/" className="flex items-center group">
-                        <Shield className="h-8 w-8 text-brand-yellow transform group-hover:rotate-12 transition-transform duration-300" />
-                        <span className="ml-2 text-2xl font-black text-white tracking-tighter">FinCore<span className="text-brand-yellow">.</span></span>
+                        <div className="relative">
+                            <Shield className="h-8 w-8 text-brand-yellow transform group-hover:rotate-12 transition-transform duration-300" />
+                            <div className="absolute inset-0 bg-brand-yellow/20 blur-lg rounded-full animate-pulse"></div>
+                        </div>
+                        <span className="ml-3 text-2xl font-black text-white tracking-tighter uppercase italic">
+                            FineCore
+                        </span>
                     </Link>
 
-                    {/* Desktop Menu */}
-                    <div className="hidden md:flex items-center space-x-8">
-                        <Link to="/" className="text-gray-300 hover:text-white font-black uppercase text-xs tracking-widest transition-colors flex items-center gap-2">
-                            UPI 2.0
-                            <span className="bg-[#FF007A]/20 text-[#FF007A] text-[8px] px-2 py-0.5 rounded-full border border-[#FF007A]/30">new!</span>
-                        </Link>
-                        <Link to="/" className="text-gray-300 hover:text-white font-black uppercase text-xs tracking-widest transition-colors">About</Link>
-                        <Link to="/" className="text-gray-300 hover:text-white font-black uppercase text-xs tracking-widest transition-colors">Blog</Link>
+                    {/* Desktop Menu - Normal Style */}
+                    <div className="hidden md:flex items-center space-x-10">
+                        <div className="flex items-center space-x-8">
+                            <Link to="/investments" className="text-gray-400 hover:text-white font-bold text-sm tracking-tight transition-all hover:scale-105">Investments</Link>
+                            <Link to="/cards" className="text-gray-400 hover:text-white font-bold text-sm tracking-tight transition-all hover:scale-105">Cards</Link>
+                            <Link to="/transfer" className="text-gray-400 hover:text-white font-bold text-sm tracking-tight transition-all hover:scale-105">Payments</Link>
+                            <Link to="/" className="text-gray-400 hover:text-white font-bold text-sm tracking-tight transition-all hover:scale-105">Security</Link>
+                        </div>
 
-                        <button className="bg-white text-black px-6 py-2.5 rounded-full font-black uppercase text-xs tracking-widest hover:bg-brand-yellow transition-all shadow-lg active:scale-95">
-                            Download
-                        </button>
-
-                        {user ? (
-                            <Link to="/dashboard" className="bg-brand-yellow text-black px-6 py-2.5 rounded-full font-black uppercase text-xs tracking-widest hover:bg-yellow-400 transition-all">
-                                My Account
-                            </Link>
-                        ) : (
-                            <Link to="/login" className="bg-brand-yellow text-black px-6 py-2.5 rounded-full font-black uppercase text-xs tracking-widest hover:bg-yellow-400 transition-all">
-                                Sign In
-                            </Link>
-                        )}
+                        <div className="flex items-center gap-4 border-l border-white/10 pl-10">
+                            {user ? (
+                                <Link to="/dashboard" className="bg-brand-yellow text-black px-6 py-2.5 rounded-full font-black uppercase text-xs tracking-widest hover:bg-yellow-400 transition-all shadow-lg hover:shadow-yellow-400/20 active:scale-95">
+                                    Dashboard
+                                </Link>
+                            ) : (
+                                <>
+                                    <Link to="/login" className="text-white font-bold text-sm hover:text-brand-yellow transition-colors">
+                                        Sign In
+                                    </Link>
+                                    <Link to="/signup" className="bg-white text-black px-6 py-2.5 rounded-full font-black uppercase text-xs tracking-widest hover:bg-brand-yellow transition-all shadow-lg active:scale-95">
+                                        Get Started
+                                    </Link>
+                                </>
+                            )}
+                        </div>
                     </div>
 
                     {/* Mobile menu button */}
@@ -55,17 +63,19 @@ const Navbar = () => {
 
             {/* Mobile Menu */}
             {isOpen && (
-                <div className="md:hidden bg-black border-t border-white/10 absolute w-full left-0 top-20">
+                <div className="md:hidden bg-black border-t border-white/10 absolute w-full left-0 top-20 animate-fade-in">
                     <div className="px-4 pt-4 pb-6 space-y-2">
-                        <Link to="/" className="block px-3 py-3 rounded-lg text-lg font-medium text-gray-300 hover:text-white hover:bg-white/5">Home</Link>
-                        <a href="#features" className="block px-3 py-3 rounded-lg text-lg font-medium text-gray-300 hover:text-white hover:bg-white/5">Features</a>
+                        <Link to="/investments" onClick={() => setIsOpen(false)} className="block px-3 py-3 rounded-lg text-lg font-bold text-gray-300 hover:text-white hover:bg-white/5">Investments</Link>
+                        <Link to="/cards" onClick={() => setIsOpen(false)} className="block px-3 py-3 rounded-lg text-lg font-bold text-gray-300 hover:text-white hover:bg-white/5">Cards</Link>
+                        <Link to="/transfer" onClick={() => setIsOpen(false)} className="block px-3 py-3 rounded-lg text-lg font-bold text-gray-300 hover:text-white hover:bg-white/5">Payments</Link>
+
                         {user ? (
-                            <Link to="/dashboard" className="block w-full text-center mt-6 py-3 btn-yellow btn-yellow-glow rounded-full">Dashboard</Link>
+                            <Link to="/dashboard" onClick={() => setIsOpen(false)} className="block w-full text-center mt-6 py-4 bg-brand-yellow text-black font-black uppercase tracking-widest rounded-xl">Go to Dashboard</Link>
                         ) : (
-                            <>
-                                <Link to="/login" className="block w-full text-center mt-6 py-3 border border-white/20 rounded-full text-white font-bold hover:bg-white/10 transition">Sign In</Link>
-                                <Link to="/signup" className="block w-full text-center mt-3 py-3 btn-yellow btn-yellow-glow rounded-full">Get Started</Link>
-                            </>
+                            <div className="grid grid-cols-2 gap-4 mt-8">
+                                <Link to="/login" onClick={() => setIsOpen(false)} className="flex items-center justify-center py-4 border border-white/20 rounded-xl text-white font-black uppercase text-xs tracking-widest hover:bg-white/5">Login</Link>
+                                <Link to="/signup" onClick={() => setIsOpen(false)} className="flex items-center justify-center py-4 bg-white text-black rounded-xl font-black uppercase text-xs tracking-widest hover:bg-brand-yellow">Sign Up</Link>
+                            </div>
                         )}
                     </div>
                 </div>

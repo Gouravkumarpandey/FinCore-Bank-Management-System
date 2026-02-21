@@ -50,7 +50,7 @@ const ReviewsSection = () => {
         { id: 1, handle: "krishh_17", text: "turning 18 this week!! i love using Fam, bring bank account linking 🙏", pos: "top-10 left-[5%]" },
         { id: 2, handle: "suhana._", text: "okay serious question — does famapp upi work with bank account?", pos: "top-40 left-[15%]" },
         { id: 3, handle: "iamvihaan", text: "about to start college... can i use famapp for hostel rent?", pos: "top-20 right-[25%]" },
-        { id: 4, handle: "dhruvsings", text: "fam 18+ ke liye bhi kuch banao. Mere saare friends use karenge.", pos: "bottom-20 left-[10%]" },
+        { id: 4, handle: "dhruvsings", text: "fam for adults ke liye bhi kuch banao. Mere saare friends use karenge.", pos: "bottom-20 left-[10%]" },
         { id: 5, handle: "soniaaa", text: "mom said yes to spotify premium 😭 Get autopay feature please.", pos: "bottom-40 right-[15%]" },
         { id: 6, handle: "iamvihaan", text: "about to start college... can i use famapp for hostel rent?", pos: "bottom-10 right-[5%]" },
     ];
@@ -104,9 +104,12 @@ const ReviewsSection = () => {
             </div>
 
             <div className="relative z-20 text-center">
-                <button className="bg-white text-black px-12 py-5 rounded-full font-black uppercase tracking-widest hover:bg-brand-yellow transition-all transform hover:scale-110 active:scale-95 shadow-[0_0_50px_rgba(255,255,255,0.2)]">
-                    Download App
-                </button>
+                <Link
+                    to="/signup"
+                    className="inline-block bg-white text-black px-12 py-5 rounded-full font-black uppercase tracking-widest hover:bg-brand-yellow transition-all transform hover:scale-110 active:scale-95 shadow-[0_0_50px_rgba(255,255,255,0.2)]"
+                >
+                    Get Started
+                </Link>
             </div>
         </section>
     );
@@ -127,21 +130,15 @@ const Home = () => {
 
             {/* Hero Section - FamX Style */}
             <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden min-h-screen flex items-center">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col md:flex-row items-center gap-10">
-                    {/* Left Content */}
-                    <div className="flex-1 text-left z-10">
-                        <div className="flex items-center gap-2 mb-8 animate-fade-in-up">
-                            <span className="text-3xl font-black tracking-tighter">fincore</span>
-                            <span className="text-gray-500 text-sm font-bold uppercase tracking-widest">by triō</span>
-                        </div>
-
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col items-center text-center">
+                    {/* Content */}
+                    <div className="z-10 py-20">
                         <div className="mb-12 animate-fade-in-up delay-100">
-                            <h1 className="text-7xl md:text-[10rem] font-black tracking-tighter leading-[0.8] uppercase italic mb-6">
-                                fin<span className="text-brand-yellow italic">X</span>
+                            <h1 className="text-8xl md:text-[11rem] font-black tracking-tighter leading-[0.8] uppercase italic mb-6">
+                                Fine<span className="text-brand-yellow">Core</span>
                             </h1>
-                            <p className="text-gray-500 text-sm font-black uppercase tracking-[0.3em] mb-8">by triō</p>
-                            <h2 className="text-4xl md:text-7xl font-black tracking-tighter leading-[1] text-white">
-                                spending account <br /> for <span className="text-brand-yellow">adults</span>
+                            <h2 className="text-4xl md:text-7xl font-black tracking-tighter leading-[1] text-white/90">
+                                Bank Management <br /> <span className="text-brand-yellow">system</span>
                             </h2>
                         </div>
 
@@ -151,111 +148,71 @@ const Home = () => {
                         >
                             Open Account
                         </Link>
-                    </div>
 
-                    {/* Right Visuals */}
-                    <div className="flex-1 relative flex justify-center items-center h-[600px] w-full mt-20 md:mt-0">
-                        <motion.div
-                            initial={{ x: 100, opacity: 0 }}
-                            animate={{ x: 0, opacity: 1 }}
-                            transition={{ duration: 1, ease: "easeOut" }}
-                            className="relative z-20"
-                        >
-                            {/* Phone Mockup */}
-                            <div className="relative w-64 h-[520px] bg-[#121212] rounded-[3rem] border-[8px] border-[#1A1A1A] shadow-2xl overflow-hidden ring-1 ring-white/10 rotate-[-5deg] hover:rotate-0 transition-transform duration-700 group">
-                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-black rounded-b-xl z-30"></div>
-                                {/* App Content Mockup */}
-                                <div className="p-6 h-full flex flex-col">
-                                    <div className="flex justify-between items-center mb-10 mt-4">
-                                        <div className="w-8 h-8 rounded-full bg-white/10"></div>
-                                        <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10"></div>
-                                    </div>
-                                    <div className="text-center mb-8">
-                                        <p className="text-gray-500 text-[10px] font-black uppercase tracking-widest mb-1">Account balance</p>
-                                        <p className="text-3xl font-black">₹ 234 <span className="text-brand-yellow">+</span></p>
-                                    </div>
-                                    <div className="bg-white/5 rounded-2xl p-4 border border-white/5 mb-4">
-                                        <div className="flex justify-between mb-4">
-                                            <div className="w-20 h-2 bg-white/10 rounded"></div>
-                                            <div className="w-8 h-2 bg-white/10 rounded"></div>
-                                        </div>
-                                        <div className="space-y-3">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-6 h-6 rounded bg-brand-yellow"></div>
-                                                <div className="flex-1 h-2 bg-white/10 rounded"></div>
-                                                <div className="w-8 h-2 bg-white/10 rounded"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Floating Card */}
-                            <motion.div
-                                animate={{
-                                    y: [0, -20, 0],
-                                    rotate: [15, 12, 15]
-                                }}
-                                transition={{
-                                    duration: 5,
-                                    repeat: Infinity,
-                                    ease: "easeInOut"
-                                }}
-                                className="absolute -right-20 top-20 w-80 h-48 bg-gradient-to-br from-gray-200 to-gray-400 rounded-2xl shadow-2xl p-6 flex flex-col justify-between overflow-hidden group hover:scale-110 transition-transform cursor-pointer"
-                            >
-                                <div className="absolute top-0 right-0 w-40 h-40 bg-brand-yellow/30 rounded-full blur-3xl -mr-20 -mt-20"></div>
-                                <div className="flex justify-between items-start">
-                                    <div className="flex items-center gap-1">
-                                        <span className="font-black text-black">fincore</span>
-                                        <span className="text-black/60 text-[8px] font-black italic">X</span>
-                                    </div>
-                                    <div className="w-10 h-7 bg-brand-yellow rounded shadow-inner"></div>
-                                </div>
-                                <div>
-                                    <p className="text-[10px] text-black/60 font-medium tracking-widest mb-1 italic">KIARA KAPOOR</p>
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex gap-2 items-center">
-                                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" className="h-2" alt="Visa" />
-                                            <span className="text-[10px] text-black font-black italic tracking-widest">PREPAID</span>
-                                        </div>
-                                        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" className="h-3" alt="UPI" />
-                                    </div>
-                                </div>
-                            </motion.div>
-                        </motion.div>
                     </div>
                 </div>
             </section>
 
-            {/* Trust Section */}
-            <div className="bg-[#111] py-12 border-y border-white/5">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap justify-between items-center gap-8 md:gap-4">
+            {/* Trust Banner - FamApp Style */}
+            <div className="bg-[#141414] border-y border-white/5" style={{ borderTop: '1px solid rgba(255,255,255,0.05)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                <div className="max-w-7xl mx-auto px-6 sm:px-10 py-10 flex flex-wrap items-center gap-10 md:gap-0 md:justify-between">
+
+                    {/* Left: User Trust Count with Shield */}
                     <div className="flex items-center gap-4">
-                        <div className="relative">
-                            <Shield className="w-12 h-12 text-gray-800" />
-                            <Check className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
-                        </div>
-                        <div>
-                            <p className="text-2xl font-black leading-none">10 million+</p>
-                            <p className="text-gray-500 text-xs font-black uppercase tracking-widest">users love FinCore</p>
+                        <img
+                            src="https://www.famapp.in/assets/images/images/pages/index/userTrustImage.png"
+                            alt="10 million users"
+                            className="h-20 w-auto object-contain"
+                            onError={(e) => {
+                                e.target.style.display = 'none';
+                                e.target.nextSibling.style.display = 'flex';
+                            }}
+                        />
+                        {/* Fallback */}
+                        <div className="items-center gap-4 hidden">
+                            <div className="relative">
+                                <Shield className="w-14 h-14 text-gray-700" strokeWidth={1.5} />
+                                <Check className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 text-gray-400" />
+                            </div>
+                            <div className="leading-tight">
+                                <p className="text-white font-black text-2xl leading-none">10 million</p>
+                                <p className="text-gray-500 text-xs font-bold uppercase tracking-widest">users love FineCore</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="h-10 w-px bg-white/10 hidden md:block"></div>
+                    {/* Divider */}
+                    <div className="hidden md:block h-12 w-px bg-white/10 mx-10" />
 
-                    <div className="flex flex-wrap items-center gap-12 opacity-50">
-                        <div className="flex items-center gap-2">
-                            <span className="text-sm font-black uppercase tracking-tight text-gray-400">Powered by</span>
-                            <div className="flex items-center gap-1">
-                                <span className="font-black">triō</span>
-                            </div>
-                        </div>
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" className="h-5 grayscale invert" alt="Visa" />
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d1/RuPay.svg" className="h-5 grayscale invert" alt="RuPay" />
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" className="h-6 grayscale invert" alt="UPI" />
+                    {/* Right: Partner logos */}
+                    <div className="flex flex-wrap items-center gap-10 md:gap-14">
+                        {/* VISA */}
+                        <img
+                            src="https://www.famapp.in/assets/images/images/pages/index/VisaLogo.png"
+                            alt="VISA"
+                            className="h-10 w-auto object-contain"
+                            onError={(e) => { e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg'; e.target.className = 'h-8 w-auto object-contain grayscale invert opacity-70'; }}
+                        />
+
+                        {/* RuPay */}
+                        <img
+                            src="https://www.famapp.in/assets/images/images/pages/index/RupayLogo.png"
+                            alt="RuPay"
+                            className="h-10 w-auto object-contain"
+                            onError={(e) => { e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/d/d1/RuPay.svg'; e.target.className = 'h-10 w-auto object-contain grayscale invert opacity-70'; }}
+                        />
+
+                        {/* UPI */}
+                        <img
+                            src="https://www.famapp.in/assets/images/images/pages/index/UPILogo.png"
+                            alt="UPI"
+                            className="h-10 w-auto object-contain"
+                            onError={(e) => { e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg'; e.target.className = 'h-10 w-auto object-contain grayscale invert opacity-70'; }}
+                        />
                     </div>
                 </div>
             </div>
+
 
             {/* Marquee Section */}
             <section className="py-10 border-y border-white/10 bg-brand-dark overflow-hidden">
@@ -324,7 +281,7 @@ const Home = () => {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
                         <div className="flex flex-col items-center">
                             <span className="text-gray-500 text-xs font-bold uppercase tracking-widest mb-2">Trusted by</span>
-                            <h3 className="text-5xl font-black text-white mb-1">65+ Crore<span className="text-brand-yellow">*</span></h3>
+                            <h3 className="text-5xl font-black text-white mb-1">65 Crore<span className="text-brand-yellow">*</span></h3>
                             <p className="text-gray-400 text-sm font-medium">Registered Users</p>
                         </div>
                         <div className="flex flex-col items-center">
@@ -334,7 +291,7 @@ const Home = () => {
                         </div>
                         <div className="flex flex-col items-center">
                             <span className="text-gray-500 text-xs font-bold uppercase tracking-widest mb-2">Accepted at over</span>
-                            <h3 className="text-5xl font-black text-white mb-1">4.7+ Crore<span className="text-brand-yellow">*</span></h3>
+                            <h3 className="text-5xl font-black text-white mb-1">4.7 Crore<span className="text-brand-yellow">*</span></h3>
                             <p className="text-gray-400 text-sm font-medium">Merchants (Stores, Apps & websites)</p>
                         </div>
                     </div>
@@ -548,10 +505,10 @@ const Home = () => {
                     <Users className="w-16 h-16 mx-auto mb-6 text-black group-hover:scale-110 transition-transform duration-300" />
                     <h2 className="text-5xl md:text-7xl font-black mb-6 uppercase">Join the <br /> Revolution</h2>
                     <p className="text-xl md:text-2xl font-medium mb-10 max-w-2xl mx-auto">
-                        Over 10+ million teenagers trust FinCore for their payments. Are you ready?
+                        Over 10 million teenagers trust FineCore for their payments. Are you ready?
                     </p>
                     <Link to="/signup" className="inline-block bg-black text-white px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform shadow-2xl">
-                        Download the App
+                        Get Started Now
                     </Link>
                 </div>
 
