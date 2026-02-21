@@ -1,0 +1,156 @@
+﻿MongoDB Connected to fix accounts...
+Found 2 accounts without cards.
+node : Error fixing 
+accounts: ValidationError: 
+Account validation failed: 
+accountType: `Savings` is 
+not a valid enum value for 
+path `accountType`.
+At line:1 char:1
++ node fixCards.js 2>&1 | 
+Out-File -FilePath 
+error.txt -Encoding utf8
++ ~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          
+    : NotSpecified: (Error  
+   fixing ac... `accountT   
+ ype`.:String) [], Remot    
+eException
+    + FullyQualifiedErrorId 
+    : NativeCommandError
+ 
+    at Document.invalidate 
+(C:\Personal 
+Project\FinCore-Bank 
+Management System\backend\no
+de_modules\mongoose\lib\docu
+ment.js:3405:32)
+    at validatePath 
+(C:\Personal 
+Project\FinCore-Bank 
+Management System\backend\no
+de_modules\mongoose\lib\docu
+ment.js:3177:13)
+    at process.processTicksA
+ndRejections (node:internal/
+process/task_queues:103:5)
+    at async Promise.all 
+(index 2)
+    at async 
+model.$__validate 
+(C:\Personal 
+Project\FinCore-Bank 
+Management System\backend\no
+de_modules\mongoose\lib\docu
+ment.js:3118:3)
+    at async model.validate 
+(C:\Personal 
+Project\FinCore-Bank 
+Management System\backend\no
+de_modules\mongoose\lib\docu
+ment.js:2687:5)
+    at async model.validateB
+eforeSavePreSave 
+(C:\Personal 
+Project\FinCore-Bank 
+Management System\backend\no
+de_modules\mongoose\lib\plug
+ins\validateBeforeSave.js:39
+:5)
+    at async Kareem.execPre 
+(C:\Personal 
+Project\FinCore-Bank 
+Management System\backend\no
+de_modules\kareem\index.js:7
+0:24)
+    at async model.$__save 
+(C:\Personal 
+Project\FinCore-Bank 
+Management System\backend\no
+de_modules\mongoose\lib\mode
+l.js:371:5)
+    at async model.save 
+(C:\Personal 
+Project\FinCore-Bank 
+Management System\backend\no
+de_modules\mongoose\lib\mode
+l.js:614:5) {
+  errors: {
+    accountType: 
+ValidatorError: `Savings` 
+is not a valid enum value 
+for path `accountType`.
+        at 
+SchemaString.doValidate 
+(C:\Personal 
+Project\FinCore-Bank 
+Management System\backend\no
+de_modules\mongoose\lib\sche
+maType.js:1425:13)
+        at validatePath 
+(C:\Personal 
+Project\FinCore-Bank 
+Management System\backend\no
+de_modules\mongoose\lib\docu
+ment.js:3169:24)
+        at 
+model.$__validate 
+(C:\Personal 
+Project\FinCore-Bank 
+Management System\backend\no
+de_modules\mongoose\lib\docu
+ment.js:3115:21)
+        at process.processTi
+cksAndRejections (node:inter
+nal/process/task_queues:103:
+5)
+        at async 
+model.validate (C:\Personal 
+Project\FinCore-Bank 
+Management System\backend\no
+de_modules\mongoose\lib\docu
+ment.js:2687:5)
+        at async model.valid
+ateBeforeSavePreSave 
+(C:\Personal 
+Project\FinCore-Bank 
+Management System\backend\no
+de_modules\mongoose\lib\plug
+ins\validateBeforeSave.js:39
+:5)
+        at async 
+Kareem.execPre (C:\Personal 
+Project\FinCore-Bank 
+Management System\backend\no
+de_modules\kareem\index.js:7
+0:24)
+        at async 
+model.$__save (C:\Personal 
+Project\FinCore-Bank 
+Management System\backend\no
+de_modules\mongoose\lib\mode
+l.js:371:5)
+        at async model.save 
+(C:\Personal 
+Project\FinCore-Bank 
+Management System\backend\no
+de_modules\mongoose\lib\mode
+l.js:614:5)
+        at async 
+fixExistingAccounts 
+(C:\Personal 
+Project\FinCore-Bank 
+Management System\backend\fi
+xCards.js:32:13) {
+      properties: [Object],
+      kind: 'enum',
+      path: 'accountType',
+      value: 'Savings',
+      reason: undefined,
+      Symbol(mongoose#valida
+torError): true
+    }
+  },
+  _message: 'Account 
+validation failed'
+}

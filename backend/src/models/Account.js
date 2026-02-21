@@ -1,43 +1,75 @@
+const mongoose = require('mongoose');
 
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../config/db');
-const User = require('./User'); // Import User for association if needed
-
-const Account = sequelize.define('Account', {
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
+const AccountSchema = new mongoose.Schema({
     userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'Users',
-            key: 'id'
-        }
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: true,
+        index: true
     },
     accountNumber: {
-        type: DataTypes.STRING,
-        allowNull: false,
+        type: String,
+        required: true,
         unique: true
     },
     accountType: {
-        type: DataTypes.ENUM('Savings', 'Current', 'Investment', 'Loan'),
-        defaultValue: 'Savings'
+        type: String,
+        enum: ['savings', 'current', 'Savings', 'Current'],
+        default: 'savings'
     },
     balance: {
-        type: DataTypes.DECIMAL(10, 2), // Better for money
-        defaultValue: 0.00
+        type: Number,
+        default: 0
     },
-    isActive: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true
+    upiId: {
+        type: String,
+        unique: true
+    },
+    upiPin: {
+        type: String,
+        select: false
+    },
+    qrCodeData: {
+        type: String
+    },
+    dailyUpiLimit: {
+        type: Number,
+        default: 100000
+    },
+    status: {
+        type: String,
+        enum: ['active', 'frozen'],
+        default: 'active'
+    },
+    // Virtual Card Details
+    cardNumber: {
+        type: String,
+        unique: true
+    },
+    cardExpiry: {
+        type: String
+    },
+    cardCvv: {
+        type: String
+    },
+    cardTheme: {
+        type: String,
+        enum: ['default', 'space', 'shopping', 'travel', 'cartoon', 'food'],
+        default: 'default'
+    },
+    cardHolderName: {
+        type: String
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now
     }
+}, {
+    timestamps: true
 });
 
-// Define Association (Will move to server or index later, but keeping it simple here)
-User.hasOne(Account, { foreignKey: 'userId', as: 'account' });
-Account.belongsTo(User, { foreignKey: 'userId', as: 'user' });
-
-module.exports = Account;
+module.exports = mongoose.model('Account', AccountSchema);

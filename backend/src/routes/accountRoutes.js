@@ -3,7 +3,8 @@ const express = require('express');
 const {
     getAccounts,
     getAccount,
-    createAccount
+    createAccount,
+    updateCardTheme
 } = require('../controllers/accountController');
 
 const router = express.Router();
@@ -11,6 +12,8 @@ const router = express.Router();
 const { protect } = require('../middleware/authMiddleware');
 
 router.use(protect);
+
+router.put('/card-theme', updateCardTheme);
 
 router
     .route('/')

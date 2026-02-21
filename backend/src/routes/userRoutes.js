@@ -1,21 +1,20 @@
-
 const express = require('express');
 const {
     getUsers,
     getUser,
     createUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    updateProfile
 } = require('../controllers/userController');
-
-const User = require('../models/User');
 
 const router = express.Router({ mergeParams: true });
 
 const { protect } = require('../middleware/authMiddleware');
 
 router.use(protect);
-// Add authorize('admin') middleware here if needed
+
+router.put('/profile', updateProfile);
 
 router
     .route('/')

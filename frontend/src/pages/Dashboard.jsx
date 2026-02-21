@@ -2,27 +2,57 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { bankService } from '../services/bankService';
+import { authService } from '../services/authService';
 import Layout from '../components/Layout';
 import ActivityChart from '../components/ActivityChart';
 import QuickTransfer from '../components/QuickTransfer';
 import CreditCard from '../components/CreditCard';
 import { Search, Bell, Settings, DollarSign, ArrowUpRight, ArrowDownLeft, Zap, Gift, Plus, Minus, Wallet } from 'lucide-react';
 
+import { userService } from '../services/userService';
+
 const Dashboard = () => {
-    const { user, login } = useAuth(); // Re-login to update context? No, better to have a refreshUser method in context.
-    // For now, we will manage local balance state and rely on context for initial data
+    const { user, login } = useAuth();
     const [balance, setBalance] = useState(user?.balance || 0);
     const [transactions, setTransactions] = useState([]);
+    const [realUsers, setRealUsers] = useState([]);
     const [showDepositModal, setShowDepositModal] = useState(false);
     const [showWithdrawModal, setShowWithdrawModal] = useState(false);
     const [amount, setAmount] = useState('');
     const [loading, setLoading] = useState(false);
 
+    const fetchDashboardData = async () => {
+        setLoading(true);
+        try {
+            const updatedUser = await authService.getMe();
+            setBalance(updatedUser.account?.balance || 0);
+
+            // Fetch real users for quick transfer
+            const usersData = await userService.getUsers();
+            // Filter out current user and map to match UI expected format
+            const formattedUsers = usersData.data
+                .filter(u => u._id !== user?.id)
+                .map(u => ({
+                    id: u._id,
+                    name: u.fullName,
+                    role: u.role || 'Member',
+                    avatar: `https://ui-avatars.com/api/?name=${u.fullName}&background=random&color=fff`,
+                    accountNumber: u.account?.accountNumber
+                }));
+            setRealUsers(formattedUsers);
+
+            const userTx = await bankService.getTransactions();
+            setTransactions(userTx);
+        } catch (error) {
+            console.error("Failed to fetch dashboard data:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
         if (user) {
-            setBalance(user.balance);
-            const userTx = bankService.getTransactions(user.email);
-            setTransactions(userTx);
+            fetchDashboardData();
         }
     }, [user]);
 
@@ -30,9 +60,8 @@ const Dashboard = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const result = await bankService.deposit(user.email, amount);
-            setBalance(result.balance);
-            setTransactions(prev => [result.transaction, ...prev]);
+            await bankService.deposit(amount);
+            await fetchDashboardData(); // Refresh all data
             setShowDepositModal(false);
             setAmount('');
             alert(`Successfully deposited ₹${amount}`);
@@ -47,9 +76,8 @@ const Dashboard = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const result = await bankService.withdraw(user.email, amount);
-            setBalance(result.balance);
-            setTransactions(prev => [result.transaction, ...prev]);
+            await bankService.withdraw(amount);
+            await fetchDashboardData(); // Refresh all data
             setShowWithdrawModal(false);
             setAmount('');
             alert(`Successfully withdrew ₹${amount}`);
@@ -60,24 +88,16 @@ const Dashboard = () => {
         }
     };
 
-    // Derived stats
-    const income = transactions.filter(t => t.type === 'Deposit' || (t.type === 'Transfer' && t.recipientEmail === user?.email))
+    const income = transactions.filter(t => t.type === 'deposit' || (t.type === 'transfer' && String(t.toAccount) === String(user?.account?._id)))
         .reduce((acc, curr) => acc + curr.amount, 0);
-    const expense = transactions.filter(t => t.type === 'Withdrawal' || (t.type === 'Transfer' && t.userEmail === user?.email))
+    const expense = transactions.filter(t => t.type === 'withdraw' || (t.type === 'transfer' && String(t.fromAccount) === String(user?.account?._id)))
         .reduce((acc, curr) => acc + curr.amount, 0);
 
     const stats = [
-        { title: 'Total Balance', value: `₹${parseFloat(balance).toLocaleString('en-IN')}`, change: '+2.5%', isUp: true },
-        { title: 'Income', value: `₹${income.toLocaleString('en-IN')}`, change: '+0.8%', isUp: true },
-        { title: 'Expenses', value: `₹${expense.toLocaleString('en-IN')}`, change: '-3.1%', isUp: false },
+        { title: 'Total Balance', value: `₹${parseFloat(balance).toLocaleString('en-IN')}` },
+        { title: 'Income', value: `₹${income.toLocaleString('en-IN')}` },
+        { title: 'Expenses', value: `₹${expense.toLocaleString('en-IN')}` },
     ];
-
-    const [dummyUsers] = useState([
-        { id: 1, name: 'Aditya', email: 'aditya@example.com', role: 'Friend', avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80' },
-        { id: 2, name: 'Riya', email: 'riya@example.com', role: 'Sister', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80' },
-        { id: 3, name: 'Rahul', email: 'rahul@example.com', role: 'Classmate', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80' },
-        { id: 4, name: 'Mom', email: 'mom@example.com', role: 'Family', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80' },
-    ]);
 
     return (
         <Layout>
@@ -85,7 +105,7 @@ const Dashboard = () => {
             <header className="flex justify-between items-center mb-10">
                 <div>
                     <h1 className="text-3xl font-black text-white">Dashboard</h1>
-                    <p className="text-gray-400 text-sm">Welcome back, {user?.name || 'User'}! 🎸</p>
+                    <p className="text-gray-400 text-sm">Welcome back, {user?.fullName || 'User'}! 🎸</p>
                 </div>
 
                 <div className="flex items-center space-x-6">
@@ -117,7 +137,7 @@ const Dashboard = () => {
                     </button>
 
                     <div className="h-12 w-12 rounded-full bg-brand-yellow flex items-center justify-center text-black font-bold text-xl border-2 border-white cursor-pointer hover:scale-110 transition">
-                        {user?.name?.charAt(0) || 'U'}
+                        {user?.fullName?.charAt(0) || 'U'}
                     </div>
                 </div>
             </header>
@@ -163,25 +183,26 @@ const Dashboard = () => {
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-white/5">
-                                    {transactions.length > 0 ? transactions.slice(0, 5).map((tx) => (
-                                        <tr key={tx.id} className="group hover:bg-white/5 transition-colors cursor-pointer">
-                                            <td className="py-4 flex items-center">
-                                                <div className={`p-2 rounded-full mr-3 ${['Deposit', 'Income'].includes(tx.type) || (tx.type === 'Transfer' && tx.recipientEmail === user?.email) ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'
-                                                    }`}>
-                                                    {['Deposit', 'Income'].includes(tx.type) || (tx.type === 'Transfer' && tx.recipientEmail === user?.email) ? <ArrowDownLeft className="h-4 w-4" /> : <ArrowUpRight className="h-4 w-4" />}
-                                                </div>
-                                                <div>
-                                                    <div className="font-bold text-white group-hover:text-brand-yellow transition">{tx.description}</div>
-                                                    <div className="text-xs text-gray-400">{tx.type}</div>
-                                                </div>
-                                            </td>
-                                            <td className="py-4 text-gray-400 text-sm">{new Date(tx.date).toLocaleDateString()}</td>
-                                            <td className={`py-4 text-right font-bold ${['Deposit', 'Income'].includes(tx.type) || (tx.type === 'Transfer' && tx.recipientEmail === user?.email) ? 'text-green-400' : 'text-white'
-                                                }`}>
-                                                {['Deposit', 'Income'].includes(tx.type) || (tx.type === 'Transfer' && tx.recipientEmail === user?.email) ? '+' : '-'}₹{Math.abs(tx.amount).toLocaleString('en-IN')}
-                                            </td>
-                                        </tr>
-                                    )) : (
+                                    {transactions.length > 0 ? transactions.slice(0, 5).map((tx) => {
+                                        const isIncome = tx.type === 'deposit' || (tx.type === 'transfer' && String(tx.toAccount) === String(user?.account?._id));
+                                        return (
+                                            <tr key={tx.transactionId} className="group hover:bg-white/5 transition-colors cursor-pointer">
+                                                <td className="py-4 flex items-center">
+                                                    <div className={`p-2 rounded-full mr-3 ${isIncome ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'}`}>
+                                                        {isIncome ? <ArrowDownLeft className="h-4 w-4" /> : <ArrowUpRight className="h-4 w-4" />}
+                                                    </div>
+                                                    <div>
+                                                        <div className="font-bold text-white group-hover:text-brand-yellow transition">{tx.description}</div>
+                                                        <div className="text-xs text-gray-400 uppercase">{tx.type} | {tx.transactionMode}</div>
+                                                    </div>
+                                                </td>
+                                                <td className="py-4 text-gray-400 text-sm">{new Date(tx.createdAt).toLocaleDateString()}</td>
+                                                <td className={`py-4 text-right font-bold ${isIncome ? 'text-green-400' : 'text-white'}`}>
+                                                    {isIncome ? '+' : '-'}₹{Math.abs(tx.amount).toLocaleString('en-IN')}
+                                                </td>
+                                            </tr>
+                                        );
+                                    }) : (
                                         <tr>
                                             <td colSpan="3" className="py-8 text-center text-gray-500">No transactions yet</td>
                                         </tr>
@@ -202,10 +223,10 @@ const Dashboard = () => {
                         </div>
                         <CreditCard
                             balance={parseFloat(balance)}
-                            cardHolder={user?.name?.toUpperCase() || 'USER NAME'}
-                            cardNumber={user?.accountNumber || "4582123456788842"}
-                            expiryDate="12/28"
-                            variant="dark"
+                            cardHolder={user?.account?.cardHolderName?.toUpperCase() || 'USER NAME'}
+                            cardNumber={user?.account?.cardNumber || "•••• •••• •••• ••••"}
+                            expiryDate={user?.account?.cardExpiry || "00/00"}
+                            cardTheme={user?.account?.cardTheme || "default"}
                         />
                     </div>
 
@@ -235,19 +256,18 @@ const Dashboard = () => {
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="p-3 bg-white/5 rounded-xl border border-white/5">
                                     <div className="text-gray-500 text-xs font-bold mb-1">Account No.</div>
-                                    <div className="text-white font-mono font-bold text-sm tracking-widest">{user?.accountNumber || '....'}</div>
+                                    <div className="text-white font-mono font-bold text-sm tracking-widest">{user?.account?.accountNumber || '....'}</div>
                                 </div>
                                 <div className="p-3 bg-white/5 rounded-xl border border-white/5">
                                     <div className="text-gray-500 text-xs font-bold mb-1">Type</div>
-                                    <div className="text-white font-bold text-sm">{user?.accountType || 'Savings'}</div>
+                                    <div className="text-white font-bold text-sm">{user?.account?.accountType || 'Savings'}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Quick Transfer */}
                     <div className="bg-brand-card rounded-3xl border border-white/5 p-6">
-                        <QuickTransfer users={dummyUsers} />
+                        <QuickTransfer users={realUsers} onTransferSuccess={fetchDashboardData} />
                     </div>
                 </div>
             </div>

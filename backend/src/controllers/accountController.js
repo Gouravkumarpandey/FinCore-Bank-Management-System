@@ -1,4 +1,3 @@
-
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const Account = require('../models/Account');
@@ -7,7 +6,7 @@ const Account = require('../models/Account');
 // @route   GET /api/accounts
 // @access  Private
 exports.getAccounts = asyncHandler(async (req, res, next) => {
-    const accounts = await Account.findAll({ where: { userId: req.user.id } });
+    const accounts = await Account.find({ userId: req.user.id });
 
     res.status(200).json({
         success: true,
@@ -20,7 +19,7 @@ exports.getAccounts = asyncHandler(async (req, res, next) => {
 // @route   GET /api/accounts/:id
 // @access  Private
 exports.getAccount = asyncHandler(async (req, res, next) => {
-    const account = await Account.findByPk(req.params.id);
+    const account = await Account.findById(req.params.id);
 
     if (!account) {
         return next(
@@ -29,7 +28,7 @@ exports.getAccount = asyncHandler(async (req, res, next) => {
     }
 
     // Make sure user owns account
-    if (account.userId !== req.user.id && req.user.role !== 'admin') {
+    if (account.userId.toString() !== req.user.id && req.user.role !== 'admin') {
         return next(
             new ErrorResponse(`User ${req.user.id} is not authorized to access this account`, 401)
         );
@@ -53,6 +52,32 @@ exports.createAccount = asyncHandler(async (req, res, next) => {
     const account = await Account.create(req.body);
 
     res.status(201).json({
+        success: true,
+        data: account
+    });
+});
+
+// @desc    Update card theme
+// @route   PUT /api/accounts/card-theme
+// @access  Private
+exports.updateCardTheme = asyncHandler(async (req, res, next) => {
+    const { theme } = req.body;
+
+    if (!theme) {
+        return next(new ErrorResponse('Please provide a theme', 400));
+    }
+
+    const account = await Account.findOneAndUpdate(
+        { userId: req.user.id },
+        { cardTheme: theme },
+        { new: true, runValidators: true }
+    );
+
+    if (!account) {
+        return next(new ErrorResponse('Account not found', 404));
+    }
+
+    res.status(200).json({
         success: true,
         data: account
     });

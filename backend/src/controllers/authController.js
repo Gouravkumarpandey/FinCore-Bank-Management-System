@@ -1,4 +1,3 @@
-
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const jwt = require('jsonwebtoken');
@@ -9,22 +8,40 @@ const Account = require('../models/Account');
 // @route   POST /api/auth/register
 // @access  Public
 exports.register = asyncHandler(async (req, res, next) => {
-    const { name, email, password } = req.body;
+    const { fullName, email, password, phone } = req.body;
 
     // Create user
     const user = await User.create({
-        name,
+        fullName,
         email,
-        password
+        password,
+        phone
     });
 
-    // Create default Savings Account for user
+    // Generate unique Account Number
     const accountNumber = '4582' + Math.floor(100000000000 + Math.random() * 900000000000);
+
+    // Generate Virtual Card Details
+    const cardNumber = '4582' + Math.floor(100000000000 + Math.random() * 900000000000);
+    const cardCvv = Math.floor(100 + Math.random() * 900).toString();
+    const now = new Date();
+    const cardExpiry = `${(now.getMonth() + 1).toString().padStart(2, '0')}/${(now.getFullYear() + 5).toString().slice(-2)}`;
+
+    // Generate UPI ID (fullName@fincore)
+    const upiId = fullName.toLowerCase().replace(/\s+/g, '') + Math.floor(100 + Math.random() * 900) + '@fincore';
+
+    // Create default Savings Account for user
     await Account.create({
-        userId: user.id,
+        userId: user._id,
         accountNumber,
-        accountType: 'Savings',
-        balance: 10000 // Sign up bonus
+        upiId,
+        accountType: 'savings',
+        balance: 10000, // Sign up bonus
+        cardNumber,
+        cardCvv,
+        cardExpiry,
+        cardHolderName: fullName,
+        cardTheme: 'default'
     });
 
     sendTokenResponse(user, 200, res);
@@ -42,8 +59,7 @@ exports.login = asyncHandler(async (req, res, next) => {
     }
 
     // Check for user
-    // In Sequelize, findOne returns the instance with password field if it's not excluded by default scope (User model doesn't exclude it here)
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ email }).select('+password');
 
     if (!user) {
         return next(new ErrorResponse('Invalid credentials', 401));
@@ -63,20 +79,31 @@ exports.login = asyncHandler(async (req, res, next) => {
 // @route   GET /api/auth/me
 // @access  Private
 exports.getMe = asyncHandler(async (req, res, next) => {
-    const user = await User.findByPk(req.user.id);
-    const account = await Account.findOne({ where: { userId: req.user.id } });
-
-    // Sequelize returns instance, call .toJSON() or access data directly
-    const userData = user.toJSON();
-    delete userData.password; // Manually remove password from response
+    const user = await User.findById(req.user.id);
+    const account = await Account.findOne({ userId: req.user.id });
 
     res.status(200).json({
         success: true,
         data: {
-            ...userData,
-            accountNumber: account ? account.accountNumber : null,
-            balance: account ? parseFloat(account.balance) : 0,
-            accountType: account ? account.accountType : null
+            id: user._id,
+            fullName: user.fullName,
+            email: user.email,
+            role: user.role,
+            phone: user.phone,
+            isBlocked: user.isBlocked,
+            account: account ? {
+                accountNumber: account.accountNumber,
+                accountType: account.accountType,
+                balance: account.balance,
+                upiId: account.upiId,
+                status: account.status,
+                dailyUpiLimit: account.dailyUpiLimit,
+                cardNumber: account.cardNumber,
+                cardExpiry: account.cardExpiry,
+                cardCvv: account.cardCvv,
+                cardTheme: account.cardTheme,
+                cardHolderName: account.cardHolderName
+            } : null
         }
     });
 });
@@ -84,7 +111,7 @@ exports.getMe = asyncHandler(async (req, res, next) => {
 // Get token from model, create cookie and send response
 const sendTokenResponse = (user, statusCode, res) => {
     // Create token
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
         expiresIn: '30d'
     });
 
@@ -102,8 +129,8 @@ const sendTokenResponse = (user, statusCode, res) => {
             success: true,
             token,
             user: {
-                id: user.id,
-                name: user.name,
+                id: user._id,
+                fullName: user.fullName,
                 email: user.email,
                 role: user.role
             }

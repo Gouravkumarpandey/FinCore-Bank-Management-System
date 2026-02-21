@@ -1,48 +1,59 @@
+const mongoose = require('mongoose');
 
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../config/db');
-const Account = require('./Account');
-
-const Transaction = sequelize.define('Transaction', {
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
+const TransactionSchema = new mongoose.Schema({
+    transactionId: {
+        type: String,
+        required: true,
+        unique: true
     },
-    accountId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'Accounts',
-            key: 'id'
-        }
+    fromAccount: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Account',
+        default: null
     },
-    type: {
-        type: DataTypes.ENUM('Deposit', 'Withdrawal', 'Transfer'),
-        allowNull: false
+    toAccount: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Account',
+        default: null
     },
     amount: {
-        type: DataTypes.DECIMAL(10, 2),
-        allowNull: false
+        type: Number,
+        required: true
     },
-    description: {
-        type: DataTypes.STRING
+    transactionMode: {
+        type: String,
+        enum: ['BANK', 'UPI', 'QR'],
+        required: true
     },
-    recipientAccount: {
-        type: DataTypes.STRING // Storing account number string for reference
+    type: {
+        type: String,
+        enum: ['deposit', 'withdraw', 'transfer'],
+        required: true
+    },
+    upiDetails: {
+        senderUpi: String,
+        receiverUpi: String
     },
     status: {
-        type: DataTypes.ENUM('Pending', 'Completed', 'Failed'),
-        defaultValue: 'Completed'
+        type: String,
+        enum: ['success', 'failed', 'pending'],
+        default: 'pending'
     },
-    date: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+    description: {
+        type: String
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
 });
 
-// Relationships
-Account.hasMany(Transaction, { foreignKey: 'accountId' });
-Transaction.belongsTo(Account, { foreignKey: 'accountId' });
+// Transactions should never be edited or deleted
+TransactionSchema.pre('save', function (next) {
+    if (!this.isNew) {
+        throw new Error('Transactions cannot be modified once created.');
+    }
+    next();
+});
 
-module.exports = Transaction;
+module.exports = mongoose.model('Transaction', TransactionSchema);

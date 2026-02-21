@@ -1,10 +1,10 @@
-
 const express = require('express');
 const {
     getTransactions,
     transferFunds,
     depositFunds,
-    withdrawFunds
+    withdrawFunds,
+    upiTransfer
 } = require('../controllers/transactionController');
 
 const router = express.Router();
@@ -17,5 +17,6 @@ router.route('/').get(getTransactions);
 router.route('/transfer').post(transferFunds);
 router.route('/deposit').post(depositFunds);
 router.route('/withdraw').post(withdrawFunds);
+router.route('/upi-transfer').post(upiTransfer);
 
 module.exports = router;

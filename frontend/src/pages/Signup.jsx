@@ -6,6 +6,7 @@ import { Shield, ArrowRight, Check } from 'lucide-react';
 const Signup = () => {
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -19,7 +20,7 @@ const Signup = () => {
         setLoading(true);
 
         try {
-            await signup(fullName, email, password);
+            await signup(fullName, email, password, phone);
             navigate('/dashboard');
         } catch (err) {
             setError('Failed to create account: ' + err.message);
@@ -82,6 +83,18 @@ const Signup = () => {
                                 onChange={(e) => setFullName(e.target.value)}
                                 className="w-full bg-brand-card/50 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-brand-yellow focus:ring-1 focus:ring-brand-yellow transition-all"
                                 placeholder="John Doe"
+                            />
+                        </div>
+
+                        <div className="group">
+                            <label className="block text-sm font-medium text-gray-400 mb-1 ml-1">Phone Number</label>
+                            <input
+                                type="tel"
+                                required
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
+                                className="w-full bg-brand-card/50 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-brand-yellow focus:ring-1 focus:ring-brand-yellow transition-all"
+                                placeholder="+91 9876543210"
                             />
                         </div>
 

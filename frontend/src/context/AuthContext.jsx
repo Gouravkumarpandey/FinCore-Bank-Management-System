@@ -30,15 +30,25 @@ export const AuthProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        // Check for logged in user on mount
+        // Validate the stored token against the server on app load
         const checkUser = async () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                setLoading(false);
+                return;
+            }
             try {
-                const currentUser = authService.getCurrentUser();
-                if (currentUser) {
-                    setUser(currentUser);
+                // This verifies the token is still valid with the backend
+                const userData = await authService.getMe();
+                if (userData) {
+                    setUser(userData);
                 }
             } catch (error) {
-                console.error("Auth check failed:", error);
+                // Token is invalid or expired — clear everything
+                console.warn("Session expired or invalid, clearing credentials.");
+                localStorage.removeItem('token');
+                localStorage.removeItem('currentUser');
+                setUser(null);
             } finally {
                 setLoading(false);
             }
@@ -75,14 +85,24 @@ export const AuthProvider = ({ children }) => {
         return userData;
     };
 
-    const signup = async (name, email, password) => {
-        const userData = await authService.signup(name, email, password);
+    const signup = async (fullName, email, password, phone) => {
+        const userData = await authService.signup(fullName, email, password, phone);
         setUser(userData);
         return userData;
     };
 
+    const refreshUser = async () => {
+        try {
+            const userData = await authService.getMe();
+            setUser(userData);
+            return userData;
+        } catch (error) {
+            console.error("Failed to refresh user:", error);
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ user, login, signup, logout, loading }}>
+        <AuthContext.Provider value={{ user, login, signup, logout, refreshUser, loading }}>
             {!loading && children}
         </AuthContext.Provider>
     );

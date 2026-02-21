@@ -2,7 +2,48 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { ArrowRight, Star, Zap, Shield, Smartphone, CreditCard, Gift, Users, Check, QrCode } from 'lucide-react';
+import { ArrowRight, Star, Zap, Shield, Smartphone, CreditCard, Gift, Users, Check, QrCode, Lock } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+const AnimatedSecurityBadge = () => {
+    return (
+        <div className="relative w-64 h-64 flex items-center justify-center">
+            {/* Revolving Orbiting Circles */}
+            <div className="absolute inset-0 border-2 border-dashed border-brand-yellow/20 rounded-full animate-spin-slow"></div>
+            <div className="absolute inset-4 border border-white/10 rounded-full animate-spin-reverse-slow"></div>
+            <div className="absolute inset-8 border-2 border-dashed border-brand-yellow/10 rounded-full animate-spin-slower"></div>
+
+            {/* Pulse Rings */}
+            <div className="absolute w-32 h-32 bg-brand-yellow/5 rounded-full animate-ping"></div>
+
+            {/* Central Badge Container */}
+            <div className="relative z-10 w-48 h-56 flex items-center justify-center animate-float-slow">
+                {/* Custom Shield Path */}
+                <svg viewBox="0 0 100 110" className="absolute inset-0 w-full h-full drop-shadow-[0_0_30px_rgba(252,207,8,0.3)]">
+                    <path
+                        d="M50 0 L95 20 L95 55 C95 85 50 110 50 110 C50 110 5 85 5 55 L5 20 Z"
+                        fill="white"
+                    />
+                    <path
+                        d="M50 5 L90 23 L90 55 C90 82 50 105 50 105 C50 105 10 82 10 55 L10 23 Z"
+                        fill="#0A0A0A"
+                    />
+                </svg>
+
+                <div className="relative z-20 text-center">
+                    <div className="flex justify-center mb-1">
+                        <Lock className="w-8 h-8 text-brand-yellow" />
+                    </div>
+                    <span className="text-4xl font-black text-white block leading-none">100%</span>
+                    <div className="mt-2 text-brand-yellow font-black text-sm tracking-[0.2em] uppercase">Money Safe</div>
+                    <div className="mt-1 bg-brand-yellow text-black px-3 py-0.5 rounded text-[10px] font-black uppercase tracking-widest">
+                        FinCore Trust
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
 
 const Home = () => {
     const [scrollY, setScrollY] = useState(0);
@@ -110,6 +151,80 @@ const Home = () => {
                 </div>
             </section>
 
+            {/* Security Banner (PhonePe Inspired) */}
+            <section className="py-20 px-4 bg-[#121212]">
+                <div className="max-w-6xl mx-auto">
+                    <div className="bg-gradient-to-r from-black via-zinc-900 to-black rounded-[2.5rem] p-8 md:p-12 flex flex-col md:flex-row items-center gap-10 shadow-3xl border border-white/5 relative overflow-hidden group">
+                        <div className="absolute top-0 left-0 w-64 h-64 bg-brand-yellow/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
+
+                        <div className="relative z-10 flex-shrink-0">
+                            <AnimatedSecurityBadge />
+                        </div>
+
+                        <div className="relative z-10 text-left flex-1">
+                            <h2 className="text-4xl md:text-5xl font-black text-white mb-4">Your money stays safe.</h2>
+                            <p className="text-gray-400 text-xl font-medium mb-8">
+                                FinCore protects your money with world-class security systems that help minimize frauds and keep your data private.
+                            </p>
+                            <div className="flex items-center gap-8 opacity-90">
+                                <div className="flex items-center gap-2 border-r border-white/10 pr-8">
+                                    <Shield className="w-6 h-6 text-brand-yellow" />
+                                    <span className="font-bold text-sm tracking-tighter text-white">PCI DSS <br /><span className="text-[10px] text-gray-500 uppercase">Compliant</span></span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <Zap className="w-6 h-6 text-brand-yellow" />
+                                    <span className="font-bold text-sm tracking-tighter text-white">ISO 27001 <br /><span className="text-[10px] text-gray-500 uppercase">Certified</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* FinCore Pulse (PhonePe Pulses Inspired) */}
+            <section className="py-24 relative overflow-hidden bg-brand-dark">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-brand-yellow/5 rounded-full pointer-events-none"></div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-brand-yellow/10 rounded-full pointer-events-none animate-spin-slow"></div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="max-w-7xl mx-auto px-4 relative z-10 text-center"
+                >
+                    <div className="inline-flex items-center gap-2 mb-6">
+                        <Zap className="text-brand-yellow w-8 h-8 fill-current" />
+                        <h2 className="text-4xl font-black text-white">FinCore Pulse</h2>
+                    </div>
+                    <p className="text-gray-400 text-xl font-medium mb-16">Get the latest data trends & insights on digital banking across India.</p>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
+                        <div className="flex flex-col items-center">
+                            <span className="text-gray-500 text-xs font-bold uppercase tracking-widest mb-2">Trusted by</span>
+                            <h3 className="text-5xl font-black text-white mb-1">65+ Crore<span className="text-brand-yellow">*</span></h3>
+                            <p className="text-gray-400 text-sm font-medium">Registered Users</p>
+                        </div>
+                        <div className="flex flex-col items-center">
+                            <span className="text-gray-500 text-xs font-bold uppercase tracking-widest mb-2">Accepted in</span>
+                            <h3 className="text-5xl font-black text-white mb-1">98%<span className="text-brand-yellow">*</span></h3>
+                            <p className="text-gray-400 text-sm font-medium">Postal Codes</p>
+                        </div>
+                        <div className="flex flex-col items-center">
+                            <span className="text-gray-500 text-xs font-bold uppercase tracking-widest mb-2">Accepted at over</span>
+                            <h3 className="text-5xl font-black text-white mb-1">4.7+ Crore<span className="text-brand-yellow">*</span></h3>
+                            <p className="text-gray-400 text-sm font-medium">Merchants (Stores, Apps & websites)</p>
+                        </div>
+                    </div>
+
+                    <button className="mt-16 bg-white text-black px-10 py-4 rounded-full font-black text-lg hover:bg-gray-200 transition-all shadow-xl hover:scale-105 active:scale-95">
+                        Explore FinCore Pulse
+                    </button>
+
+                    <p className="mt-8 text-gray-600 text-[10px] uppercase font-bold">*Based on current market estimates & internal data.</p>
+                </motion.div>
+            </section>
+
             {/* Rewarding Spending Account Section */}
             <section className="py-32 bg-brand-dark relative overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row-reverse items-center gap-16">
@@ -132,24 +247,12 @@ const Home = () => {
                             ))}
                         </div>
                     </div>
-                    <div className="flex-1 relative">
-                        <div className="relative z-10 w-full aspect-square rounded-[3rem] border border-white/10 overflow-hidden shadow-2xl animate-float-slow group">
-                            <img
-                                src="https://famapp.in/assets/images/images/pages/index/SpendingAccountImage.jpg"
-                                alt="Spending Account"
-                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                            />
-
-                            {/* Overlay Gradient */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-
-                            {/* Floating Badge */}
-                            <div className="absolute bottom-6 right-6 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full flex items-center shadow-lg animate-bounce-slow delay-300">
-                                <Gift className="w-5 h-5 text-brand-yellow mr-2" />
-                                <span className="text-white font-bold text-sm">Earn Rewards</span>
-                            </div>
-                        </div>
-                        <div className="absolute -inset-10 bg-gradient-to-r from-brand-yellow/20 to-purple-600/20 blur-[100px] rounded-full pointer-events-none"></div>
+                    <div className="flex-1 flex justify-center items-center">
+                        <img
+                            src="https://famapp.in/assets/images/images/pages/index/SpendingAccountImage.jpg"
+                            alt="FinCore Transactions Mockup"
+                            className="w-full max-w-lg rounded-[3.5rem] shadow-[0_0_100px_rgba(0,0,0,0.8)] border border-white/10"
+                        />
                     </div>
                 </div>
             </section>

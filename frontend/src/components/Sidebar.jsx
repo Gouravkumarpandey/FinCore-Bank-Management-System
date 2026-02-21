@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Home, List, Send, User, LogOut, LayoutDashboard, CreditCard, PieChart, TrendingUp, Settings, HelpCircle, Zap, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Home, List, Send, User, LogOut, LayoutDashboard, CreditCard, PieChart, TrendingUp, Settings, HelpCircle, Zap, ChevronLeft, ChevronRight, QrCode, Smartphone } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useSidebar } from '../context/SidebarContext';
@@ -22,6 +22,7 @@ const Sidebar = () => {
         { name: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
         { name: 'Transactions', icon: List, path: '/transactions' },
         { name: 'Accounts', icon: User, path: '/accounts' },
+        { name: 'UPI Payment', icon: QrCode, path: '/upi-payment' },
         { name: 'Investments', icon: TrendingUp, path: '/investments' },
         { name: 'Cards', icon: CreditCard, path: '/cards' }, // Renamed from "Credit Cards" to fit better
         { name: 'Loans', icon: PieChart, path: '/loans' },
@@ -60,8 +61,8 @@ const Sidebar = () => {
                         key={item.name}
                         to={item.path}
                         className={`group flex items-center py-3 text-sm font-bold rounded-xl transition-all duration-200 relative ${isActive(item.path)
-                                ? 'bg-brand-yellow text-black'
-                                : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                            ? 'bg-brand-yellow text-black'
+                            : 'text-gray-400 hover:bg-white/5 hover:text-white'
                             } ${isCollapsed ? 'justify-center px-0 mx-2' : 'px-4 mx-2'}`}
                         title={isCollapsed ? item.name : ''}
                     >
@@ -84,8 +85,8 @@ const Sidebar = () => {
                             key={item.name}
                             to={item.path}
                             className={`group flex items-center py-3 text-sm font-bold rounded-xl transition-all duration-200 relative ${isActive(item.path)
-                                    ? 'bg-white/10 text-white'
-                                    : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                                ? 'bg-white/10 text-white'
+                                : 'text-gray-400 hover:bg-white/5 hover:text-white'
                                 } ${isCollapsed ? 'justify-center px-0 mx-2' : 'px-4 mx-2'}`}
                             title={isCollapsed ? item.name : ''}
                         >

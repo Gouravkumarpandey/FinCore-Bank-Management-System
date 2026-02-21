@@ -1,6 +1,7 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { authService } from '../services/authService';
 import Sidebar from '../components/Sidebar';
 import { User, Lock, Mail, Phone, MapPin, Camera, Save, X } from 'lucide-react';
 
@@ -9,17 +10,21 @@ const Profile = () => {
     const [isEditing, setIsEditing] = useState(false);
     // Local state for editing form, initialized with user data
     const [formData, setFormData] = useState({
-        name: user?.name || '',
+        fullName: user?.fullName || '',
         email: user?.email || '',
-        phone: user?.phone || '+91 98765 43210',
+        phone: user?.phone || '',
         address: user?.address || 'Mumbai, India',
     });
 
-    const handleSave = (e) => {
+    const handleSave = async (e) => {
         e.preventDefault();
-        setIsEditing(false);
-        // In a real app, call authService.updateProfile(formData) here
-        alert("Profile updated locally! (Persisting requires update function)");
+        try {
+            await authService.updateProfile(formData);
+            setIsEditing(false);
+            alert("Profile updated successfully!");
+        } catch (error) {
+            alert(error.message);
+        }
     };
 
     return (
@@ -47,8 +52,8 @@ const Profile = () => {
                                         <Camera className="w-4 h-4" />
                                     </button>
                                 </div>
-                                <h3 className="text-xl font-black text-white">{user?.name}</h3>
-                                <p className="text-sm text-brand-yellow font-bold uppercase tracking-wider mt-1">{user?.accountType || 'Savings Account'}</p>
+                                <h3 className="text-xl font-black text-white">{user?.fullName}</h3>
+                                <p className="text-sm text-brand-yellow font-bold uppercase tracking-wider mt-1">{user?.account?.accountType || 'Savings Account'}</p>
 
                                 <div className="w-full mt-8 space-y-3 relative z-10">
                                     <button
@@ -77,8 +82,8 @@ const Profile = () => {
                                             <div className="relative">
                                                 <input
                                                     type="text"
-                                                    value={formData.name}
-                                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                                    value={formData.fullName}
+                                                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                                                     disabled={!isEditing}
                                                     className={`w-full bg-black/50 border border-white/10 rounded-2xl px-4 py-3 text-white focus:outline-none focus:border-brand-yellow transition-all ${!isEditing && 'opacity-60 cursor-not-allowed'}`}
                                                 />

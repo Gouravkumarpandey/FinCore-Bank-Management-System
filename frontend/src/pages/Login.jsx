@@ -20,8 +20,12 @@ const Login = () => {
         setLoading(true);
 
         try {
-            await login(email, password);
-            navigate('/dashboard');
+            const data = await login(email, password);
+            if (data.role === 'admin') {
+                navigate('/admin');
+            } else {
+                navigate('/dashboard');
+            }
         } catch (err) {
             setError('Failed to log in: ' + err.message);
         } finally {
@@ -37,7 +41,7 @@ const Login = () => {
 
                 {/* Animated Blobs */}
                 <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-yellow/20 rounded-full blur-[100px] animate-blob"></div>
-                <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-[100px] animate-blob animation-delay-2000"></div>
+                <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-zinc-600/20 rounded-full blur-[100px] animate-blob animation-delay-2000"></div>
 
                 <div className="relative z-10 p-12 max-w-lg">
                     <Link to="/" className="inline-flex items-center space-x-2 mb-8 group">
@@ -135,6 +139,11 @@ const Login = () => {
                                     Sign up for free
                                 </Link>
                             </p>
+                            <div className="mt-4">
+                                <Link to="/admin/login" className="text-[10px] text-gray-600 hover:text-brand-yellow font-black uppercase tracking-widest transition-colors">
+                                    Operator Admin Portal
+                                </Link>
+                            </div>
                         </div>
                     </form>
                 </div>

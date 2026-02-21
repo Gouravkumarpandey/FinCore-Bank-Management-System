@@ -1,11 +1,8 @@
-
 import { useState } from 'react';
 import { ArrowRight, UserPlus, Send, Loader2, Check } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
 import { bankService } from '../services/bankService';
 
-const QuickTransfer = ({ users }) => {
-    const { user: currentUser } = useAuth();
+const QuickTransfer = ({ users, onTransferSuccess }) => {
     const [selectedUser, setSelectedUser] = useState(null);
     const [amount, setAmount] = useState('');
     const [loading, setLoading] = useState(false);
@@ -22,8 +19,7 @@ const QuickTransfer = ({ users }) => {
 
         try {
             await bankService.transfer(
-                currentUser.email,
-                selectedUser.email || selectedUser.name, // Use email if available, otherwise name (might fail if simulated backend strictness varies, but we updated dummyUsers with emails)
+                selectedUser.accountNumber,
                 amount,
                 "Quick Transfer"
             );
@@ -36,13 +32,7 @@ const QuickTransfer = ({ users }) => {
             setTimeout(() => {
                 setStatus('idle');
                 setLoading(false);
-                // Trigger a refresh of transactions/balance in parent if possible, but auto-refresh via context/service subscription is better.
-                // Since Dashboard handles its own refresh on user change or we might need to reload.
-                // For now, let's just alert or reload window to see balance update, OR rely on Dashboard's useEffect if user object in context updates? 
-                // Context doesn't auto-update on service calls unless we explicitly update it.
-                // We'll rely on the user manually refreshing or navigating for now as per "Basic" requirement, 
-                // or ideally we should expose a refresh function.
-                window.location.reload(); // Simple refresh to show updated balance
+                if (onTransferSuccess) onTransferSuccess();
             }, 2000);
 
         } catch (error) {
@@ -102,8 +92,8 @@ const QuickTransfer = ({ users }) => {
                     onClick={handleTransfer}
                     disabled={loading || !selectedUser || !amount}
                     className={`p-3 rounded-xl shadow-[0_0_15px_rgba(252,207,8,0.4)] transform transition-all flex items-center justify-center ${status === 'success' ? 'bg-green-500 text-white' :
-                            loading ? 'bg-brand-yellow/50 cursor-not-allowed' :
-                                'bg-brand-yellow hover:bg-yellow-400 hover:scale-105 text-black'
+                        loading ? 'bg-brand-yellow/50 cursor-not-allowed' :
+                            'bg-brand-yellow hover:bg-yellow-400 hover:scale-105 text-black'
                         }`}
                 >
                     {status === 'success' ? (

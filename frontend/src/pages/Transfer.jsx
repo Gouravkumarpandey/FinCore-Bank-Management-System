@@ -22,7 +22,7 @@ const Transfer = () => {
         setErrorMessage('');
 
         try {
-            await bankService.transfer(user.email, recipient, amount, note);
+            await bankService.transfer(recipient, amount, note);
             setStatus('success');
             setTimeout(() => {
                 setStatus('idle');

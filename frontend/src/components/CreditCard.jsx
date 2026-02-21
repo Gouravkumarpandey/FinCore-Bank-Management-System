@@ -2,18 +2,33 @@ import React from 'react';
 import { DollarSign } from 'lucide-react';
 import PropTypes from 'prop-types';
 
-const CreditCard = ({ balance, cardNumber, cardHolder, expiryDate, variant = 'primary' }) => {
+const CreditCard = ({ balance, cardNumber, cardHolder, expiryDate, variant = 'primary', cardTheme = 'default' }) => {
     // Tailwind gradients for different card variants
     const variants = {
-        primary: 'bg-gradient-to-br from-blue-600 to-indigo-700',
-        secondary: 'bg-gradient-to-br from-purple-600 to-pink-600',
-        dark: 'bg-gradient-to-br from-gray-800 to-gray-900',
+        primary: 'from-blue-600 to-indigo-700',
+        secondary: 'from-purple-600 to-pink-600',
+        dark: 'from-gray-800 to-gray-900',
+        default: 'custom-bg',
+        space: 'from-purple-900 via-indigo-900 to-black',
+        shopping: 'from-pink-600 via-rose-500 to-orange-400',
+        travel: 'from-cyan-600 via-blue-700 to-indigo-900',
+        cartoon: 'from-yellow-400 via-orange-500 to-red-500',
+        food: 'from-orange-600 via-amber-700 to-stone-900',
     };
 
-    const gradient = variants[variant] || variants.primary;
+    const isDefault = cardTheme === 'default';
+    const gradient = variants[cardTheme] || variants[variant] || variants.primary;
 
     return (
-        <div className={`${gradient} rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 text-white relative overflow-hidden h-56 w-full max-w-sm flex flex-col justify-between`}>
+        <div
+            className={`rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 text-white relative overflow-hidden h-56 w-full max-w-sm flex flex-col justify-between ${!isDefault ? `bg-gradient-to-br ${gradient}` : ''}`}
+            style={isDefault ? {
+                backgroundImage: 'url("/banking%20cardbackdesign.svg")',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundColor: '#000'
+            } : {}}
+        >
             {/* Background Decorations */}
             <div className="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 rounded-full bg-white opacity-10 blur-2xl"></div>
             <div className="absolute bottom-0 left-0 -ml-10 -mb-10 w-32 h-32 rounded-full bg-white opacity-10 blur-2xl"></div>

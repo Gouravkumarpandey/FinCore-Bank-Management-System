@@ -12,18 +12,21 @@ const Transactions = () => {
     const [filterType, setFilterType] = useState('All'); // All, Income, Expense
 
     useEffect(() => {
-        if (user) {
-            const txs = bankService.getTransactions(user.email);
-            setTransactions(txs);
-        }
+        const fetchTransactions = async () => {
+            if (user) {
+                const txs = await bankService.getTransactions();
+                setTransactions(txs);
+            }
+        };
+        fetchTransactions();
     }, [user]);
 
     const filteredTransactions = transactions.filter(tx => {
         const matchesSearch = tx.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
             tx.amount.toString().includes(searchTerm);
 
-        const isIncome = ['Deposit', 'Income'].includes(tx.type) || (tx.type === 'Transfer' && tx.recipientEmail === user?.email);
-        const isExpense = ['Withdrawal', 'Expense'].includes(tx.type) || (tx.type === 'Transfer' && tx.userEmail === user?.email);
+        const isIncome = ['Deposit', 'Income'].includes(tx.type) || (tx.type === 'Transfer' && tx.recipientAccount === user?.accountNumber);
+        const isExpense = ['Withdrawal', 'Expense'].includes(tx.type) || (tx.type === 'Transfer' && tx.recipientAccount !== user?.accountNumber);
 
         let matchesFilter = true;
         if (filterType === 'Income') matchesFilter = isIncome;
@@ -71,8 +74,8 @@ const Transactions = () => {
                                     key={type}
                                     onClick={() => setFilterType(type)}
                                     className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${filterType === type
-                                            ? 'bg-brand-yellow text-black'
-                                            : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
+                                        ? 'bg-brand-yellow text-black'
+                                        : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
                                         }`}
                                 >
                                     {type}
@@ -94,7 +97,7 @@ const Transactions = () => {
                             </thead>
                             <tbody className="divide-y divide-white/5">
                                 {filteredTransactions.length > 0 ? filteredTransactions.map((tx) => {
-                                    const isIncome = ['Deposit', 'Income'].includes(tx.type) || (tx.type === 'Transfer' && tx.recipientEmail === user?.email);
+                                    const isIncome = ['Deposit', 'Income'].includes(tx.type) || (tx.type === 'Transfer' && tx.recipientAccount === user?.accountNumber);
 
                                     return (
                                         <tr key={tx.id} className="hover:bg-white/5 transition-colors group">
