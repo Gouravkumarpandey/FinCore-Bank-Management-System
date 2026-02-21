@@ -128,29 +128,55 @@ const Home = () => {
         <div className="font-sans antialiased bg-black text-white selection:bg-brand-yellow selection:text-black min-h-screen overflow-x-hidden">
             <Navbar />
 
-            {/* Hero Section - FamX Style */}
-            <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden min-h-screen flex items-center">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col items-center text-center">
-                    {/* Content */}
-                    <div className="z-10 py-20">
-                        <div className="mb-12 animate-fade-in-up delay-100">
-                            <h1 className="text-8xl md:text-[11rem] font-black tracking-tighter leading-[0.8] uppercase italic mb-6">
-                                Fine<span className="text-brand-yellow">Core</span>
-                            </h1>
-                            <h2 className="text-4xl md:text-7xl font-black tracking-tighter leading-[1] text-white/90">
-                                Bank Management <br /> <span className="text-brand-yellow">system</span>
-                            </h2>
+            {/* Hero Section - Split Screen Style */}
+            <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden min-h-screen flex items-center bg-black">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                    <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+
+                        {/* Left Content */}
+                        <div className="flex-1 text-left z-10 transition-all duration-700">
+                            <div className="mb-6 animate-fade-in-up">
+                                <span className="text-white font-black text-xl flex items-center gap-2">
+                                    fincore
+                                </span>
+                            </div>
+
+                            <div className="mb-12 animate-fade-in-up delay-100">
+                                <h1 className="text-7xl md:text-[11rem] font-black tracking-tighter leading-[0.75] uppercase italic mb-8 text-white">
+                                    FINX
+                                </h1>
+                                <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-[0.9] text-white">
+                                    spending account <br />
+                                    <span className="text-brand-yellow">for adults</span>
+                                </h2>
+                            </div>
+
+                            <Link
+                                to="/signup"
+                                className="inline-block bg-brand-yellow text-black px-12 py-5 text-xl rounded-full font-black uppercase tracking-widest hover:bg-yellow-400 hover:scale-105 transition-all shadow-[0_0_40px_rgba(252,207,8,0.3)] active:scale-95 animate-fade-in-up delay-200"
+                            >
+                                Open Account
+                            </Link>
                         </div>
 
-                        <Link
-                            to="/signup"
-                            className="inline-block bg-brand-yellow text-black px-12 py-6 text-2xl rounded-full font-black uppercase tracking-widest hover:bg-yellow-400 hover:scale-105 transition-all shadow-[0_0_40px_rgba(252,207,8,0.3)] active:scale-95 animate-fade-in-up delay-200"
+                        {/* Right Content - Phone Mockup */}
+                        <motion.div
+                            initial={{ x: 100, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ duration: 1, ease: "easeOut" }}
+                            className="flex-1 relative z-10"
                         >
-                            Open Account
-                        </Link>
-
+                            <img
+                                src="/home.png"
+                                alt="FineCore App"
+                                className="w-full h-auto max-w-[650px] mx-auto drop-shadow-[0_0_80px_rgba(252,207,8,0.15)]"
+                            />
+                        </motion.div>
                     </div>
                 </div>
+
+                {/* Background Ambient Glow */}
+                <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] bg-brand-yellow/5 rounded-full blur-[150px] pointer-events-none"></div>
             </section>
 
             {/* Trust Banner - FamApp Style */}
@@ -162,7 +188,7 @@ const Home = () => {
                         <img
                             src="https://www.famapp.in/assets/images/images/pages/index/userTrustImage.png"
                             alt="10 million users"
-                            className="h-20 w-auto object-contain"
+                            className="h-36 w-auto object-contain"
                             onError={(e) => {
                                 e.target.style.display = 'none';
                                 e.target.nextSibling.style.display = 'flex';
@@ -392,37 +418,66 @@ const Home = () => {
 
             <ReviewsSection />
 
-            {/* Support Section - New */}
-            <section className="py-32 bg-[#121212] relative overflow-hidden">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-20">
-                    <div className="flex-1 relative">
+            {/* Support Section - Safety Chat */}
+            <section id="support" className="py-32 bg-black relative overflow-hidden">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-20">
+
+                    {/* Floating Chat Container */}
+                    <div className="flex-1 relative flex justify-center">
                         <motion.div
-                            initial={{ opacity: 0, x: -50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            className="relative"
+                            className="bg-[#0A0A0A] w-full max-w-md rounded-[3rem] p-10 border border-white/5 shadow-[0_40px_100px_rgba(0,0,0,0.5)] relative min-h-[550px] flex flex-col justify-center gap-8"
                         >
-                            <img
-                                src="https://www.famapp.in/assets/images/images/pages/index/supportChatGif.gif"
-                                alt="Support Chat"
-                                className="w-full max-w-md rounded-[2.5rem] shadow-2xl border border-white/5"
-                            />
-                            {/* Float elements */}
-                            <div className="absolute -top-10 -right-10 bg-brand-yellow text-black font-black p-4 rounded-3xl animate-bounce-slow shadow-xl">
-                                Active 24/7
+                            {/* Message 1 */}
+                            <div className="flex flex-col items-end gap-2 animate-fade-in-up">
+                                <div className="bg-white p-5 rounded-3xl rounded-tr-none text-[#121212] font-bold text-sm max-w-[80%] relative shadow-xl">
+                                    Hey! I lost my FamCard, 😭 <br /> what will I do now?
+                                    <div className="absolute top-0 -right-2 w-4 h-4 bg-white" style={{ clipPath: 'polygon(0 0, 0% 100%, 100% 0)' }}></div>
+                                </div>
+                                <div className="flex items-center gap-2 pr-2">
+                                    <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">Teresa</span>
+                                    <img src="https://i.pravatar.cc/150?u=teresa" className="w-8 h-8 rounded-full border border-white/10" alt="" />
+                                </div>
                             </div>
+
+                            {/* Message 2 */}
+                            <div className="flex flex-col items-start gap-2 animate-fade-in-up delay-300">
+                                <div className="bg-white p-5 rounded-3xl rounded-tl-none text-[#121212] font-bold text-sm max-w-[85%] relative shadow-xl leading-snug">
+                                    Hi! 👋 You can block your card instantly from the app. No transactions will be processed once your card is blocked as it gets deactivated permanently.
+                                    <div className="absolute top-0 -left-2 w-4 h-4 bg-white" style={{ clipPath: 'polygon(100% 0, 100% 100%, 0 0)' }}></div>
+                                </div>
+                                <div className="flex items-center gap-2 pl-2">
+                                    <img src="https://i.pravatar.cc/150?u=shifa" className="w-8 h-8 rounded-full border border-white/10" alt="" />
+                                    <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">Shifa</span>
+                                </div>
+                            </div>
+
+                            {/* Message 3 */}
+                            <div className="flex flex-col items-end gap-2 animate-fade-in-up delay-700">
+                                <div className="bg-white p-5 rounded-3xl rounded-tr-none text-[#121212] font-bold text-sm max-w-[80%] relative shadow-xl">
+                                    OKK! Thank you sm. 🙏 <br /> Blocking the card right away
+                                    <div className="absolute top-0 -right-2 w-4 h-4 bg-white" style={{ clipPath: 'polygon(0 0, 0% 100%, 100% 0)' }}></div>
+                                </div>
+                                <div className="flex items-center gap-2 pr-2">
+                                    <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">Teresa</span>
+                                    <img src="https://i.pravatar.cc/150?u=teresa" className="w-8 h-8 rounded-full border border-white/10" alt="" />
+                                </div>
+                            </div>
+
                         </motion.div>
                     </div>
 
-                    <div className="flex-1 text-left">
+                    <div className="flex-1 text-left lg:pl-10">
                         <h2 className="text-5xl md:text-7xl font-black text-white mb-6 leading-[0.9] italic uppercase tracking-tighter">
-                            Our support team <br /> <span className="text-brand-yellow">active 24x7.</span>
+                            Your card. <br /> <span className="text-brand-yellow">Your control.</span>
                         </h2>
-                        <p className="text-xl text-gray-400 mb-10 leading-relaxed font-medium">
-                            Got a question? Need a hand? Our humans are standing by 24/7 to help you out. No bots, just pure support.
+                        <p className="text-xl text-gray-400 mb-10 leading-relaxed font-medium max-w-xl">
+                            Lost your card? Tap a button to block it. Found it back? Tap again to unblock. Total control, zero stress.
                         </p>
                         <button className="bg-white/5 border border-white/10 text-white px-10 py-5 rounded-full font-black uppercase tracking-widest hover:bg-white/10 transition-all flex items-center gap-4 group">
-                            Contact Us
+                            Learn more about safety
                             <div className="w-10 h-10 bg-brand-yellow rounded-full flex items-center justify-center group-hover:rotate-45 transition-transform">
                                 <ArrowRight className="text-black w-6 h-6" />
                             </div>
@@ -457,7 +512,7 @@ const Home = () => {
             </section>
 
             {/* Interactive Card Section */}
-            <section className="py-32 bg-brand-dark relative overflow-hidden">
+            <section id="cards" className="py-32 bg-brand-dark relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-yellow/5 rounded-full blur-[100px] pointer-events-none animate-pulse-slow"></div>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-16">
                     <div className="flex-1">
@@ -479,9 +534,10 @@ const Home = () => {
                     </div>
                     <div className="flex-1 relative">
                         {/* Card Graphic */}
-                        <div className="w-full max-w-md aspect-video bg-black rounded-3xl border border-white/10 p-8 relative shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500 hover:shadow-[0_0_50px_rgba(252,207,8,0.2)]">
-                            <div className="absolute inset-0 bg-gradient-to-tr from-gray-900 to-black rounded-3xl opacity-90"></div>
-                            <div className="relative z-10 flex flex-col justify-between h-full">
+                        <div className="w-full max-w-md aspect-video rounded-3xl border border-white/10 relative shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500 hover:shadow-[0_0_50px_rgba(252,207,8,0.2)] overflow-hidden">
+                            <img src="/banking cardbackdesign.svg" alt="Card Background" className="absolute inset-0 w-full h-full object-cover" />
+                            <div className="absolute inset-0 bg-black/40 bg-gradient-to-tr from-black to-transparent"></div>
+                            <div className="relative z-10 flex flex-col justify-between h-full p-8">
                                 <div className="flex justify-between items-start">
                                     <Zap className="text-brand-yellow w-8 h-8 fill-current" />
                                     <span className="text-white/50 font-mono">FinCore</span>

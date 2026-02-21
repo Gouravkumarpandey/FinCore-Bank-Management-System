@@ -15,9 +15,16 @@ export const authService = {
         }
     },
 
-    async signup(fullName, email, password, phone) {
+    async signup(fullName, email, password, phone, accountType, occupation) {
         try {
-            const response = await API.post('/auth/register', { fullName, email, password, phone });
+            const response = await API.post('/auth/register', {
+                fullName,
+                email,
+                password,
+                phone,
+                accountType,
+                occupation
+            });
             if (response.data.success) {
                 const { user, token } = response.data;
                 localStorage.setItem('token', token);

@@ -8,6 +8,8 @@ const Signup = () => {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
+    const [accountType, setAccountType] = useState('Savings');
+    const [occupation, setOccupation] = useState('Student');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -20,7 +22,7 @@ const Signup = () => {
         setLoading(true);
 
         try {
-            await signup(fullName, email, password, phone);
+            await signup(fullName, email, password, phone, accountType, occupation);
             navigate('/dashboard');
         } catch (err) {
             setError('Failed to create account: ' + err.message);
@@ -84,6 +86,34 @@ const Signup = () => {
                                 className="w-full bg-brand-card/50 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-brand-yellow focus:ring-1 focus:ring-brand-yellow transition-all"
                                 placeholder="John Doe"
                             />
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div className="group">
+                                <label className="block text-sm font-medium text-gray-400 mb-1 ml-1">Account Type</label>
+                                <select
+                                    value={accountType}
+                                    onChange={(e) => setAccountType(e.target.value)}
+                                    className="w-full bg-brand-card/50 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-brand-yellow focus:ring-1 focus:ring-brand-yellow transition-all appearance-none cursor-pointer"
+                                >
+                                    <option value="Savings">Savings Account</option>
+                                    <option value="Student">Student Account</option>
+                                    <option value="Business">Business Account</option>
+                                </select>
+                            </div>
+                            <div className="group">
+                                <label className="block text-sm font-medium text-gray-400 mb-1 ml-1">Occupation</label>
+                                <select
+                                    value={occupation}
+                                    onChange={(e) => setOccupation(e.target.value)}
+                                    className="w-full bg-brand-card/50 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-brand-yellow focus:ring-1 focus:ring-brand-yellow transition-all appearance-none cursor-pointer"
+                                >
+                                    <option value="Student">Student</option>
+                                    <option value="Professional">Professional</option>
+                                    <option value="Self-Employed">Self-Employed</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
                         </div>
 
                         <div className="group">

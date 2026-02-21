@@ -17,10 +17,7 @@ const Footer = ({ darkMode = false }) => {
                     {/* Brand Section */}
                     <div className="col-span-1 md:col-span-1">
                         <div className="flex items-center space-x-2 mb-6">
-                            <Shield className={`h-8 w-8 ${darkMode ? "text-brand-yellow" : "text-blue-400"}`} />
-                            <span className="text-2xl font-black tracking-tighter">
-                                FinCore
-                            </span>
+                            <img src="/logo (2).jpg" alt="FineCore" className="h-14 w-auto" />
                         </div>
                         <p className="text-gray-400 text-sm leading-relaxed mb-6 font-medium">
                             Building the financial stack for the next generation. Secure, limitless, and rewarding.

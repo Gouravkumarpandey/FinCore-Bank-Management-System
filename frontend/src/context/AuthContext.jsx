@@ -85,8 +85,8 @@ export const AuthProvider = ({ children }) => {
         return userData;
     };
 
-    const signup = async (fullName, email, password, phone) => {
-        const userData = await authService.signup(fullName, email, password, phone);
+    const signup = async (fullName, email, password, phone, accountType, occupation) => {
+        const userData = await authService.signup(fullName, email, password, phone, accountType, occupation);
         setUser(userData);
         return userData;
     };

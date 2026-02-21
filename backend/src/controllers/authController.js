@@ -8,14 +8,15 @@ const Account = require('../models/Account');
 // @route   POST /api/auth/register
 // @access  Public
 exports.register = asyncHandler(async (req, res, next) => {
-    const { fullName, email, password, phone } = req.body;
+    const { fullName, email, password, phone, accountType, occupation } = req.body;
 
     // Create user
     const user = await User.create({
         fullName,
         email,
         password,
-        phone
+        phone,
+        occupation
     });
 
     // Generate unique Account Number
@@ -30,12 +31,12 @@ exports.register = asyncHandler(async (req, res, next) => {
     // Generate UPI ID (fullName@fincore)
     const upiId = fullName.toLowerCase().replace(/\s+/g, '') + Math.floor(100 + Math.random() * 900) + '@fincore';
 
-    // Create default Savings Account for user
+    // Create default Account for user with selected type
     await Account.create({
         userId: user._id,
         accountNumber,
         upiId,
-        accountType: 'savings',
+        accountType: accountType || 'savings',
         balance: 10000, // Sign up bonus
         cardNumber,
         cardCvv,
@@ -90,6 +91,7 @@ exports.getMe = asyncHandler(async (req, res, next) => {
             email: user.email,
             role: user.role,
             phone: user.phone,
+            occupation: user.occupation,
             isBlocked: user.isBlocked,
             account: account ? {
                 accountNumber: account.accountNumber,
