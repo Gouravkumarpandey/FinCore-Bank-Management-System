@@ -48,7 +48,7 @@ const QuickTransfer = ({ users, onTransferSuccess }) => {
             <h3 className="text-xl font-bold text-white mb-6">Quick Transfer</h3>
 
             <div className="flex space-x-6 mb-8 overflow-x-auto pb-4 scrollbar-hide">
-                {users.slice(0, 5).map((user) => (
+                {users && users.slice(0, 5).map((user) => (
                     <div
                         key={user.id}
                         onClick={() => setSelectedUser(user)}
@@ -66,7 +66,7 @@ const QuickTransfer = ({ users, onTransferSuccess }) => {
                                 </div>
                             )}
                         </div>
-                        <span className={`text-xs font-bold truncate w-16 ${selectedUser?.id === user.id ? 'text-brand-yellow' : 'text-white'}`}>{user.name.split(' ')[0]}</span>
+                        <span className={`text-xs font-bold truncate w-16 ${selectedUser?.id === user.id ? 'text-brand-yellow' : 'text-white'}`}>{user.name?.split(' ')[0] || 'User'}</span>
                         <span className="text-[10px] text-gray-500 truncate w-16 uppercase tracking-wider">{user.role}</span>
                     </div>
                 ))}

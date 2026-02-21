@@ -34,9 +34,9 @@ const Dashboard = () => {
                 .filter(u => u._id !== user?.id)
                 .map(u => ({
                     id: u._id,
-                    name: u.fullName,
+                    name: u.fullName || 'User',
                     role: u.role || 'Member',
-                    avatar: `https://ui-avatars.com/api/?name=${u.fullName}&background=random&color=fff`,
+                    avatar: `https://ui-avatars.com/api/?name=${u.fullName || 'User'}&background=random&color=fff`,
                     accountNumber: u.account?.accountNumber
                 }));
             setRealUsers(formattedUsers);
