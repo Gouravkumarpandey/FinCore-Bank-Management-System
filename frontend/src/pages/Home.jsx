@@ -184,47 +184,57 @@ const Home = () => {
             {/* Hero Section - Split Screen Style */}
             <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden min-h-screen flex items-center bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                    <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
-
-                        {/* Left Content */}
-                        <div className="flex-1 text-left z-10 transition-all duration-700">
-                            <div className="mb-6 animate-fade-in-up">
-                                <span className="text-gray-900 font-black text-xl flex items-center gap-2">
-                                    fincore
-                                </span>
-                            </div>
-
-                            <div className="mb-12 animate-fade-in-up delay-100">
-                                <h1 className="text-7xl md:text-[11rem] font-black tracking-tighter leading-[0.75] uppercase italic mb-8 text-gray-900">
-                                    FINX
-                                </h1>
-                                <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-[0.9] text-gray-900">
-                                    spending account <br />
-                                    <span className="text-blue-600">for adults</span>
-                                </h2>
-                            </div>
-
-                            <Link
-                                to="/signup"
-                                className="inline-block bg-blue-600 text-white px-12 py-5 text-xl rounded-full font-black uppercase tracking-widest hover:bg-blue-700 hover:scale-105 transition-all shadow-[0_0_40px_rgba(37,99,235,0.3)] active:scale-95 animate-fade-in-up delay-200"
+                    <div className="max-w-4xl mx-auto text-center z-10 transition-all duration-700 relative">
+                        {/* Static Scattered Coins - Visible on all devices (Optimized for Mobile) */}
+                        {[
+                            { size: "w-16 md:w-32", pos: "-left-8 md:-left-20 -top-10", rotate: "rotate-12", delay: 0.2 },
+                            { size: "w-12 md:w-24", pos: "-right-8 md:-right-16 top-10 md:top-20", rotate: "-rotate-12", delay: 0.4 },
+                            { size: "w-10 md:w-20", pos: "-left-6 md:left-10 bottom-0 md:bottom-0", rotate: "rotate-45", delay: 0.6 },
+                            { size: "w-14 md:w-28", pos: "-right-10 md:-right-24 bottom-10", rotate: "-rotate-6", delay: 0.8 },
+                            { size: "w-10 md:w-16", pos: "right-4 md:right-40 -top-16 md:-top-20", rotate: "rotate-[30deg]", delay: 1.0 },
+                        ].map((coin, idx) => (
+                            <motion.div
+                                key={idx}
+                                initial={{ opacity: 0, scale: 0.5, rotate: 0 }}
+                                animate={{ opacity: 1, scale: 1, rotate: parseInt(coin.rotate.replace('rotate-', '')) || 0 }}
+                                transition={{ duration: 1, delay: coin.delay, ease: "easeOut" }}
+                                className={`absolute ${coin.pos} ${coin.size} z-0 pointer-events-none`}
                             >
-                                Open Account
-                            </Link>
-                        </div>
+                                <img src="/coin.png" alt="coin" className="w-full h-auto drop-shadow-2xl" />
+                            </motion.div>
+                        ))}
 
-                        {/* Right Content - Phone Mockup */}
-                        <motion.div
-                            initial={{ x: 100, opacity: 0 }}
-                            animate={{ x: 0, opacity: 1 }}
-                            transition={{ duration: 1, ease: "easeOut" }}
-                            className="flex-1 relative z-10"
-                        >
-                            <img
-                                src="/home.png"
-                                alt="FineCore App"
-                                className="w-full h-auto max-w-[650px] mx-auto drop-shadow-[0_0_80px_rgba(252,207,8,0.15)]"
-                            />
-                        </motion.div>
+                        <div className="flex flex-col items-center animate-fade-in-up">
+                            {/* Heading */}
+                            <h1 className="text-5xl md:text-8xl font-black text-gray-900 leading-[1.05] tracking-tight mb-8 max-w-4xl">
+                                The banking solution <br />
+                                for modern <span className="text-blue-600">adults</span>
+                            </h1>
+
+                            {/* Subheading */}
+                            <p className="text-gray-500 text-lg md:text-xl font-medium max-w-xl mb-12 leading-relaxed">
+                                With FinCore, your spending and savings work as one, <br className="hidden md:block" />
+                                managing your money smarter and faster.
+                            </p>
+
+                            {/* Action Buttons Stack */}
+                            <div className="flex flex-col gap-4 w-full max-w-sm px-4">
+                                <Link
+                                    to="/signup"
+                                    className="bg-blue-600 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-lg hover:bg-blue-700 hover:scale-[1.02] shadow-xl transition-all active:scale-95"
+                                >
+                                    Open free account
+                                </Link>
+                                <button
+                                    className="bg-white border-2 border-gray-100 text-gray-900 py-5 rounded-2xl font-black uppercase tracking-widest text-lg flex items-center justify-center gap-3 hover:bg-gray-50 hover:border-gray-200 transition-all active:scale-95"
+                                >
+                                    <div className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center">
+                                        <Zap className="w-4 h-4 text-gray-400 fill-current" />
+                                    </div>
+                                    Explore Features
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -345,10 +355,10 @@ const Home = () => {
                 </motion.div>
             </section>
 
-            {/* FinCore Pulse (PhonePe Pulses Inspired) */}
-            <section className="py-24 relative overflow-hidden bg-white">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-blue-600/5 rounded-full pointer-events-none"></div>
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-blue-600/10 rounded-full pointer-events-none animate-spin-slow"></div>
+            {/* FinCore Pulse (Sleek Dark Theme) */}
+            <section className="py-24 relative overflow-hidden bg-black border-t border-white/5">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-blue-600/10 rounded-full pointer-events-none"></div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-blue-600/20 rounded-full pointer-events-none animate-spin-slow"></div>
 
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
@@ -357,40 +367,40 @@ const Home = () => {
                     transition={{ duration: 0.8, ease: "easeOut" }}
                     className="max-w-7xl mx-auto px-4 relative z-10 text-center"
                 >
-                    <div className="inline-flex items-center gap-2 mb-6">
-                        <Zap className="text-blue-600 w-8 h-8 fill-current" />
-                        <h2 className="text-4xl font-black text-gray-900">FinCore Pulse</h2>
+                    <div className="inline-flex items-center gap-3 mb-6">
+                        <Zap className="text-blue-500 w-8 h-8 fill-current" />
+                        <h2 className="text-4xl font-black text-white italic uppercase tracking-tighter">FinCore Pulse</h2>
                     </div>
-                    <p className="text-gray-500 text-xl font-medium mb-16">Get the latest data trends & insights on digital banking across India.</p>
+                    <p className="text-gray-400 text-xl font-medium mb-16 max-w-2xl mx-auto">Get the latest data trends & insights on digital banking across India.</p>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
-                        <div className="flex flex-col items-center">
-                            <span className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Trusted by</span>
-                            <h3 className="text-5xl font-black text-gray-900 mb-1">65 Crore<span className="text-blue-600">*</span></h3>
-                            <p className="text-gray-600 text-sm font-medium">Registered Users</p>
+                        <div className="flex flex-col items-center group">
+                            <span className="text-gray-500 text-xs font-black uppercase tracking-[0.2em] mb-4">Trusted by</span>
+                            <h3 className="text-5xl md:text-6xl font-black text-white mb-2 group-hover:text-blue-500 transition-colors tracking-tighter">65 Crore<span className="text-blue-600">*</span></h3>
+                            <p className="text-gray-400 text-sm font-bold uppercase tracking-widest">Registered Users</p>
                         </div>
-                        <div className="flex flex-col items-center">
-                            <span className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Accepted in</span>
-                            <h3 className="text-5xl font-black text-gray-900 mb-1">98%<span className="text-blue-600">*</span></h3>
-                            <p className="text-gray-600 text-sm font-medium">Postal Codes</p>
+                        <div className="flex flex-col items-center group">
+                            <span className="text-gray-500 text-xs font-black uppercase tracking-[0.2em] mb-4">Accepted in</span>
+                            <h3 className="text-5xl md:text-6xl font-black text-white mb-2 group-hover:text-blue-500 transition-colors tracking-tighter">98%<span className="text-blue-600">*</span></h3>
+                            <p className="text-gray-400 text-sm font-bold uppercase tracking-widest">Postal Codes</p>
                         </div>
-                        <div className="flex flex-col items-center">
-                            <span className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Accepted at over</span>
-                            <h3 className="text-5xl font-black text-gray-900 mb-1">4.7 Crore<span className="text-blue-600">*</span></h3>
-                            <p className="text-gray-600 text-sm font-medium">Merchants (Stores, Apps & websites)</p>
+                        <div className="flex flex-col items-center group">
+                            <span className="text-gray-500 text-xs font-black uppercase tracking-[0.2em] mb-4">Accepted at over</span>
+                            <h3 className="text-5xl md:text-6xl font-black text-white mb-2 group-hover:text-blue-500 transition-colors tracking-tighter">4.7 Crore<span className="text-blue-600">*</span></h3>
+                            <p className="text-gray-400 text-sm font-bold uppercase tracking-widest leading-tight">Merchants <br /><span className="text-[10px] opacity-60">(Stores, Apps & websites)</span></p>
                         </div>
                     </div>
 
-                    <button className="mt-16 bg-blue-600 text-white px-10 py-4 rounded-full font-black text-lg hover:bg-blue-700 transition-all shadow-xl hover:scale-105 active:scale-95">
+                    <button className="mt-16 bg-blue-600 text-white px-12 py-5 rounded-full font-black uppercase tracking-widest text-lg hover:bg-blue-700 transition-all shadow-xl hover:scale-105 active:scale-95">
                         Explore FinCore Pulse
                     </button>
 
-                    <p className="mt-8 text-gray-400 text-[10px] uppercase font-bold">*Based on current market estimates & internal data.</p>
+                    <p className="mt-10 text-gray-600 text-[10px] uppercase font-black tracking-widest animate-pulse">*Based on current market estimates & internal data.</p>
                 </motion.div>
             </section>
 
-            {/* Rewarding Spending Account Section */}
-            <section className="py-32 bg-white relative overflow-hidden">
+            {/* Rewarding Spending Account Section (Dark Wealth Theme) */}
+            <section className="py-32 bg-black relative overflow-hidden border-t border-white/5">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row-reverse items-center gap-16">
                     <motion.div
                         initial={{ opacity: 0, x: 50 }}
@@ -399,13 +409,13 @@ const Home = () => {
                         transition={{ duration: 0.8 }}
                         className="flex-1 text-left"
                     >
-                        <h2 className="text-5xl md:text-6xl font-black text-gray-900 mb-8 leading-tight">
+                        <h2 className="text-5xl md:text-6xl font-black text-white mb-8 leading-tight italic uppercase tracking-tighter">
                             Smart <span className="text-blue-600">Wealth</span> <br /> Management.
                         </h2>
-                        <p className="text-xl text-gray-500 mb-8 leading-relaxed">
+                        <p className="text-xl text-gray-400 mb-8 leading-relaxed font-medium">
                             Grow your money with industry-leading interest rates and automated investing.
                         </p>
-                        <div className="grid grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             {[
                                 { title: "5.5% APY", subtitle: "on savings" },
                                 { title: "Automated", subtitle: "SIP & Investing" }
@@ -416,10 +426,10 @@ const Home = () => {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ duration: 0.5, delay: i * 0.2 }}
-                                    className="bg-gray-50 p-6 rounded-2xl border border-gray-100 backdrop-blur-sm hover:bg-gray-100 transition-colors"
+                                    className="bg-white/5 p-8 rounded-3xl border border-white/10 backdrop-blur-md hover:bg-white/10 transition-all group"
                                 >
-                                    <h3 className="text-2xl font-black text-blue-600 mb-1">{item.title}</h3>
-                                    <p className="text-gray-900 font-medium">{item.subtitle}</p>
+                                    <h3 className="text-3xl font-black text-blue-500 mb-2 group-hover:scale-110 transition-transform origin-left">{item.title}</h3>
+                                    <p className="text-gray-300 font-bold uppercase tracking-widest text-xs">{item.subtitle}</p>
                                 </motion.div>
                             ))}
                         </div>
@@ -431,11 +441,14 @@ const Home = () => {
                         transition={{ duration: 0.8 }}
                         className="flex-1 flex justify-center items-center"
                     >
-                        <img
-                            src="https://famapp.in/assets/images/images/pages/index/SpendingAccountImage.jpg"
-                            alt="FinCore Transactions Mockup"
-                            className="w-full max-w-lg rounded-[3.5rem] shadow-[0_0_100px_rgba(37,99,235,0.1)] border border-gray-100"
-                        />
+                        <div className="relative group">
+                            <div className="absolute inset-0 bg-blue-600/30 blur-[100px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <img
+                                src="https://famapp.in/assets/images/images/pages/index/SpendingAccountImage.jpg"
+                                alt="FinCore Transactions Mockup"
+                                className="w-full max-w-lg rounded-[3.5rem] shadow-[0_0_80px_rgba(37,99,235,0.2)] border border-white/10 relative z-10"
+                            />
+                        </div>
                     </motion.div>
                 </div>
             </section>
@@ -456,7 +469,7 @@ const Home = () => {
                         <div className="inline-flex items-center px-4 py-2 rounded-full border border-brand-yellow/20 bg-brand-yellow/5 text-brand-yellow text-xs font-black uppercase tracking-widest mb-6">
                             Unified Payments Interface
                         </div>
-                        <h2 className="text-5xl md:text-7xl font-black text-gray-900 mb-8 leading-tight italic uppercase tracking-tighter">
+                        <h2 className="text-5xl md:text-7xl font-black text-white mb-8 leading-tight italic uppercase tracking-tighter">
                             Lightning fast <br /> <span className="text-brand-yellow">UPI Payments.</span>
                         </h2>
                         <ul className="space-y-6 mb-10">

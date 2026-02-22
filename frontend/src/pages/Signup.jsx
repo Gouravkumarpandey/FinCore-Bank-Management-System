@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Shield, ArrowRight, Check } from 'lucide-react';
+import { Shield, ArrowLeft, Check } from 'lucide-react';
 
 const Signup = () => {
     const [fullName, setFullName] = useState('');
@@ -42,9 +42,8 @@ const Signup = () => {
                 <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[100px] animate-blob animation-delay-2000"></div>
 
                 <div className="relative z-10 p-12 max-w-lg">
-                    <Link to="/" className="inline-flex items-center space-x-2 mb-8 group">
-                        <Shield className="h-10 w-10 text-brand-yellow group-hover:rotate-12 transition-transform" />
-                        <span className="text-3xl font-black text-gray-900 tracking-tighter">FinCore.</span>
+                    <Link to="/" className="inline-flex items-center mb-8 group">
+                        <img src="/logo (2).jpg" alt="FinCore" className="h-28 w-auto object-contain" />
                     </Link>
                     <h1 className="text-5xl font-black text-gray-900 mb-6 leading-tight">
                         Join the <span className="text-brand-yellow">revolution</span> today.
@@ -64,8 +63,8 @@ const Signup = () => {
 
             {/* Right Side - Form */}
             <div className="w-full lg:w-1/2 flex items-center justify-center p-8 lg:p-16 relative bg-white">
-                <Link to="/" className="absolute top-8 right-8 text-gray-500 hover:text-gray-900 transition flex items-center">
-                    Back to Home <ArrowRight className="ml-2 w-4 h-4" />
+                <Link to="/" className="absolute top-8 left-8 text-gray-500 hover:text-gray-900 transition flex items-center gap-2">
+                    <ArrowLeft className="w-4 h-4" /> Back to Home
                 </Link>
 
                 <div className="max-w-md w-full space-y-6">
@@ -167,7 +166,7 @@ const Signup = () => {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full bg-brand-yellow text-white py-4 rounded-2xl font-bold text-lg hover:bg-blue-700 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg shadow-brand-yellow/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full bg-brand-yellow text-white py-4 rounded-2xl font-bold text-lg hover:bg-blue-700 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {loading ? 'Creating Account...' : 'Create Account'}
                         </button>
