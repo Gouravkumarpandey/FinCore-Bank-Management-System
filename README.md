@@ -1,5 +1,9 @@
 # 🏦 FinCore - Advanced Bank Management System
 
+<img width="1897" height="916" alt="image" src="https://github.com/user-attachments/assets/ef79842a-7a04-4ee7-a2e5-9d56a40f76ed" />
+
+
+
 FinCore is a robust, full-stack banking application designed to simulate modern core banking operations. Built with a focus on security, performance, and user experience, it features a sleek dark-themed UI and a powerful backend capable of handling real-time transactions with ACID compliance.
 
 ## 🚀 Key Features
