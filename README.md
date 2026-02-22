@@ -1,6 +1,6 @@
 # 🏦 FinCore - Advanced Bank Management System
 
-<img width="1895" height="910" alt="image" src="https://github.com/user-attachments/assets/dea3f169-5aa9-4eab-be03-8f3b901b9fd8" />
+<img width="1897" height="916" alt="image" src="https://github.com/user-attachments/assets/ef79842a-7a04-4ee7-a2e5-9d56a40f76ed" />
 
 
 
