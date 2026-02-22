@@ -9,17 +9,17 @@ const AnimatedSecurityBadge = () => {
     return (
         <div className="relative w-64 h-64 flex items-center justify-center">
             {/* Revolving Orbiting Circles */}
-            <div className="absolute inset-0 border-2 border-dashed border-brand-yellow/20 rounded-full animate-spin-slow"></div>
+            <div className="absolute inset-0 border-2 border-dashed border-blue-600/20 rounded-full animate-spin-slow"></div>
             <div className="absolute inset-4 border border-white/10 rounded-full animate-spin-reverse-slow"></div>
-            <div className="absolute inset-8 border-2 border-dashed border-brand-yellow/10 rounded-full animate-spin-slower"></div>
+            <div className="absolute inset-8 border-2 border-dashed border-blue-600/10 rounded-full animate-spin-slower"></div>
 
             {/* Pulse Rings */}
-            <div className="absolute w-32 h-32 bg-brand-yellow/5 rounded-full animate-ping"></div>
+            <div className="absolute w-32 h-32 bg-blue-600/5 rounded-full animate-ping"></div>
 
             {/* Central Badge Container */}
             <div className="relative z-10 w-48 h-56 flex items-center justify-center animate-float-slow">
                 {/* Custom Shield Path */}
-                <svg viewBox="0 0 100 110" className="absolute inset-0 w-full h-full drop-shadow-[0_0_30px_rgba(252,207,8,0.3)]">
+                <svg viewBox="0 0 100 110" className="absolute inset-0 w-full h-full drop-shadow-[0_0_30px_rgba(37,99,235,0.3)]">
                     <path
                         d="M50 0 L95 20 L95 55 C95 85 50 110 50 110 C50 110 5 85 5 55 L5 20 Z"
                         fill="white"
@@ -32,11 +32,11 @@ const AnimatedSecurityBadge = () => {
 
                 <div className="relative z-20 text-center">
                     <div className="flex justify-center mb-1">
-                        <Lock className="w-8 h-8 text-brand-yellow" />
+                        <Lock className="w-8 h-8 text-blue-600" />
                     </div>
                     <span className="text-4xl font-black text-white block leading-none">100%</span>
-                    <div className="mt-2 text-brand-yellow font-black text-sm tracking-[0.2em] uppercase">Money Safe</div>
-                    <div className="mt-1 bg-brand-yellow text-black px-3 py-0.5 rounded text-[10px] font-black uppercase tracking-widest">
+                    <div className="mt-2 text-blue-600 font-black text-sm tracking-[0.2em] uppercase">Money Safe</div>
+                    <div className="mt-1 bg-blue-600 text-white px-3 py-0.5 rounded text-[10px] font-black uppercase tracking-widest">
                         FinCore Trust
                     </div>
                 </div>
@@ -99,7 +99,7 @@ const HappyStoriesSection = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-24">
                     <h2 className="text-5xl md:text-7xl font-black text-gray-900 tracking-tighter uppercase">
-                        Over a <span className="text-brand-yellow">million</span> happy stories
+                        Over a <span className="text-blue-600">million</span> happy stories
                     </h2>
                 </div>
 
@@ -157,7 +157,7 @@ const HappyStoriesSection = () => {
                                 <button
                                     key={idx}
                                     onClick={() => setActiveIdx(idx)}
-                                    className={`h-2 transition-all duration-300 rounded-full ${activeIdx === idx ? 'w-12 bg-brand-yellow' : 'w-4 bg-gray-200'}`}
+                                    className={`h-2 transition-all duration-300 rounded-full ${activeIdx === idx ? 'w-12 bg-blue-600' : 'w-4 bg-gray-200'}`}
                                 />
                             ))}
                         </div>
@@ -178,7 +178,7 @@ const Home = () => {
     }, []);
 
     return (
-        <div className="font-sans antialiased bg-white text-gray-900 selection:bg-brand-yellow selection:text-white min-h-screen overflow-x-hidden">
+        <div className="font-sans antialiased bg-white text-gray-900 selection:bg-blue-600 selection:text-white min-h-screen overflow-x-hidden">
             <Navbar />
 
             {/* Hero Section - Split Screen Style */}
@@ -200,13 +200,13 @@ const Home = () => {
                                 </h1>
                                 <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-[0.9] text-gray-900">
                                     spending account <br />
-                                    <span className="text-brand-yellow">for adults</span>
+                                    <span className="text-blue-600">for adults</span>
                                 </h2>
                             </div>
 
                             <Link
                                 to="/signup"
-                                className="inline-block bg-brand-yellow text-white px-12 py-5 text-xl rounded-full font-black uppercase tracking-widest hover:bg-blue-700 hover:scale-105 transition-all shadow-[0_0_40px_rgba(37,99,235,0.3)] active:scale-95 animate-fade-in-up delay-200"
+                                className="inline-block bg-blue-600 text-white px-12 py-5 text-xl rounded-full font-black uppercase tracking-widest hover:bg-blue-700 hover:scale-105 transition-all shadow-[0_0_40px_rgba(37,99,235,0.3)] active:scale-95 animate-fade-in-up delay-200"
                             >
                                 Open Account
                             </Link>
@@ -229,19 +229,19 @@ const Home = () => {
                 </div>
 
                 {/* Background Ambient Glow */}
-                <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] bg-brand-yellow/5 rounded-full blur-[150px] pointer-events-none"></div>
+                <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[150px] pointer-events-none"></div>
             </section>
 
             {/* Trust Banner - FamApp Style */}
-            <div className="bg-gray-50 border-y border-gray-200" style={{ borderTop: '1px solid rgba(0,0,0,0.05)', borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
-                <div className="max-w-7xl mx-auto px-6 sm:px-10 py-10 flex flex-wrap items-center gap-10 md:gap-0 md:justify-between">
+            <div className="bg-gray-100 border-y border-gray-200" style={{ borderTop: '1px solid rgba(0,0,0,0.05)', borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
+                <div className="max-w-7xl mx-auto px-6 sm:px-10 py-10 flex flex-wrap items-center justify-center gap-10 md:gap-20">
 
                     {/* Left: User Trust Count with Shield */}
                     <div className="flex items-center gap-4">
                         <img
                             src="https://www.famapp.in/assets/images/images/pages/index/userTrustImage.png"
                             alt="10 million users"
-                            className="h-36 w-auto object-contain"
+                            className="h-36 w-auto object-contain brightness-0 opacity-70"
                             onError={(e) => {
                                 e.target.style.display = 'none';
                                 e.target.nextSibling.style.display = 'flex';
@@ -261,7 +261,7 @@ const Home = () => {
                     </div>
 
                     {/* Divider */}
-                    <div className="hidden md:block h-12 w-px bg-white/10 mx-10" />
+                    <div className="hidden md:block h-12 w-px bg-gray-300" />
 
                     {/* Right: Partner logos */}
                     <div className="flex flex-wrap items-center gap-10 md:gap-14">
@@ -269,24 +269,24 @@ const Home = () => {
                         <img
                             src="https://www.famapp.in/assets/images/images/pages/index/VisaLogo.png"
                             alt="VISA"
-                            className="h-10 w-auto object-contain"
-                            onError={(e) => { e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg'; e.target.className = 'h-8 w-auto object-contain grayscale invert opacity-70'; }}
+                            className="h-10 w-auto object-contain brightness-0 opacity-70"
+                            onError={(e) => { e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg'; e.target.className = 'h-8 w-auto object-contain grayscale opacity-70'; }}
                         />
 
                         {/* RuPay */}
                         <img
                             src="https://www.famapp.in/assets/images/images/pages/index/RupayLogo.png"
                             alt="RuPay"
-                            className="h-10 w-auto object-contain"
-                            onError={(e) => { e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/d/d1/RuPay.svg'; e.target.className = 'h-10 w-auto object-contain grayscale invert opacity-70'; }}
+                            className="h-10 w-auto object-contain brightness-0 opacity-70"
+                            onError={(e) => { e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/d/d1/RuPay.svg'; e.target.className = 'h-10 w-auto object-contain grayscale opacity-70'; }}
                         />
 
                         {/* UPI */}
                         <img
                             src="https://www.famapp.in/assets/images/images/pages/index/UPILogo.png"
                             alt="UPI"
-                            className="h-10 w-auto object-contain"
-                            onError={(e) => { e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg'; e.target.className = 'h-10 w-auto object-contain grayscale invert opacity-70'; }}
+                            className="h-16 w-auto object-contain brightness-0 opacity-70 transition-all"
+                            onError={(e) => { e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg'; e.target.className = 'h-12 w-auto object-contain grayscale opacity-70'; }}
                         />
                     </div>
                 </div>
@@ -294,15 +294,15 @@ const Home = () => {
 
 
             {/* Marquee Section */}
-            <section className="py-10 border-y border-gray-100 bg-brand-dark overflow-hidden">
+            <section className="py-10 border-y border-gray-100 bg-white overflow-hidden">
                 <div className="flex space-x-12 animate-marquee whitespace-nowrap">
                     {[...Array(10)].map((_, i) => (
-                        <div key={i} className="flex items-center space-x-2 text-2xl font-black text-gray-900/10 uppercase tracking-tighter">
-                            <Star className="w-6 h-6 fill-current text-brand-yellow/50" />
+                        <div key={i} className="flex items-center space-x-2 text-2xl font-black text-blue-900 uppercase tracking-tighter">
+                            <Star className="w-6 h-6 fill-current text-blue-600/30" />
                             <span>High Interest Savings</span>
-                            <Star className="w-6 h-6 fill-current text-brand-yellow/50" />
+                            <Star className="w-6 h-6 fill-current text-blue-600/30" />
                             <span>Zero Maintenance Fees</span>
-                            <Star className="w-6 h-6 fill-current text-brand-yellow/50" />
+                            <Star className="w-6 h-6 fill-current text-blue-600/30" />
                             <span>Bank-Grade Security</span>
                         </div>
                     ))}
@@ -319,7 +319,7 @@ const Home = () => {
                     className="max-w-6xl mx-auto"
                 >
                     <div className="bg-gradient-to-r from-gray-50 via-white to-gray-50 rounded-[2.5rem] p-8 md:p-12 flex flex-col md:flex-row items-center gap-10 shadow-3xl border border-gray-100 relative overflow-hidden group">
-                        <div className="absolute top-0 left-0 w-64 h-64 bg-brand-yellow/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
+                        <div className="absolute top-0 left-0 w-64 h-64 bg-blue-600/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
 
                         <div className="relative z-10 flex-shrink-0">
                             <AnimatedSecurityBadge />
@@ -327,17 +327,17 @@ const Home = () => {
 
                         <div className="relative z-10 text-left flex-1">
                             <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">Your money stays safe.</h2>
-                            <p className="text-gray-400 text-xl font-medium mb-8">
+                            <p className="text-gray-500 text-xl font-medium mb-8">
                                 FinCore protects your money with world-class security systems that help minimize frauds and keep your data private.
                             </p>
                             <div className="flex items-center gap-8 opacity-90">
                                 <div className="flex items-center gap-2 border-r border-gray-200 pr-8">
-                                    <Shield className="w-6 h-6 text-brand-yellow" />
-                                    <span className="font-bold text-sm tracking-tighter text-gray-900">PCI DSS <br /><span className="text-[10px] text-gray-500 uppercase">Compliant</span></span>
+                                    <Shield className="w-6 h-6 text-blue-600" />
+                                    <span className="font-bold text-sm tracking-tighter text-gray-900">PCI DSS <br /><span className="text-[10px] text-gray-400 uppercase">Compliant</span></span>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <Zap className="w-6 h-6 text-brand-yellow" />
-                                    <span className="font-bold text-sm tracking-tighter text-gray-900">ISO 27001 <br /><span className="text-[10px] text-gray-500 uppercase">Certified</span></span>
+                                    <Zap className="w-6 h-6 text-blue-600" />
+                                    <span className="font-bold text-sm tracking-tighter text-gray-900">ISO 27001 <br /><span className="text-[10px] text-gray-400 uppercase">Certified</span></span>
                                 </div>
                             </div>
                         </div>
@@ -346,9 +346,9 @@ const Home = () => {
             </section>
 
             {/* FinCore Pulse (PhonePe Pulses Inspired) */}
-            <section className="py-24 relative overflow-hidden bg-brand-dark">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-brand-yellow/5 rounded-full pointer-events-none"></div>
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-brand-yellow/10 rounded-full pointer-events-none animate-spin-slow"></div>
+            <section className="py-24 relative overflow-hidden bg-white">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-blue-600/5 rounded-full pointer-events-none"></div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-blue-600/10 rounded-full pointer-events-none animate-spin-slow"></div>
 
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
@@ -358,39 +358,39 @@ const Home = () => {
                     className="max-w-7xl mx-auto px-4 relative z-10 text-center"
                 >
                     <div className="inline-flex items-center gap-2 mb-6">
-                        <Zap className="text-brand-yellow w-8 h-8 fill-current" />
+                        <Zap className="text-blue-600 w-8 h-8 fill-current" />
                         <h2 className="text-4xl font-black text-gray-900">FinCore Pulse</h2>
                     </div>
-                    <p className="text-gray-400 text-xl font-medium mb-16">Get the latest data trends & insights on digital banking across India.</p>
+                    <p className="text-gray-500 text-xl font-medium mb-16">Get the latest data trends & insights on digital banking across India.</p>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
                         <div className="flex flex-col items-center">
-                            <span className="text-gray-500 text-xs font-bold uppercase tracking-widest mb-2">Trusted by</span>
-                            <h3 className="text-5xl font-black text-gray-900 mb-1">65 Crore<span className="text-brand-yellow">*</span></h3>
+                            <span className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Trusted by</span>
+                            <h3 className="text-5xl font-black text-gray-900 mb-1">65 Crore<span className="text-blue-600">*</span></h3>
                             <p className="text-gray-600 text-sm font-medium">Registered Users</p>
                         </div>
                         <div className="flex flex-col items-center">
-                            <span className="text-gray-500 text-xs font-bold uppercase tracking-widest mb-2">Accepted in</span>
-                            <h3 className="text-5xl font-black text-gray-900 mb-1">98%<span className="text-brand-yellow">*</span></h3>
+                            <span className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Accepted in</span>
+                            <h3 className="text-5xl font-black text-gray-900 mb-1">98%<span className="text-blue-600">*</span></h3>
                             <p className="text-gray-600 text-sm font-medium">Postal Codes</p>
                         </div>
                         <div className="flex flex-col items-center">
-                            <span className="text-gray-500 text-xs font-bold uppercase tracking-widest mb-2">Accepted at over</span>
-                            <h3 className="text-5xl font-black text-gray-900 mb-1">4.7 Crore<span className="text-brand-yellow">*</span></h3>
+                            <span className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Accepted at over</span>
+                            <h3 className="text-5xl font-black text-gray-900 mb-1">4.7 Crore<span className="text-blue-600">*</span></h3>
                             <p className="text-gray-600 text-sm font-medium">Merchants (Stores, Apps & websites)</p>
                         </div>
                     </div>
 
-                    <button className="mt-16 bg-white text-black px-10 py-4 rounded-full font-black text-lg hover:bg-gray-200 transition-all shadow-xl hover:scale-105 active:scale-95">
+                    <button className="mt-16 bg-blue-600 text-white px-10 py-4 rounded-full font-black text-lg hover:bg-blue-700 transition-all shadow-xl hover:scale-105 active:scale-95">
                         Explore FinCore Pulse
                     </button>
 
-                    <p className="mt-8 text-gray-600 text-[10px] uppercase font-bold">*Based on current market estimates & internal data.</p>
+                    <p className="mt-8 text-gray-400 text-[10px] uppercase font-bold">*Based on current market estimates & internal data.</p>
                 </motion.div>
             </section>
 
             {/* Rewarding Spending Account Section */}
-            <section className="py-32 bg-brand-dark relative overflow-hidden">
+            <section className="py-32 bg-white relative overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row-reverse items-center gap-16">
                     <motion.div
                         initial={{ opacity: 0, x: 50 }}
@@ -400,9 +400,9 @@ const Home = () => {
                         className="flex-1 text-left"
                     >
                         <h2 className="text-5xl md:text-6xl font-black text-gray-900 mb-8 leading-tight">
-                            Smart <span className="text-brand-yellow">Wealth</span> <br /> Management.
+                            Smart <span className="text-blue-600">Wealth</span> <br /> Management.
                         </h2>
-                        <p className="text-xl text-gray-400 mb-8 leading-relaxed">
+                        <p className="text-xl text-gray-500 mb-8 leading-relaxed">
                             Grow your money with industry-leading interest rates and automated investing.
                         </p>
                         <div className="grid grid-cols-2 gap-6">
@@ -416,9 +416,9 @@ const Home = () => {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ duration: 0.5, delay: i * 0.2 }}
-                                    className="bg-white/5 p-6 rounded-2xl border border-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors"
+                                    className="bg-gray-50 p-6 rounded-2xl border border-gray-100 backdrop-blur-sm hover:bg-gray-100 transition-colors"
                                 >
-                                    <h3 className="text-2xl font-black text-brand-yellow mb-1">{item.title}</h3>
+                                    <h3 className="text-2xl font-black text-blue-600 mb-1">{item.title}</h3>
                                     <p className="text-gray-900 font-medium">{item.subtitle}</p>
                                 </motion.div>
                             ))}
@@ -434,7 +434,7 @@ const Home = () => {
                         <img
                             src="https://famapp.in/assets/images/images/pages/index/SpendingAccountImage.jpg"
                             alt="FinCore Transactions Mockup"
-                            className="w-full max-w-lg rounded-[3.5rem] shadow-[0_0_100px_rgba(0,0,0,0.8)] border border-white/10"
+                            className="w-full max-w-lg rounded-[3.5rem] shadow-[0_0_100px_rgba(37,99,235,0.1)] border border-gray-100"
                         />
                     </motion.div>
                 </div>
@@ -510,7 +510,7 @@ const Home = () => {
             <HappyStoriesSection />
 
             {/* Support Section - Card Control */}
-            <section id="support" className="py-32 bg-[#121212] relative overflow-hidden">
+            <section id="support" className="py-32 bg-black relative overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-20">
 
                     {/* Chat GIF Visualization */}
@@ -525,16 +525,16 @@ const Home = () => {
                     </div>
 
                     <div className="flex-1 text-left lg:pl-10">
-                        <h2 className="text-5xl md:text-7xl font-black text-gray-900 mb-6 leading-[0.9] italic uppercase tracking-tighter">
-                            Your card. <br /> <span className="text-brand-yellow">Your control.</span>
+                        <h2 className="text-5xl md:text-7xl font-black text-white mb-6 leading-[0.9] italic uppercase tracking-tighter">
+                            Your card. <br /> <span className="text-blue-600">Your control.</span>
                         </h2>
                         <p className="text-xl text-gray-400 mb-10 leading-relaxed font-medium max-w-xl">
                             Lost your card? Tap a button to block it. Found it back? Tap again to unblock. Total control, zero stress.
                         </p>
-                        <button className="bg-gray-100 border border-gray-200 text-gray-900 px-10 py-5 rounded-full font-black uppercase tracking-widest hover:bg-gray-200 transition-all flex items-center gap-4 group">
+                        <button className="bg-gray-100 border border-gray-200 text-gray-900 px-10 py-5 rounded-full font-black uppercase tracking-widest hover:bg-white transition-all flex items-center gap-4 group">
                             Learn more about safety
-                            <div className="w-10 h-10 bg-brand-yellow rounded-full flex items-center justify-center group-hover:rotate-45 transition-transform">
-                                <ArrowRight className="text-black w-6 h-6" />
+                            <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center group-hover:rotate-45 transition-transform">
+                                <ArrowRight className="text-white w-6 h-6" />
                             </div>
                         </button>
                     </div>
@@ -551,7 +551,7 @@ const Home = () => {
                         transition={{ duration: 0.6 }}
                         className="text-center mb-20"
                     >
-                        <h2 className="text-4xl md:text-6xl font-black text-gray-900 mb-6">ONE BANK. <span className="text-brand-yellow">LIMITLESS</span> POSSIBILITIES.</h2>
+                        <h2 className="text-4xl md:text-6xl font-black text-gray-900 mb-6">ONE BANK. <span className="text-blue-600">LIMITLESS</span> POSSIBILITIES.</h2>
                     </motion.div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -580,7 +580,7 @@ const Home = () => {
                                     </p>
                                 </div>
 
-                                <div className="w-12 h-1 bg-white/10 rounded-full group-hover:w-24 group-hover:bg-brand-yellow transition-all duration-500"></div>
+                                <div className="w-12 h-1 bg-white/10 rounded-full group-hover:w-24 group-hover:bg-blue-600 transition-all duration-500"></div>
                             </motion.div>
                         ))}
                     </div>
@@ -612,7 +612,7 @@ const Home = () => {
                                 </li>
                             ))}
                         </ul>
-                        <button className="bg-brand-yellow text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-blue-700 hover:scale-105 transition-all transform shadow-2xl">Order Now</button>
+                        <button className="bg-blue-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-blue-700 hover:scale-105 transition-all transform shadow-2xl">Order Now</button>
                     </motion.div>
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9, rotate: 10 }}
@@ -643,28 +643,7 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* Community Section */}
-            <section className="py-20 bg-brand-yellow text-black text-center relative overflow-hidden group">
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
-                    className="relative z-10 max-w-4xl mx-auto px-4"
-                >
-                    <Users className="w-16 h-16 mx-auto mb-6 text-black group-hover:scale-110 transition-transform duration-300" />
-                    <h2 className="text-5xl md:text-7xl font-black mb-6 uppercase">Join the <br /> Revolution</h2>
-                    <p className="text-xl md:text-2xl font-medium mb-10 max-w-2xl mx-auto">
-                        Over 10 million teenagers trust FineCore for their payments. Are you ready?
-                    </p>
-                    <Link to="/signup" className="inline-block bg-white text-brand-yellow px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform shadow-2xl">
-                        Get Started Now
-                    </Link>
-                </motion.div>
 
-                {/* Background Pattern */}
-                <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle, #000 2px, transparent 2px)', backgroundSize: '30px 30px' }}></div>
-            </section>
 
             <Footer darkMode={true} />
         </div>
