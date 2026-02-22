@@ -18,11 +18,13 @@ const Navbar = () => {
 
                     {/* Desktop Menu - Normal Style */}
                     <div className="hidden md:flex items-center space-x-10">
-                        <Link to="/" className="text-gray-400 hover:text-white font-black text-sm tracking-tighter transition-all hover:scale-105">Home</Link>
-                        <a href="#features" className="text-gray-400 hover:text-white font-black text-sm tracking-tighter transition-all hover:scale-105">Features</a>
-                        <a href="#cards" className="text-gray-400 hover:text-white font-black text-sm tracking-tighter transition-all hover:scale-105">Cards</a>
-                        <a href="#support" className="text-gray-400 hover:text-white font-black text-sm tracking-tighter transition-all hover:scale-105">Support</a>
-                        <Link to="/about" className="text-gray-400 hover:text-white font-black text-sm tracking-tighter transition-all hover:scale-105">About</Link>
+                        <div className="flex items-center space-x-8">
+                            <Link to="/" className="text-gray-400 hover:text-white font-black text-sm tracking-tighter transition-all hover:scale-105">Home</Link>
+                            <a href="#features" className="text-gray-400 hover:text-white font-black text-sm tracking-tighter transition-all hover:scale-105">Features</a>
+                            <a href="#cards" className="text-gray-400 hover:text-white font-black text-sm tracking-tighter transition-all hover:scale-105">Cards</a>
+                            <a href="#support" className="text-gray-400 hover:text-white font-black text-sm tracking-tighter transition-all hover:scale-105">Support</a>
+                            <Link to="/about" className="text-gray-400 hover:text-white font-black text-sm tracking-tighter transition-all hover:scale-105">About</Link>
+                        </div>
 
                         <div className="flex items-center gap-4 border-l border-white/10 pl-10">
                             {user ? (

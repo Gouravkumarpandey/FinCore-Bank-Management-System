@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { ArrowRight, Star, Zap, Shield, Smartphone, CreditCard, Gift, Users, Check, QrCode, Lock } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const AnimatedSecurityBadge = () => {
     return (
@@ -45,71 +45,102 @@ const AnimatedSecurityBadge = () => {
     );
 };
 
-const ReviewsSection = () => {
-    const reviews = [
-        { id: 1, handle: "krishh_17", text: "turning 18 this week!! i love using Fam, bring bank account linking 🙏", pos: "top-10 left-[5%]" },
-        { id: 2, handle: "suhana._", text: "okay serious question — does famapp upi work with bank account?", pos: "top-40 left-[15%]" },
-        { id: 3, handle: "iamvihaan", text: "about to start college... can i use famapp for hostel rent?", pos: "top-20 right-[25%]" },
-        { id: 4, handle: "dhruvsings", text: "fam for adults ke liye bhi kuch banao. Mere saare friends use karenge.", pos: "bottom-20 left-[10%]" },
-        { id: 5, handle: "soniaaa", text: "mom said yes to spotify premium 😭 Get autopay feature please.", pos: "bottom-40 right-[15%]" },
-        { id: 6, handle: "iamvihaan", text: "about to start college... can i use famapp for hostel rent?", pos: "bottom-10 right-[5%]" },
+const HappyStoriesSection = () => {
+    const stories = [
+        {
+            id: 1,
+            name: "Aditya",
+            tagline: "Love the concept of spending account 💖",
+            text: "The idea is so cool. I can use my spending account to make daily payments - and keep it separate from my savings now!",
+            img: "https://www.famapp.in/assets/images/images/pages/index/testimonial-aditya.webp"
+        },
+        {
+            id: 2,
+            name: "Eshaa",
+            tagline: "Yeh toh upgrade ka bhi upgrade hai 🐐",
+            text: "The new design is so cool and app has become more smooth. The FamApp has everything I need in one place.",
+            img: "https://www.famapp.in/assets/images/images/pages/index/testimonial-eshaa.webp"
+        },
+        {
+            id: 3,
+            name: "Cassius",
+            tagline: "My payment took 0.6 seconds! ⚡",
+            text: "I was at a shop, and I needed to make a payment in hurry. It was honestly the fastest payment I’ve ever done.",
+            img: "https://www.famapp.in/assets/images/images/pages/index/testimonial-cassius.webp"
+        }
     ];
 
+    const [activeIdx, setActiveIdx] = useState(0);
+
     return (
-        <section className="py-32 bg-black relative overflow-hidden min-h-[800px] flex items-center justify-center">
-            {/* Background Text */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
-                <h2 className="text-[12vw] font-black leading-none text-center uppercase tracking-tighter">
-                    Now you <br /> have to le...
-                </h2>
-            </div>
+        <section className="py-32 bg-[#121212] relative overflow-hidden">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="text-center mb-24">
+                    <h2 className="text-5xl md:text-7xl font-black text-white tracking-tighter uppercase">
+                        Over a <span className="text-brand-yellow">million</span> happy stories
+                    </h2>
+                </div>
 
-            {/* Floating Review Cards */}
-            <div className="absolute inset-0 z-10">
-                {reviews.map((review) => (
-                    <motion.div
-                        key={review.id}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        className={`absolute ${review.pos} bg-[#1A1A1A] p-6 rounded-[2rem] border border-white/5 shadow-2xl max-w-[300px] group hover:border-brand-yellow/30 transition-all cursor-default scale-90 md:scale-100`}
-                        animate={{
-                            y: [0, -10, 0],
-                            rotate: review.id % 2 === 0 ? [0, 1, 0] : [0, -1, 0]
-                        }}
-                        transition={{
-                            duration: 4 + (review.id % 3),
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                        }}
-                    >
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 border border-white/10 overflow-hidden">
-                                <img src={`https://ui-avatars.com/api/?name=${review.handle}&background=random&color=fff`} alt="" />
-                            </div>
-                            <div className="flex-1">
-                                <p className="text-sm font-bold text-gray-300">@{review.handle}</p>
-                            </div>
-                            <Star className="w-4 h-4 text-gray-500" />
+                <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-32">
+                    {/* Image Stack */}
+                    <div className="flex-1 relative w-full aspect-square max-w-lg">
+                        <div className="absolute inset-0 flex items-center justify-center">
+                            {stories.map((story, idx) => (
+                                <motion.div
+                                    key={story.id}
+                                    initial={{ opacity: 0, x: 50, rotate: 5 }}
+                                    animate={{
+                                        opacity: activeIdx === idx ? 1 : 0.3,
+                                        x: activeIdx === idx ? 0 : (idx - activeIdx) * 40,
+                                        rotate: activeIdx === idx ? 0 : (idx - activeIdx) * 5,
+                                        scale: activeIdx === idx ? 1 : 0.9,
+                                        zIndex: activeIdx === idx ? 20 : 10
+                                    }}
+                                    transition={{ duration: 0.6, ease: "circOut" }}
+                                    className="absolute w-[85%] h-[85%] rounded-[2.5rem] overflow-hidden border-4 border-white/10 shadow-2xl cursor-pointer"
+                                    onClick={() => setActiveIdx(idx)}
+                                >
+                                    <img src={story.img} className="w-full h-full object-cover" alt={story.name} />
+                                </motion.div>
+                            ))}
                         </div>
-                        <p className="text-lg font-bold leading-tight text-white mb-4">
-                            {review.text}
-                        </p>
-                        <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-gray-500">
-                            <span>Reply</span>
-                            <span>See translation</span>
-                        </div>
-                    </motion.div>
-                ))}
-            </div>
+                    </div>
 
-            <div className="relative z-20 text-center">
-                <Link
-                    to="/signup"
-                    className="inline-block bg-white text-black px-12 py-5 rounded-full font-black uppercase tracking-widest hover:bg-brand-yellow transition-all transform hover:scale-110 active:scale-95 shadow-[0_0_50px_rgba(255,255,255,0.2)]"
-                >
-                    Get Started
-                </Link>
+                    {/* Text Content */}
+                    <div className="flex-1">
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={activeIdx}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -20 }}
+                                transition={{ duration: 0.4 }}
+                                className="max-w-xl"
+                            >
+                                <h3 className="text-3xl md:text-5xl font-black text-white mb-6 leading-tight">
+                                    {stories[activeIdx].tagline}
+                                </h3>
+                                <p className="text-xl text-gray-400 mb-8 leading-relaxed font-medium">
+                                    {stories[activeIdx].text}
+                                </p>
+                                <p className="text-2xl font-black text-white tracking-tight">
+                                    {stories[activeIdx].name}
+                                </p>
+                            </motion.div>
+                        </AnimatePresence>
+
+                        {/* Navigation Dots */}
+                        <div className="flex gap-4 mt-12">
+                            {stories.map((_, idx) => (
+                                <button
+                                    key={idx}
+                                    onClick={() => setActiveIdx(idx)}
+                                    className={`h-2 transition-all duration-300 rounded-full ${activeIdx === idx ? 'w-12 bg-brand-yellow' : 'w-4 bg-white/10'}`}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     );
@@ -258,7 +289,13 @@ const Home = () => {
 
             {/* Security Banner (PhonePe Inspired) */}
             <section className="py-20 px-4 bg-[#121212]">
-                <div className="max-w-6xl mx-auto">
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.8 }}
+                    className="max-w-6xl mx-auto"
+                >
                     <div className="bg-gradient-to-r from-black via-zinc-900 to-black rounded-[2.5rem] p-8 md:p-12 flex flex-col md:flex-row items-center gap-10 shadow-3xl border border-white/5 relative overflow-hidden group">
                         <div className="absolute top-0 left-0 w-64 h-64 bg-brand-yellow/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
 
@@ -283,7 +320,7 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             </section>
 
             {/* FinCore Pulse (PhonePe Pulses Inspired) */}
@@ -333,7 +370,13 @@ const Home = () => {
             {/* Rewarding Spending Account Section */}
             <section className="py-32 bg-brand-dark relative overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row-reverse items-center gap-16">
-                    <div className="flex-1 text-left">
+                    <motion.div
+                        initial={{ opacity: 0, x: 50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
+                        className="flex-1 text-left"
+                    >
                         <h2 className="text-5xl md:text-6xl font-black text-white mb-8 leading-tight">
                             Smart <span className="text-brand-yellow">Wealth</span> <br /> Management.
                         </h2>
@@ -345,20 +388,33 @@ const Home = () => {
                                 { title: "5.5% APY", subtitle: "on savings" },
                                 { title: "Automated", subtitle: "SIP & Investing" }
                             ].map((item, i) => (
-                                <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors">
+                                <motion.div
+                                    key={i}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.5, delay: i * 0.2 }}
+                                    className="bg-white/5 p-6 rounded-2xl border border-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors"
+                                >
                                     <h3 className="text-2xl font-black text-brand-yellow mb-1">{item.title}</h3>
                                     <p className="text-white font-medium">{item.subtitle}</p>
-                                </div>
+                                </motion.div>
                             ))}
                         </div>
-                    </div>
-                    <div className="flex-1 flex justify-center items-center">
+                    </motion.div>
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
+                        className="flex-1 flex justify-center items-center"
+                    >
                         <img
                             src="https://famapp.in/assets/images/images/pages/index/SpendingAccountImage.jpg"
                             alt="FinCore Transactions Mockup"
                             className="w-full max-w-lg rounded-[3.5rem] shadow-[0_0_100px_rgba(0,0,0,0.8)] border border-white/10"
                         />
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
@@ -368,7 +424,13 @@ const Home = () => {
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-16 relative z-10">
                     {/* Left Content */}
-                    <div className="flex-1">
+                    <motion.div
+                        initial={{ opacity: 0, x: -50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
+                        className="flex-1"
+                    >
                         <div className="inline-flex items-center px-4 py-2 rounded-full border border-brand-yellow/20 bg-brand-yellow/5 text-brand-yellow text-xs font-black uppercase tracking-widest mb-6">
                             Unified Payments Interface
                         </div>
@@ -381,19 +443,26 @@ const Home = () => {
                                 "Scan any QR code to pay",
                                 "Seamless bank-to-bank transfers"
                             ].map((item, i) => (
-                                <li key={i} className="flex items-center text-lg text-gray-300 font-medium bg-white/5 p-5 rounded-[2rem] border border-white/5 hover:border-brand-yellow/30 transition-all cursor-default group">
+                                <motion.li
+                                    key={i}
+                                    initial={{ opacity: 0, y: 10 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.4, delay: i * 0.15 }}
+                                    className="flex items-center text-lg text-gray-300 font-medium bg-white/5 p-5 rounded-[2rem] border border-white/5 hover:border-brand-yellow/30 transition-all cursor-default group"
+                                >
                                     <div className="bg-brand-yellow flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
                                         <Check className="w-5 h-5 text-black stroke-[4]" />
                                     </div>
                                     <span className="font-bold">{item}</span>
-                                </li>
+                                </motion.li>
                             ))}
                         </ul>
                         <button className="bg-brand-yellow text-black px-12 py-5 text-xl rounded-full font-black uppercase tracking-widest hover:bg-yellow-400 hover:scale-105 transition-all shadow-2xl active:scale-95 group">
                             Pay Anyone Now
                             <ArrowRight className="inline-block ml-2 w-6 h-6 group-hover:translate-x-2 transition-transform" />
                         </button>
-                    </div>
+                    </motion.div>
 
                     {/* Right Visuals - FamApp Style */}
                     <div className="flex-1 relative flex items-center justify-center">
@@ -416,57 +485,21 @@ const Home = () => {
                 </div>
             </section>
 
-            <ReviewsSection />
+            <HappyStoriesSection />
 
-            {/* Support Section - Safety Chat */}
-            <section id="support" className="py-32 bg-black relative overflow-hidden">
+            {/* Support Section - Card Control */}
+            <section id="support" className="py-32 bg-[#121212] relative overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-20">
 
-                    {/* Floating Chat Container */}
+                    {/* Chat GIF Visualization */}
                     <div className="flex-1 relative flex justify-center">
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            className="bg-[#0A0A0A] w-full max-w-md rounded-[3rem] p-10 border border-white/5 shadow-[0_40px_100px_rgba(0,0,0,0.5)] relative min-h-[550px] flex flex-col justify-center gap-8"
-                        >
-                            {/* Message 1 */}
-                            <div className="flex flex-col items-end gap-2 animate-fade-in-up">
-                                <div className="bg-white p-5 rounded-3xl rounded-tr-none text-[#121212] font-bold text-sm max-w-[80%] relative shadow-xl">
-                                    Hey! I lost my FamCard, 😭 <br /> what will I do now?
-                                    <div className="absolute top-0 -right-2 w-4 h-4 bg-white" style={{ clipPath: 'polygon(0 0, 0% 100%, 100% 0)' }}></div>
-                                </div>
-                                <div className="flex items-center gap-2 pr-2">
-                                    <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">Teresa</span>
-                                    <img src="https://i.pravatar.cc/150?u=teresa" className="w-8 h-8 rounded-full border border-white/10" alt="" />
-                                </div>
-                            </div>
-
-                            {/* Message 2 */}
-                            <div className="flex flex-col items-start gap-2 animate-fade-in-up delay-300">
-                                <div className="bg-white p-5 rounded-3xl rounded-tl-none text-[#121212] font-bold text-sm max-w-[85%] relative shadow-xl leading-snug">
-                                    Hi! 👋 You can block your card instantly from the app. No transactions will be processed once your card is blocked as it gets deactivated permanently.
-                                    <div className="absolute top-0 -left-2 w-4 h-4 bg-white" style={{ clipPath: 'polygon(100% 0, 100% 100%, 0 0)' }}></div>
-                                </div>
-                                <div className="flex items-center gap-2 pl-2">
-                                    <img src="https://i.pravatar.cc/150?u=shifa" className="w-8 h-8 rounded-full border border-white/10" alt="" />
-                                    <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">Shifa</span>
-                                </div>
-                            </div>
-
-                            {/* Message 3 */}
-                            <div className="flex flex-col items-end gap-2 animate-fade-in-up delay-700">
-                                <div className="bg-white p-5 rounded-3xl rounded-tr-none text-[#121212] font-bold text-sm max-w-[80%] relative shadow-xl">
-                                    OKK! Thank you sm. 🙏 <br /> Blocking the card right away
-                                    <div className="absolute top-0 -right-2 w-4 h-4 bg-white" style={{ clipPath: 'polygon(0 0, 0% 100%, 100% 0)' }}></div>
-                                </div>
-                                <div className="flex items-center gap-2 pr-2">
-                                    <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">Teresa</span>
-                                    <img src="https://i.pravatar.cc/150?u=teresa" className="w-8 h-8 rounded-full border border-white/10" alt="" />
-                                </div>
-                            </div>
-
-                        </motion.div>
+                        <div className="relative w-full max-w-lg rounded-[3rem] overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.5)] border border-white/5 bg-black">
+                            <img
+                                src="https://www.famapp.in/assets/images/images/pages/index/supportChatGif.gif"
+                                className="w-full h-auto object-contain"
+                                alt="Card Control Animation"
+                            />
+                        </div>
                     </div>
 
                     <div className="flex-1 text-left lg:pl-10">
@@ -489,23 +522,44 @@ const Home = () => {
             {/* Features Grid */}
             <section id="features" className="py-32 relative bg-black">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-20">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        className="text-center mb-20"
+                    >
                         <h2 className="text-4xl md:text-6xl font-black text-white mb-6">ONE BANK. <span className="text-brand-yellow">LIMITLESS</span> POSSIBILITIES.</h2>
-                    </div>
+                    </motion.div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {[
-                            { title: "Digital Banking", desc: "Open a full-featured bank account in minutes from your phone.", icon: <Smartphone className="w-10 h-10 text-brand-yellow" />, color: "border-brand-yellow/20 hover:border-brand-yellow" },
-                            { title: "Global Debit Card", desc: "A sleek, metal numberless card for offline and online spends worldwide.", icon: <CreditCard className="w-10 h-10 text-purple-500" />, color: "border-purple-500/20 hover:border-purple-500" },
-                            { title: "Instant Loans", desc: "Get pre-approved personal loans disbursed to your account instantly.", icon: <Gift className="w-10 h-10 text-green-500" />, color: "border-green-500/20 hover:border-green-500" },
+                            { title: "classic", desc: "Make secure and fast payments with your virtual FamX card and UPI ID.", color: "text-[#FF8A00]" },
+                            { title: "higher limits", desc: "Upgrade your payments with higher limits, rewards and special benefits.", color: "text-[#FFB800]" },
+                            { title: "ultra", desc: "Premium membership offering FamX card, ATM withdrawals, customer support, and more.", color: "text-[#00D1FF]" },
                         ].map((feature, i) => (
-                            <div key={i} className={`p-8 bg-brand-card rounded-3xl border ${feature.color} hover:bg-white/5 transition-all duration-300 group hover:-translate-y-2`}>
-                                <div className="w-20 h-20 bg-black rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.05)]">
-                                    {feature.icon}
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5, delay: i * 0.2 }}
+                                className="p-10 bg-[#0A0A0A] rounded-[2.5rem] border border-white/5 hover:border-white/10 transition-all duration-500 group relative overflow-hidden h-[350px] flex flex-col justify-between"
+                            >
+                                {/* Subtle Background Gradient */}
+                                <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+                                <div>
+                                    <h3 className={`text-5xl md:text-6xl font-black mb-6 tracking-tighter ${feature.color}`}>
+                                        {feature.title}
+                                    </h3>
+                                    <p className="text-gray-400 text-lg leading-relaxed font-medium">
+                                        {feature.desc}
+                                    </p>
                                 </div>
-                                <h3 className="text-2xl font-bold text-white mb-3">{feature.title}</h3>
-                                <p className="text-gray-400 text-lg leading-relaxed">{feature.desc}</p>
-                            </div>
+
+                                <div className="w-12 h-1 bg-white/10 rounded-full group-hover:w-24 group-hover:bg-brand-yellow transition-all duration-500"></div>
+                            </motion.div>
                         ))}
                     </div>
                 </div>
@@ -515,7 +569,13 @@ const Home = () => {
             <section id="cards" className="py-32 bg-brand-dark relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-yellow/5 rounded-full blur-[100px] pointer-events-none animate-pulse-slow"></div>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-16">
-                    <div className="flex-1">
+                    <motion.div
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
+                        className="flex-1"
+                    >
                         <h2 className="text-4xl md:text-6xl font-black text-white mb-8">
                             THE <span className="text-brand-yellow">FinCore</span> CARD.
                         </h2>
@@ -531,10 +591,16 @@ const Home = () => {
                             ))}
                         </ul>
                         <button className="bg-white text-black px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-200 hover:scale-105 transition-all transform shadow-2xl">Order Now</button>
-                    </div>
-                    <div className="flex-1 relative">
+                    </motion.div>
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9, rotate: 10 }}
+                        whileInView={{ opacity: 1, scale: 1, rotate: 3 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1, ease: "easeOut" }}
+                        className="flex-1 relative"
+                    >
                         {/* Card Graphic */}
-                        <div className="w-full max-w-md aspect-video rounded-3xl border border-white/10 relative shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500 hover:shadow-[0_0_50px_rgba(252,207,8,0.2)] overflow-hidden">
+                        <div className="w-full max-w-md aspect-video rounded-3xl border border-white/10 relative shadow-2xl hover:rotate-0 transition-transform duration-500 hover:shadow-[0_0_50px_rgba(252,207,8,0.2)] overflow-hidden">
                             <img src="/banking cardbackdesign.svg" alt="Card Background" className="absolute inset-0 w-full h-full object-cover" />
                             <div className="absolute inset-0 bg-black/40 bg-gradient-to-tr from-black to-transparent"></div>
                             <div className="relative z-10 flex flex-col justify-between h-full p-8">
@@ -551,13 +617,19 @@ const Home = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
             {/* Community Section */}
             <section className="py-20 bg-brand-yellow text-black text-center relative overflow-hidden group">
-                <div className="relative z-10 max-w-4xl mx-auto px-4">
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                    className="relative z-10 max-w-4xl mx-auto px-4"
+                >
                     <Users className="w-16 h-16 mx-auto mb-6 text-black group-hover:scale-110 transition-transform duration-300" />
                     <h2 className="text-5xl md:text-7xl font-black mb-6 uppercase">Join the <br /> Revolution</h2>
                     <p className="text-xl md:text-2xl font-medium mb-10 max-w-2xl mx-auto">
@@ -566,7 +638,7 @@ const Home = () => {
                     <Link to="/signup" className="inline-block bg-black text-white px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform shadow-2xl">
                         Get Started Now
                     </Link>
-                </div>
+                </motion.div>
 
                 {/* Background Pattern */}
                 <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle, #000 2px, transparent 2px)', backgroundSize: '30px 30px' }}></div>
