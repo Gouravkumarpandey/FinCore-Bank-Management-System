@@ -37,33 +37,33 @@ const Loans = () => {
     }, [loanAmount, tenure, interestRate]);
 
     return (
-        <div className="flex bg-black min-h-screen text-white font-sans selection:bg-brand-yellow selection:text-black">
+        <div className="flex bg-brand-dark min-h-screen text-gray-900 font-sans selection:bg-brand-yellow selection:text-white">
             <Sidebar />
 
             <div className="flex-1 md:ml-64 p-8 transition-all duration-300">
                 {/* Header */}
                 <header className="mb-10">
                     <div className="flex items-center gap-2 mb-1">
-                        <span className="bg-brand-yellow text-black text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-tighter">Instant Approval</span>
-                        <h1 className="text-3xl font-black text-white italic uppercase tracking-tighter">FinCore <span className="text-brand-yellow">Lend</span></h1>
+                        <span className="bg-brand-yellow text-white text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-tighter">Instant Approval</span>
+                        <h1 className="text-3xl font-black text-gray-900 italic uppercase tracking-tighter">FinCore <span className="text-brand-yellow">Lend</span></h1>
                     </div>
-                    <p className="text-gray-400 text-sm italic">Empowering your dreams with flexible capital. 💰</p>
+                    <p className="text-gray-500 text-sm italic">Empowering your dreams with flexible capital. 💰</p>
                 </header>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
                     {/* Left: Interactive Tools */}
                     <div className="lg:col-span-8 space-y-8">
                         {/* Tab Switcher */}
-                        <div className="flex p-1 bg-brand-card border border-white/5 rounded-2xl w-fit">
+                        <div className="flex p-1 bg-gray-50 border border-gray-100 rounded-2xl w-fit">
                             <button
                                 onClick={() => setActiveTab('calculate')}
-                                className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'calculate' ? 'bg-brand-yellow text-black' : 'text-gray-500 hover:text-white'}`}
+                                className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'calculate' ? 'bg-brand-yellow text-white shadow-lg shadow-brand-yellow/20' : 'text-gray-500 hover:text-gray-900 hover:bg-white'}`}
                             >
                                 EMI Calculator
                             </button>
                             <button
                                 onClick={() => setActiveTab('apply')}
-                                className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'apply' ? 'bg-brand-yellow text-black' : 'text-gray-500 hover:text-white'}`}
+                                className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'apply' ? 'bg-brand-yellow text-white shadow-lg shadow-brand-yellow/20' : 'text-gray-500 hover:text-gray-900 hover:bg-white'}`}
                             >
                                 Quick Apply
                             </button>
@@ -76,9 +76,9 @@ const Loans = () => {
                                     initial={{ opacity: 0, x: -20 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     exit={{ opacity: 0, x: 20 }}
-                                    className="bg-brand-card border border-white/5 rounded-[2.5rem] p-8 shadow-2xl"
+                                    className="bg-white border border-gray-100 rounded-[2.5rem] p-8 shadow-sm"
                                 >
-                                    <h3 className="text-xl font-black uppercase tracking-tighter mb-8 flex items-center gap-2">
+                                    <h3 className="text-xl font-black uppercase tracking-tighter mb-8 flex items-center gap-2 text-gray-900">
                                         <Calculator className="text-brand-yellow" size={24} /> Estimate Your monthly EMI
                                     </h3>
 
@@ -87,7 +87,7 @@ const Loans = () => {
                                             {/* Amount Slider */}
                                             <div className="space-y-4">
                                                 <div className="flex justify-between items-center">
-                                                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">Loan Amount</label>
+                                                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Loan Amount</label>
                                                     <span className="text-xl font-black text-brand-yellow">₹{loanAmount.toLocaleString()}</span>
                                                 </div>
                                                 <input
@@ -97,14 +97,14 @@ const Loans = () => {
                                                     step="50000"
                                                     value={loanAmount}
                                                     onChange={(e) => setLoanAmount(parseInt(e.target.value))}
-                                                    className="w-full h-2 bg-black rounded-lg appearance-none cursor-pointer accent-brand-yellow"
+                                                    className="w-full h-2 bg-gray-100 rounded-lg appearance-none cursor-pointer accent-brand-yellow"
                                                 />
                                             </div>
 
                                             {/* Tenure Slider */}
                                             <div className="space-y-4">
                                                 <div className="flex justify-between items-center">
-                                                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">Tenure (Months)</label>
+                                                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Tenure (Months)</label>
                                                     <span className="text-xl font-black text-brand-yellow">{tenure} Mo</span>
                                                 </div>
                                                 <input
@@ -114,14 +114,14 @@ const Loans = () => {
                                                     step="6"
                                                     value={tenure}
                                                     onChange={(e) => setTenure(parseInt(e.target.value))}
-                                                    className="w-full h-2 bg-black rounded-lg appearance-none cursor-pointer accent-brand-yellow"
+                                                    className="w-full h-2 bg-gray-100 rounded-lg appearance-none cursor-pointer accent-brand-yellow"
                                                 />
                                             </div>
 
                                             {/* Interest Slider */}
                                             <div className="space-y-4">
                                                 <div className="flex justify-between items-center">
-                                                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">Interest Rate (% p.a)</label>
+                                                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Interest Rate (% p.a)</label>
                                                     <span className="text-xl font-black text-brand-yellow">{interestRate}%</span>
                                                 </div>
                                                 <input
@@ -131,31 +131,31 @@ const Loans = () => {
                                                     step="0.1"
                                                     value={interestRate}
                                                     onChange={(e) => setInterestRate(parseFloat(e.target.value))}
-                                                    className="w-full h-2 bg-black rounded-lg appearance-none cursor-pointer accent-brand-yellow"
+                                                    className="w-full h-2 bg-gray-100 rounded-lg appearance-none cursor-pointer accent-brand-yellow"
                                                 />
                                             </div>
                                         </div>
 
-                                        <div className="bg-black/40 rounded-[2rem] p-8 border border-white/5 flex flex-col items-center justify-center text-center relative overflow-hidden">
-                                            <div className="absolute top-0 right-0 p-4 opacity-5">
-                                                <Percent size={100} />
+                                        <div className="bg-gray-50 rounded-[2rem] p-8 border border-gray-100 flex flex-col items-center justify-center text-center relative overflow-hidden">
+                                            <div className="absolute top-0 right-0 p-4 opacity-10">
+                                                <Percent size={100} className="text-gray-200" />
                                             </div>
-                                            <p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] mb-4">Estimated Monthly Payment</p>
-                                            <h2 className="text-6xl font-black text-white italic mb-2">₹{emi.toLocaleString()}</h2>
+                                            <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] mb-4">Estimated Monthly Payment</p>
+                                            <h2 className="text-6xl font-black text-gray-900 italic mb-2">₹{emi.toLocaleString()}</h2>
                                             <div className="flex gap-4 mt-8">
                                                 <div className="text-left">
-                                                    <p className="text-[8px] font-black text-gray-500 uppercase">Total Interest</p>
+                                                    <p className="text-[8px] font-black text-gray-400 uppercase">Total Interest</p>
                                                     <p className="text-sm font-black text-brand-yellow">₹{(emi * tenure - loanAmount).toLocaleString()}</p>
                                                 </div>
-                                                <div className="w-px h-8 bg-white/10"></div>
+                                                <div className="w-px h-8 bg-gray-200"></div>
                                                 <div className="text-left">
-                                                    <p className="text-[8px] font-black text-gray-500 uppercase">Total Payback</p>
-                                                    <p className="text-sm font-black text-white">₹{(emi * tenure).toLocaleString()}</p>
+                                                    <p className="text-[8px] font-black text-gray-400 uppercase">Total Payback</p>
+                                                    <p className="text-sm font-black text-gray-900">₹{(emi * tenure).toLocaleString()}</p>
                                                 </div>
                                             </div>
                                             <button
                                                 onClick={() => setActiveTab('apply')}
-                                                className="mt-10 w-full bg-brand-yellow text-black py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-yellow-400 transition-all shadow-xl hover:shadow-yellow-400/20"
+                                                className="mt-10 w-full bg-brand-yellow text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-700 transition-all shadow-lg shadow-brand-yellow/30"
                                             >
                                                 Apply Now
                                             </button>
@@ -168,34 +168,34 @@ const Loans = () => {
                                     initial={{ opacity: 0, scale: 0.95 }}
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.95 }}
-                                    className="bg-brand-card border border-white/5 rounded-[2.5rem] p-10 flex flex-col items-center text-center"
+                                    className="bg-white border border-gray-100 rounded-[2.5rem] p-10 flex flex-col items-center text-center shadow-sm"
                                 >
                                     <div className="bg-brand-yellow/10 p-6 rounded-full mb-8">
                                         <Landmark size={48} className="text-brand-yellow" />
                                     </div>
-                                    <h3 className="text-3xl font-black uppercase tracking-tighter mb-4">Submit Application</h3>
-                                    <p className="text-gray-400 max-w-md mx-auto mb-10 leading-relaxed font-medium">
-                                        You are applying for a <span className="text-white font-bold">₹{loanAmount.toLocaleString()}</span> loan for <span className="text-white font-bold">{tenure} months</span>. Our AI will review your credit profile in 60 seconds.
+                                    <h3 className="text-3xl font-black uppercase tracking-tighter mb-4 text-gray-900">Submit Application</h3>
+                                    <p className="text-gray-500 max-w-md mx-auto mb-10 leading-relaxed font-medium">
+                                        You are applying for a <span className="text-gray-900 font-bold">₹{loanAmount.toLocaleString()}</span> loan for <span className="text-gray-900 font-bold">{tenure} months</span>. Our AI will review your credit profile in 60 seconds.
                                     </p>
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl mb-10">
-                                        <div className="flex items-center gap-4 p-5 rounded-2xl bg-black/40 border border-white/5 text-left">
-                                            <div className="p-3 bg-white/5 rounded-xl"><Zap className="text-brand-yellow" size={20} /></div>
+                                        <div className="flex items-center gap-4 p-5 rounded-2xl bg-gray-50 border border-gray-100 text-left">
+                                            <div className="p-3 bg-white rounded-xl shadow-sm"><Zap className="text-brand-yellow" size={20} /></div>
                                             <div>
-                                                <p className="text-[10px] font-black text-gray-500 uppercase">Approval Time</p>
-                                                <p className="text-sm font-bold">Instant ~ 60s</p>
+                                                <p className="text-[10px] font-black text-gray-400 uppercase">Approval Time</p>
+                                                <p className="text-sm font-bold text-gray-900">Instant ~ 60s</p>
                                             </div>
                                         </div>
-                                        <div className="flex items-center gap-4 p-5 rounded-2xl bg-black/40 border border-white/5 text-left">
-                                            <div className="p-3 bg-white/5 rounded-xl"><ShieldCheck className="text-brand-yellow" size={20} /></div>
+                                        <div className="flex items-center gap-4 p-5 rounded-2xl bg-gray-50 border border-gray-100 text-left">
+                                            <div className="p-3 bg-white rounded-xl shadow-sm"><ShieldCheck className="text-brand-yellow" size={20} /></div>
                                             <div>
-                                                <p className="text-[10px] font-black text-gray-500 uppercase">Processing Fee</p>
-                                                <p className="text-sm font-bold">0.5% (Flat)</p>
+                                                <p className="text-[10px] font-black text-gray-400 uppercase">Processing Fee</p>
+                                                <p className="text-sm font-bold text-gray-900">0.5% (Flat)</p>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <button className="bg-brand-yellow text-black px-12 py-5 rounded-3xl font-black text-sm uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-yellow-400 transition-all shadow-2xl hover:shadow-yellow-400/30 active:scale-95">
+                                    <button className="bg-brand-yellow text-white px-12 py-5 rounded-3xl font-black text-sm uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-blue-700 transition-all shadow-lg shadow-brand-yellow/30 active:scale-95">
                                         Confirm & Submit <ArrowRight size={20} />
                                     </button>
                                 </motion.div>
@@ -203,12 +203,12 @@ const Loans = () => {
                         </AnimatePresence>
 
                         {/* Recent Loan History Placeholder */}
-                        <div className="bg-brand-card border border-white/5 rounded-[2.5rem] p-8">
-                            <h3 className="text-xl font-black uppercase tracking-tighter mb-6">Existing Loans</h3>
-                            <div className="bg-black/40 border border-dashed border-white/10 rounded-3xl p-12 text-center">
-                                <Landmark className="mx-auto text-gray-800 mb-4" size={40} />
-                                <p className="text-gray-500 font-bold uppercase text-[10px] tracking-widest">No Active Loan Accounts Found</p>
-                                <p className="text-gray-600 text-xs mt-2 italic">Apply above to get your first credit line.</p>
+                        <div className="bg-white border border-gray-100 rounded-[2.5rem] p-8 shadow-sm">
+                            <h3 className="text-xl font-black uppercase tracking-tighter mb-6 text-gray-900">Existing Loans</h3>
+                            <div className="bg-gray-50 border border-dashed border-gray-200 rounded-3xl p-12 text-center">
+                                <Landmark className="mx-auto text-gray-200 mb-4" size={40} />
+                                <p className="text-gray-400 font-bold uppercase text-[10px] tracking-widest">No Active Loan Accounts Found</p>
+                                <p className="text-gray-500 text-xs mt-2 italic">Apply above to get your first credit line.</p>
                             </div>
                         </div>
                     </div>
@@ -216,13 +216,13 @@ const Loans = () => {
                     {/* Right: Promotions & Types */}
                     <div className="lg:col-span-4 space-y-8">
                         {/* Loan Types */}
-                        <div className="bg-brand-card border border-white/10 rounded-[2.5rem] p-8">
-                            <h3 className="text-xl font-black uppercase tracking-tighter mb-6">Loan <span className="text-brand-yellow">Offers</span></h3>
+                        <div className="bg-white border border-gray-100 rounded-[2.5rem] p-8 shadow-sm">
+                            <h3 className="text-xl font-black uppercase tracking-tighter mb-6 text-gray-900">Loan <span className="text-brand-yellow">Offers</span></h3>
                             <div className="space-y-4">
                                 {loanTypes.map((type) => (
                                     <div
                                         key={type.id}
-                                        className="group p-5 rounded-3xl bg-black/40 border border-white/5 hover:border-brand-yellow/30 transition-all cursor-pointer"
+                                        className="group p-5 rounded-3xl bg-gray-50 border border-gray-100 hover:border-brand-yellow transition-all cursor-pointer"
                                     >
                                         <div className="flex items-center justify-between mb-4">
                                             <div className={`p-3 rounded-2xl bg-gradient-to-br ${type.color} text-white shadow-lg`}>
@@ -230,8 +230,8 @@ const Loans = () => {
                                             </div>
                                             <span className="text-xl font-black text-brand-yellow italic">{type.rate}</span>
                                         </div>
-                                        <p className="font-black text-sm uppercase tracking-tight">{type.name}</p>
-                                        <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">Starting from</p>
+                                        <p className="font-black text-sm uppercase tracking-tight text-gray-900">{type.name}</p>
+                                        <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">Starting from</p>
                                     </div>
                                 ))}
                             </div>
@@ -258,10 +258,10 @@ const Loans = () => {
                         </div>
 
                         {/* Security Alert */}
-                        <div className="p-6 rounded-3xl bg-red-500/5 border border-red-500/10 flex gap-4">
-                            <ShieldAlert className="text-red-500 shrink-0" size={24} />
+                        <div className="p-6 rounded-3xl bg-red-50 border border-red-100 flex gap-4">
+                            <ShieldAlert className="text-red-600 shrink-0" size={24} />
                             <div>
-                                <p className="text-[10px] font-black text-red-500 uppercase tracking-widest mb-1">Borrow Responsibly</p>
+                                <p className="text-[10px] font-black text-red-600 uppercase tracking-widest mb-1">Borrow Responsibly</p>
                                 <p className="text-[10px] text-gray-500 font-medium leading-relaxed italic">
                                     Interest rates are subject to your credit score. Non-payment may lead to legal action and a drop in CIBIL score.
                                 </p>

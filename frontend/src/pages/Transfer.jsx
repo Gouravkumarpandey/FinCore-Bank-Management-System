@@ -38,38 +38,38 @@ const Transfer = () => {
     };
 
     return (
-        <div className="flex bg-black min-h-screen text-white font-sans selection:bg-brand-yellow selection:text-black">
+        <div className="flex bg-brand-dark min-h-screen text-gray-900 font-sans selection:bg-brand-yellow selection:text-white">
             <Sidebar />
             <div className="flex-1 md:ml-64 p-8 transition-all duration-300 flex justify-center items-center min-h-screen">
                 <div className="max-w-2xl w-full space-y-8 animate-fade-in-up">
                     <div className="text-center">
-                        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-brand-yellow/20 text-brand-yellow mb-6 animate-pulse">
+                        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-brand-yellow/10 text-brand-yellow mb-6">
                             <Zap className="h-8 w-8 fill-current" />
                         </div>
-                        <h2 className="text-4xl font-black text-white mb-2">Send Money</h2>
-                        <p className="text-gray-400 font-medium">Instant. Secure. No Fees.</p>
-                        <p className="text-gray-500 text-sm mt-2">Available Balance: <span className="text-white font-bold">₹{parseFloat(user?.balance || 0).toLocaleString('en-IN')}</span></p>
+                        <h2 className="text-4xl font-black text-gray-900 mb-2">Send Money</h2>
+                        <p className="text-gray-500 font-medium">Instant. Secure. No Fees.</p>
+                        <p className="text-gray-400 text-sm mt-2">Available Balance: <span className="text-gray-900 font-bold">₹{parseFloat(user?.balance || 0).toLocaleString('en-IN')}</span></p>
                     </div>
 
-                    <div className="bg-brand-card rounded-3xl border border-white/5 p-8 shadow-2xl relative overflow-hidden">
+                    <div className="bg-white rounded-3xl border border-gray-100 p-8 shadow-sm relative overflow-hidden">
                         {/* Background Decoration */}
                         <div className="absolute top-0 right-0 w-64 h-64 bg-brand-yellow/5 rounded-full blur-[80px] pointer-events-none"></div>
 
                         {status === 'success' ? (
                             <div className="text-center py-10 animate-fade-in-up">
-                                <div className="mx-auto flex items-center justify-center h-24 w-24 rounded-full bg-green-500/20 mb-6 animate-bounce-slow">
-                                    <ShieldCheck className="h-12 w-12 text-green-500" />
+                                <div className="mx-auto flex items-center justify-center h-24 w-24 rounded-full bg-green-50 mb-6 animate-bounce-slow">
+                                    <ShieldCheck className="h-12 w-12 text-green-600" />
                                 </div>
-                                <h3 className="text-3xl font-black text-white mb-2">Transfer Successful!</h3>
-                                <p className="text-gray-400 text-lg">₹{amount} sent to {recipient}</p>
-                                <div className="mt-8 p-4 bg-white/5 rounded-xl border border-white/10 text-sm text-gray-400">
+                                <h3 className="text-3xl font-black text-gray-900 mb-2">Transfer Successful!</h3>
+                                <p className="text-gray-500 text-lg">₹{amount} sent to {recipient}</p>
+                                <div className="mt-8 p-4 bg-gray-50 rounded-xl border border-gray-100 text-sm text-gray-500">
                                     Redirecting to dashboard...
                                 </div>
                             </div>
                         ) : (
                             <form onSubmit={handleTransfer} className="space-y-6 relative z-10">
                                 {status === 'error' && (
-                                    <div className="bg-red-500/10 border border-red-500/50 rounded-xl p-4 flex items-center text-red-500 animate-shake">
+                                    <div className="bg-red-50 border border-red-100 rounded-xl p-4 flex items-center text-red-600 animate-shake">
                                         <AlertCircle className="w-5 h-5 mr-3 flex-shrink-0" />
                                         <span>{errorMessage}</span>
                                     </div>
@@ -84,7 +84,7 @@ const Transfer = () => {
                                         <input
                                             type="text"
                                             required
-                                            className="block w-full pl-12 pr-4 py-4 bg-black/50 border border-white/10 rounded-2xl text-white placeholder-gray-600 focus:outline-none focus:border-brand-yellow focus:ring-1 focus:ring-brand-yellow transition-all font-medium"
+                                            className="block w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-2xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-brand-yellow focus:ring-1 focus:ring-brand-yellow transition-all font-medium"
                                             placeholder="Email or Account Number"
                                             value={recipient}
                                             onChange={(e) => setRecipient(e.target.value)}
@@ -103,7 +103,7 @@ const Transfer = () => {
                                             required
                                             min="1"
                                             step="0.01"
-                                            className="block w-full pl-12 pr-4 py-4 bg-black/50 border border-white/10 rounded-2xl text-white placeholder-gray-600 focus:outline-none focus:border-brand-yellow focus:ring-1 focus:ring-brand-yellow transition-all font-bold text-lg"
+                                            className="block w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-2xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-brand-yellow focus:ring-1 focus:ring-brand-yellow transition-all font-bold text-lg"
                                             placeholder="0.00"
                                             value={amount}
                                             onChange={(e) => setAmount(e.target.value)}
@@ -115,7 +115,7 @@ const Transfer = () => {
                                     <label className="text-sm font-bold text-gray-500 uppercase tracking-wider ml-1">Note (Optional)</label>
                                     <textarea
                                         rows="2"
-                                        className="block w-full px-4 py-4 bg-black/50 border border-white/10 rounded-2xl text-white placeholder-gray-600 focus:outline-none focus:border-brand-yellow focus:ring-1 focus:ring-brand-yellow transition-all font-medium resize-none"
+                                        className="block w-full px-4 py-4 bg-gray-50 border border-gray-100 rounded-2xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-brand-yellow focus:ring-1 focus:ring-brand-yellow transition-all font-medium resize-none"
                                         placeholder="What's this for? 🍕"
                                         value={note}
                                         onChange={(e) => setNote(e.target.value)}
@@ -125,7 +125,7 @@ const Transfer = () => {
                                 <button
                                     type="submit"
                                     disabled={status === 'loading'}
-                                    className="w-full bg-brand-yellow text-black py-4 rounded-2xl font-black text-lg hover:bg-yellow-400 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_20px_rgba(252,207,8,0.3)] flex justify-center items-center group disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="w-full bg-brand-yellow text-white py-4 rounded-2xl font-black text-lg hover:bg-blue-700 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg shadow-brand-yellow/30 flex justify-center items-center group disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     {status === 'loading' ? (
                                         <span className="animate-pulse">Processing...</span>

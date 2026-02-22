@@ -68,17 +68,17 @@ const UPIPayment = () => {
     };
 
     return (
-        <div className="flex bg-black min-h-screen text-white font-sans selection:bg-brand-yellow selection:text-black">
+        <div className="flex bg-brand-dark min-h-screen text-gray-900 font-sans selection:bg-brand-yellow selection:text-white">
             <Sidebar />
 
             <div className="flex-1 md:ml-64 p-8 transition-all duration-300">
                 {/* Header */}
                 <header className="mb-10">
                     <div className="flex items-center gap-2 mb-1">
-                        <span className="bg-brand-yellow text-black text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-tighter">Instant Settlement</span>
-                        <h1 className="text-3xl font-black text-white italic uppercase tracking-tighter">UPI <span className="text-brand-yellow">Payments</span></h1>
+                        <span className="bg-brand-yellow text-white text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-tighter">Instant Settlement</span>
+                        <h1 className="text-3xl font-black text-gray-900 italic uppercase tracking-tighter">UPI <span className="text-brand-yellow">Payments</span></h1>
                     </div>
-                    <p className="text-gray-400 text-sm italic">Lightning fast transfers across any bank. ⚡</p>
+                    <p className="text-gray-500 text-sm italic">Lightning fast transfers across any bank. ⚡</p>
                 </header>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
@@ -87,7 +87,7 @@ const UPIPayment = () => {
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="bg-brand-card border border-white/5 rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden"
+                            className="bg-white border border-gray-100 rounded-[2.5rem] p-8 shadow-sm relative overflow-hidden"
                         >
                             {/* Decorative Blur */}
                             <div className="absolute -top-24 -right-24 w-64 h-64 bg-brand-yellow/5 rounded-full blur-[100px] pointer-events-none"></div>
@@ -108,7 +108,7 @@ const UPIPayment = () => {
                                             value={receiverUpi}
                                             onChange={(e) => setReceiverUpi(e.target.value)}
                                             placeholder="username@fincore or phone@upi"
-                                            className="w-full bg-black/40 border border-white/10 rounded-3xl py-5 pl-14 pr-6 text-white font-bold placeholder:text-gray-600 focus:outline-none focus:border-brand-yellow transition-all"
+                                            className="w-full bg-gray-50 border border-gray-100 rounded-3xl py-5 pl-14 pr-6 text-gray-900 font-bold placeholder:text-gray-400 focus:outline-none focus:border-brand-yellow transition-all"
                                         />
                                     </div>
                                 </div>
@@ -124,7 +124,7 @@ const UPIPayment = () => {
                                             value={amount}
                                             onChange={(e) => setAmount(e.target.value)}
                                             placeholder="0.00"
-                                            className="w-full bg-black/40 border border-white/10 rounded-3xl py-6 pl-14 pr-6 text-4xl font-black text-white placeholder:text-gray-800 focus:outline-none focus:border-brand-yellow transition-all"
+                                            className="w-full bg-gray-50 border border-gray-100 rounded-3xl py-6 pl-14 pr-6 text-4xl font-black text-gray-900 placeholder:text-gray-200 focus:outline-none focus:border-brand-yellow transition-all"
                                         />
                                     </div>
                                     <div className="flex justify-between px-2">
@@ -140,13 +140,13 @@ const UPIPayment = () => {
                                         value={description}
                                         onChange={(e) => setDescription(e.target.value)}
                                         placeholder="Coffee, rent, etc."
-                                        className="w-full bg-black/40 border border-white/10 rounded-3xl py-4 px-6 text-white font-bold placeholder:text-gray-600 focus:outline-none focus:border-brand-yellow transition-all"
+                                        className="w-full bg-gray-50 border border-gray-100 rounded-3xl py-4 px-6 text-gray-900 font-bold placeholder:text-gray-400 focus:outline-none focus:border-brand-yellow transition-all"
                                     />
                                 </div>
 
                                 <button
                                     disabled={loading || !amount || !receiverUpi}
-                                    className="w-full bg-brand-yellow text-black py-6 rounded-3xl font-black text-sm uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-yellow-400 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-xl hover:shadow-yellow-400/20 active:scale-95"
+                                    className="w-full bg-brand-yellow text-white py-6 rounded-3xl font-black text-sm uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-brand-yellow/30 active:scale-95"
                                 >
                                     {loading ? (
                                         <>
@@ -173,45 +173,45 @@ const UPIPayment = () => {
                                     initial={{ opacity: 0, scale: 0.95 }}
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.95 }}
-                                    className={`p-8 rounded-[2.5rem] border flex flex-col items-center text-center ${status === 'success' ? 'bg-green-500/10 border-green-500/20' : 'bg-red-500/10 border-red-500/20'
+                                    className={`p-8 rounded-[2.5rem] border flex flex-col items-center text-center shadow-sm ${status === 'success' ? 'bg-green-50 border-green-100' : 'bg-red-50 border-red-100'
                                         }`}
                                 >
                                     {status === 'success' ? (
-                                        <div className="mb-6 bg-green-500 rounded-full p-4 shadow-[0_0_30px_rgba(34,197,94,0.4)]">
-                                            <CheckCircle2 size={48} className="text-black" />
+                                        <div className="mb-6 bg-green-500 rounded-full p-4 shadow-lg shadow-green-500/20">
+                                            <CheckCircle2 size={48} className="text-white" />
                                         </div>
                                     ) : (
-                                        <div className="mb-6 bg-red-500 rounded-full p-4 shadow-[0_0_30px_rgba(239,68,68,0.4)]">
-                                            <XCircle size={48} className="text-black" />
+                                        <div className="mb-6 bg-red-500 rounded-full p-4 shadow-lg shadow-red-500/20">
+                                            <XCircle size={48} className="text-white" />
                                         </div>
                                     )}
 
-                                    <h3 className={`text-2xl font-black uppercase tracking-tighter mb-2 ${status === 'success' ? 'text-green-400' : 'text-red-400'
+                                    <h3 className={`text-2xl font-black uppercase tracking-tighter mb-2 ${status === 'success' ? 'text-green-600' : 'text-red-600'
                                         }`}>
                                         Payment {status === 'success' ? 'Settled' : 'Failed'}
                                     </h3>
-                                    <p className="text-gray-400 text-sm font-medium mb-6">
+                                    <p className="text-gray-500 text-sm font-medium mb-6">
                                         {status === 'success'
                                             ? `₹${amount} successfully transferred to ${receiverUpi}`
                                             : transactionData?.message || 'Something went wrong. Please try again.'}
                                     </p>
 
                                     {status === 'success' && (
-                                        <div className="w-full bg-black/40 rounded-3xl p-6 border border-white/5 text-left space-y-3">
+                                        <div className="w-full bg-gray-50 rounded-3xl p-6 border border-gray-100 text-left space-y-3 shadow-sm">
                                             <div className="flex justify-between">
-                                                <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Transaction ID</span>
-                                                <span className="text-[10px] font-mono text-white font-bold">{transactionData?.transactionId}</span>
+                                                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Transaction ID</span>
+                                                <span className="text-[10px] font-mono text-gray-900 font-bold">{transactionData?.transactionId}</span>
                                             </div>
                                             <div className="flex justify-between">
-                                                <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Reference</span>
-                                                <span className="text-[10px] text-white font-bold uppercase">{transactionData?.transactionMode}</span>
+                                                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Reference</span>
+                                                <span className="text-[10px] text-gray-900 font-bold uppercase">{transactionData?.transactionMode}</span>
                                             </div>
                                         </div>
                                     )}
 
                                     <button
                                         onClick={() => setStatus(null)}
-                                        className="mt-8 text-xs font-black uppercase tracking-widest text-gray-500 hover:text-white transition-colors"
+                                        className="mt-8 text-xs font-black uppercase tracking-widest text-gray-400 hover:text-gray-900 transition-colors"
                                     >
                                         Make Another Payment
                                     </button>
@@ -220,16 +220,16 @@ const UPIPayment = () => {
                         </AnimatePresence>
 
                         {/* Your UPI Info */}
-                        <div className="bg-brand-card border border-white/5 rounded-[2.5rem] p-8">
-                            <h3 className="text-xl font-black uppercase tracking-tighter mb-6 flex items-center gap-2">
+                        <div className="bg-white border border-gray-100 rounded-[2.5rem] p-8 shadow-sm">
+                            <h3 className="text-xl font-black uppercase tracking-tighter mb-6 flex items-center gap-2 text-gray-900">
                                 <QrCode className="text-brand-yellow" size={24} /> Your Payment Link
                             </h3>
 
-                            <div className="bg-black/40 rounded-3xl p-6 border border-white/5 mb-6">
-                                <p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-2">Personal VPA</p>
+                            <div className="bg-gray-50 rounded-3xl p-6 border border-gray-100 mb-6">
+                                <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-2">Personal VPA</p>
                                 <div className="flex items-center justify-between">
-                                    <p className="text-lg font-black text-white italic">{user?.account?.upiId || 'loading...'}</p>
-                                    <button onClick={copyUpiId} className="p-2 hover:bg-white/5 rounded-xl text-brand-yellow transition-all">
+                                    <p className="text-lg font-black text-gray-900 italic">{user?.account?.upiId || 'loading...'}</p>
+                                    <button onClick={copyUpiId} className="p-2 hover:bg-white rounded-xl text-brand-yellow transition-all shadow-sm">
                                         <Copy size={20} />
                                     </button>
                                 </div>
@@ -244,9 +244,9 @@ const UPIPayment = () => {
                         </div>
 
                         {/* Recent UPI Activity */}
-                        <div className="bg-brand-card border border-white/5 rounded-[2.5rem] p-8">
+                        <div className="bg-white border border-gray-100 rounded-[2.5rem] p-8 shadow-sm">
                             <div className="flex items-center justify-between mb-6">
-                                <h3 className="text-xl font-black uppercase tracking-tighter flex items-center gap-2">
+                                <h3 className="text-xl font-black uppercase tracking-tighter flex items-center gap-2 text-gray-900">
                                     <History size={20} className="text-brand-yellow" /> Recents
                                 </h3>
                                 <button className="text-[10px] font-black text-brand-yellow uppercase tracking-widest hover:underline">View All</button>
@@ -254,19 +254,19 @@ const UPIPayment = () => {
 
                             <div className="space-y-4">
                                 {transactions.length > 0 ? transactions.slice(0, 5).map((item, i) => (
-                                    <div key={i} className="flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-all cursor-pointer group">
+                                    <div key={i} className="flex items-center justify-between p-4 rounded-2xl bg-gray-50 border border-gray-50 hover:bg-white hover:border-gray-100 transition-all cursor-pointer group shadow-sm">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-10 h-10 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow font-black group-hover:bg-brand-yellow group-hover:text-black transition-all">
+                                            <div className="w-10 h-10 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow font-black group-hover:bg-brand-yellow group-hover:text-white transition-all">
                                                 {(item.upiDetails?.receiverUpi || 'U').charAt(0)}
                                             </div>
-                                            <p className="text-sm font-bold text-gray-300 group-hover:text-white transition-colors">
+                                            <p className="text-sm font-bold text-gray-500 group-hover:text-gray-900 transition-colors">
                                                 {item.upiDetails?.receiverUpi || 'Unknown UPI'}
                                             </p>
                                         </div>
-                                        <p className="text-sm font-black text-white">-₹{item.amount}</p>
+                                        <p className="text-sm font-black text-gray-900">-₹{item.amount}</p>
                                     </div>
                                 )) : (
-                                    <p className="text-center py-6 text-gray-600 font-bold uppercase text-[10px] tracking-widest italic">No recent activity</p>
+                                    <p className="text-center py-6 text-gray-400 font-bold uppercase text-[10px] tracking-widest italic">No recent activity</p>
                                 )}
                             </div>
                         </div>

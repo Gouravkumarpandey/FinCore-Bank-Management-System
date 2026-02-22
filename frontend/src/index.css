@@ -248,21 +248,21 @@
 
 @layer components {
 
-  /* Permanent Yellow Button Style */
-  .btn-yellow {
-    @apply bg-brand-yellow text-black font-bold shadow-lg shadow-brand-yellow/40 hover:bg-yellow-400 hover:scale-105 active:scale-95 transition-all duration-300;
+  /* Permanent Blue Button Style */
+  .btn-blue {
+    @apply bg-brand-blue text-white font-bold shadow-lg shadow-brand-blue/20 hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all duration-300;
   }
 
-  .btn-yellow-glow {
+  .btn-blue-glow {
     @apply relative overflow-hidden;
   }
 
-  .btn-yellow-glow::after {
+  .btn-blue-glow::after {
     content: '';
     @apply absolute inset-0 bg-white/20 translate-x-[-100%] skew-x-12 transition-transform duration-1000;
   }
 
-  .btn-yellow-glow:hover::after {
+  .btn-blue-glow:hover::after {
     @apply translate-x-[200%];
   }
 }

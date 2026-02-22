@@ -6,7 +6,7 @@ const Layout = ({ children }) => {
     const { isCollapsed } = useSidebar();
 
     return (
-        <div className="flex bg-black min-h-screen text-white font-sans selection:bg-brand-yellow selection:text-black">
+        <div className="flex bg-brand-dark min-h-screen text-gray-900 font-sans selection:bg-brand-yellow selection:text-white">
             <Sidebar />
 
             <div

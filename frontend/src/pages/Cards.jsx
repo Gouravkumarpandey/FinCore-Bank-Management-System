@@ -50,7 +50,7 @@ const Cards = () => {
     const selectedTheme = themes.find(t => t.id === currentTheme) || themes[0];
 
     return (
-        <div className="flex bg-black min-h-screen text-white font-sans selection:bg-brand-yellow selection:text-black">
+        <div className="flex bg-brand-dark min-h-screen text-gray-900 font-sans selection:bg-brand-yellow selection:text-white">
             <Sidebar />
 
             <div className="flex-1 md:ml-64 p-8 transition-all duration-300">
@@ -58,20 +58,20 @@ const Cards = () => {
                 <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
                     <div>
                         <div className="flex items-center gap-2 mb-1">
-                            <span className="bg-brand-yellow text-black text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-tighter">Secure Terminal</span>
-                            <h1 className="text-3xl font-black text-white italic uppercase tracking-tighter">Card <span className="text-brand-yellow">Control</span></h1>
+                            <span className="bg-brand-yellow text-white text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-tighter">Secure Terminal</span>
+                            <h1 className="text-3xl font-black text-gray-900 italic uppercase tracking-tighter">Card <span className="text-brand-yellow">Control</span></h1>
                         </div>
-                        <p className="text-gray-400 text-sm italic">Manage your virtual spending power. 💳</p>
+                        <p className="text-gray-500 text-sm italic">Manage your virtual spending power. 💳</p>
                     </div>
 
                     <div className="flex items-center gap-3">
-                        <button className="bg-white/5 border border-white/10 p-3 rounded-2xl text-gray-400 hover:text-white transition-all">
+                        <button className="bg-gray-50 border border-gray-100 p-3 rounded-2xl text-gray-400 hover:text-gray-900 transition-all">
                             <Download size={20} />
                         </button>
-                        <button className="bg-white/5 border border-white/10 p-3 rounded-2xl text-gray-400 hover:text-white transition-all">
+                        <button className="bg-gray-50 border border-gray-100 p-3 rounded-2xl text-gray-400 hover:text-gray-900 transition-all">
                             <Settings size={20} />
                         </button>
-                        <button className="bg-brand-yellow text-black px-6 py-3 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-yellow-400 transition-all shadow-lg hover:shadow-yellow-400/20 active:scale-95">
+                        <button className="bg-brand-yellow text-white px-6 py-3 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-700 transition-all shadow-lg shadow-brand-yellow/30 active:scale-95">
                             Apply for Physical Card
                         </button>
                     </div>
@@ -133,10 +133,10 @@ const Cards = () => {
                                 </div>
 
                                 {/* Back Face */}
-                                <div className={`absolute inset-0 backface-hidden rounded-[2.5rem] bg-zinc-900 p-8 shadow-2xl border border-white/10 flex flex-col justify-between overflow-hidden [transform:rotateY(180deg)]`}>
+                                <div className={`absolute inset-0 backface-hidden rounded-[2.5rem] bg-gray-900 p-8 shadow-2xl border border-white/10 flex flex-col justify-between overflow-hidden [transform:rotateY(180deg)]`}>
                                     <div className="absolute top-10 left-0 w-full h-12 bg-black/80"></div>
                                     <div className="mt-20">
-                                        <div className="w-2/3 h-10 bg-zinc-800 rounded flex items-center justify-end px-4 border-l-4 border-brand-yellow">
+                                        <div className="w-2/3 h-10 bg-gray-800 rounded flex items-center justify-end px-4 border-l-4 border-brand-yellow">
                                             <span className="font-mono text-white tracking-widest text-lg">{reveal ? card.cardCvv : '•••'}</span>
                                         </div>
                                         <p className="text-[8px] text-zinc-500 mt-2 uppercase font-black tracking-widest">Authorized Security Signature - Do not share your CVV</p>
@@ -156,26 +156,26 @@ const Cards = () => {
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <button
                                 onClick={() => setReveal(!reveal)}
-                                className={`flex items-center justify-center gap-3 p-5 rounded-3xl border transition-all ${reveal ? 'bg-brand-yellow text-black border-brand-yellow' : 'bg-white/5 text-white border-white/10 hover:bg-white/10'}`}
+                                className={`flex items-center justify-center gap-3 p-5 rounded-3xl border transition-all ${reveal ? 'bg-brand-yellow text-white border-brand-yellow shadow-lg shadow-brand-yellow/30' : 'bg-gray-50 text-gray-900 border-gray-100 hover:bg-gray-100'}`}
                             >
                                 {reveal ? <EyeOff size={20} /> : <Eye size={20} />}
                                 <span className="font-black text-xs uppercase tracking-widest">{reveal ? 'Hide Details' : 'Reveal Details'}</span>
                             </button>
 
-                            <button className="flex items-center justify-center gap-3 p-5 rounded-3xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all group">
+                            <button className="flex items-center justify-center gap-3 p-5 rounded-3xl bg-gray-50 border border-gray-100 text-gray-900 hover:bg-gray-100 transition-all group">
                                 <RefreshCw size={20} className="group-hover:rotate-180 transition-transform duration-500" />
                                 <span className="font-black text-xs uppercase tracking-widest">Re-generate Card</span>
                             </button>
 
-                            <button className="flex items-center justify-center gap-3 p-5 rounded-3xl bg-red-500/10 border border-red-500/20 text-red-500 hover:bg-red-500/20 transition-all">
+                            <button className="flex items-center justify-center gap-3 p-5 rounded-3xl bg-red-50 border border-red-100 text-red-600 hover:bg-red-100 transition-all">
                                 <Lock size={20} />
                                 <span className="font-black text-xs uppercase tracking-widest">Freeze Card</span>
                             </button>
                         </div>
 
                         {/* Card Stats/Info */}
-                        <div className="bg-brand-card p-8 rounded-[2.5rem] border border-white/5">
-                            <h3 className="text-xl font-black uppercase tracking-tighter mb-6 flex items-center gap-2">
+                        <div className="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm">
+                            <h3 className="text-xl font-black uppercase tracking-tighter mb-6 flex items-center gap-2 text-gray-900">
                                 <CreditCard className="text-brand-yellow" /> Usage Insights
                             </h3>
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -186,8 +186,8 @@ const Cards = () => {
                                     { label: 'Billing Cycle', value: '1st - 30th' }
                                 ].map((stat, i) => (
                                     <div key={i}>
-                                        <p className="text-[10px] font-black text-gray-500 uppercase mb-1">{stat.label}</p>
-                                        <p className="text-lg font-black">{stat.value}</p>
+                                        <p className="text-[10px] font-black text-gray-400 uppercase mb-1">{stat.label}</p>
+                                        <p className="text-lg font-black text-gray-900">{stat.value}</p>
                                     </div>
                                 ))}
                             </div>
@@ -196,9 +196,9 @@ const Cards = () => {
 
                     {/* Right: Customization Panel */}
                     <div className="lg:col-span-12 xl:col-span-5">
-                        <div className="bg-brand-card border border-white/10 rounded-[2.5rem] p-8 h-full">
+                        <div className="bg-white border border-gray-100 rounded-[2.5rem] p-8 h-full shadow-sm">
                             <div className="flex items-center justify-between mb-8">
-                                <h3 className="text-2xl font-black uppercase tracking-tighter">Theme <span className="text-brand-yellow">Engine</span></h3>
+                                <h3 className="text-2xl font-black uppercase tracking-tighter text-gray-900">Theme <span className="text-brand-yellow">Engine</span></h3>
                                 {updating && <RefreshCw className="animate-spin text-brand-yellow" size={18} />}
                             </div>
 
@@ -209,8 +209,8 @@ const Cards = () => {
                                         onClick={() => handleThemeChange(theme.id)}
                                         disabled={updating}
                                         className={`w-full flex items-center justify-between p-4 rounded-3xl border transition-all ${currentTheme === theme.id
-                                            ? 'bg-brand-yellow/10 border-brand-yellow'
-                                            : 'bg-black/40 border-white/5 hover:border-white/20'
+                                            ? 'bg-blue-50 border-brand-yellow'
+                                            : 'bg-gray-50 border-gray-100 hover:border-gray-200'
                                             }`}
                                     >
                                         <div className="flex items-center gap-4 text-left">
@@ -218,11 +218,11 @@ const Cards = () => {
                                                 {theme.icon}
                                             </div>
                                             <div>
-                                                <p className="font-black text-sm uppercase tracking-tight">{theme.name}</p>
-                                                <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Active Skin</p>
+                                                <p className="font-black text-sm uppercase tracking-tight text-gray-900">{theme.name}</p>
+                                                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Active Skin</p>
                                             </div>
                                         </div>
-                                        <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all ${currentTheme === theme.id ? 'border-brand-yellow text-brand-yellow' : 'border-zinc-800 text-transparent'
+                                        <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all ${currentTheme === theme.id ? 'border-brand-yellow text-brand-yellow' : 'border-gray-200 text-transparent'
                                             }`}>
                                             <ChevronRight size={14} />
                                         </div>
@@ -230,12 +230,12 @@ const Cards = () => {
                                 ))}
                             </div>
 
-                            <div className="mt-10 p-6 rounded-3xl bg-brand-yellow/5 border border-brand-yellow/10">
+                            <div className="mt-10 p-6 rounded-3xl bg-blue-50 border border-blue-100">
                                 <div className="flex gap-4 items-start">
-                                    <Shield className="text-brand-yellow shrink-0 mt-1" size={24} />
+                                    <Shield className="text-blue-600 shrink-0 mt-1" size={24} />
                                     <div>
-                                        <p className="font-black text-xs uppercase tracking-widest text-brand-yellow mb-2">Security Note</p>
-                                        <p className="text-xs text-gray-400 font-medium leading-relaxed">
+                                        <p className="font-black text-xs uppercase tracking-widest text-blue-600 mb-2">Security Note</p>
+                                        <p className="text-xs text-gray-500 font-medium leading-relaxed">
                                             Virtual themed skins are only visible in the app. Your physical card will follow the standard luxury zinc design. Re-generating your card will change your CVV.
                                         </p>
                                     </div>

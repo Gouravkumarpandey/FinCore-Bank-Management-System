@@ -49,34 +49,56 @@ const HappyStoriesSection = () => {
     const stories = [
         {
             id: 1,
-            name: "Aditya",
+            name: "Aryan",
             tagline: "Love the concept of spending account 💖",
             text: "The idea is so cool. I can use my spending account to make daily payments - and keep it separate from my savings now!",
-            img: "https://www.famapp.in/assets/images/images/pages/index/testimonial-aditya.webp"
+            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRazGKny1CSlH3XZGzdceONvBwSZqNVKklLnA&s"
         },
         {
             id: 2,
-            name: "Eshaa",
+            name: "Eshan",
             tagline: "Yeh toh upgrade ka bhi upgrade hai 🐐",
-            text: "The new design is so cool and app has become more smooth. The FamApp has everything I need in one place.",
-            img: "https://www.famapp.in/assets/images/images/pages/index/testimonial-eshaa.webp"
+            text: "The new design is so cool and app has become more smooth. The FinCore has everything I need in one place.",
+            img: "https://img.freepik.com/free-photo/young-handsome-man-wearing-casual-tshirt-blue-background-happy-face-smiling-with-crossed-arms-looking-camera-positive-person_839833-12963.jpg?semt=ais_user_personalization&w=740&q=80"
         },
         {
             id: 3,
-            name: "Cassius",
+            name: "Meera",
             tagline: "My payment took 0.6 seconds! ⚡",
             text: "I was at a shop, and I needed to make a payment in hurry. It was honestly the fastest payment I’ve ever done.",
-            img: "https://www.famapp.in/assets/images/images/pages/index/testimonial-cassius.webp"
+            img: "https://plus.unsplash.com/premium_photo-1690407617542-2f210cf20d7e?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fHww"
+        },
+        {
+            id: 4,
+            name: "Marcus",
+            tagline: "Finally a bank that speaks my language 🚀",
+            text: "The rewards system is actually rewarding. I've earned back so much on my daily coffee runs. Absolutely loving it!",
+            img: "https://www.shutterstock.com/image-photo/handsome-happy-african-american-bearded-600nw-2460702995.jpg"
         }
     ];
 
     const [activeIdx, setActiveIdx] = useState(0);
+    const [isPaused, setIsPaused] = useState(false);
+
+    useEffect(() => {
+        if (isPaused) return;
+
+        const interval = setInterval(() => {
+            setActiveIdx((prev) => (prev + 1) % stories.length);
+        }, 4000);
+
+        return () => clearInterval(interval);
+    }, [isPaused, stories.length]);
 
     return (
-        <section className="py-32 bg-[#121212] relative overflow-hidden">
+        <section
+            className="py-32 bg-white relative overflow-hidden border-t border-gray-50"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+        >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-24">
-                    <h2 className="text-5xl md:text-7xl font-black text-white tracking-tighter uppercase">
+                    <h2 className="text-5xl md:text-7xl font-black text-gray-900 tracking-tighter uppercase">
                         Over a <span className="text-brand-yellow">million</span> happy stories
                     </h2>
                 </div>
@@ -97,7 +119,7 @@ const HappyStoriesSection = () => {
                                         zIndex: activeIdx === idx ? 20 : 10
                                     }}
                                     transition={{ duration: 0.6, ease: "circOut" }}
-                                    className="absolute w-[85%] h-[85%] rounded-[2.5rem] overflow-hidden border-4 border-white/10 shadow-2xl cursor-pointer"
+                                    className="absolute w-[85%] h-[85%] rounded-[2.5rem] overflow-hidden border-4 border-white shadow-2xl cursor-pointer"
                                     onClick={() => setActiveIdx(idx)}
                                 >
                                     <img src={story.img} className="w-full h-full object-cover" alt={story.name} />
@@ -117,13 +139,13 @@ const HappyStoriesSection = () => {
                                 transition={{ duration: 0.4 }}
                                 className="max-w-xl"
                             >
-                                <h3 className="text-3xl md:text-5xl font-black text-white mb-6 leading-tight">
+                                <h3 className="text-3xl md:text-5xl font-black text-gray-900 mb-6 leading-tight">
                                     {stories[activeIdx].tagline}
                                 </h3>
-                                <p className="text-xl text-gray-400 mb-8 leading-relaxed font-medium">
+                                <p className="text-xl text-gray-500 mb-8 leading-relaxed font-medium">
                                     {stories[activeIdx].text}
                                 </p>
-                                <p className="text-2xl font-black text-white tracking-tight">
+                                <p className="text-2xl font-black text-gray-900 tracking-tight">
                                     {stories[activeIdx].name}
                                 </p>
                             </motion.div>
@@ -135,7 +157,7 @@ const HappyStoriesSection = () => {
                                 <button
                                     key={idx}
                                     onClick={() => setActiveIdx(idx)}
-                                    className={`h-2 transition-all duration-300 rounded-full ${activeIdx === idx ? 'w-12 bg-brand-yellow' : 'w-4 bg-white/10'}`}
+                                    className={`h-2 transition-all duration-300 rounded-full ${activeIdx === idx ? 'w-12 bg-brand-yellow' : 'w-4 bg-gray-200'}`}
                                 />
                             ))}
                         </div>
@@ -156,27 +178,27 @@ const Home = () => {
     }, []);
 
     return (
-        <div className="font-sans antialiased bg-black text-white selection:bg-brand-yellow selection:text-black min-h-screen overflow-x-hidden">
+        <div className="font-sans antialiased bg-white text-gray-900 selection:bg-brand-yellow selection:text-white min-h-screen overflow-x-hidden">
             <Navbar />
 
             {/* Hero Section - Split Screen Style */}
-            <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden min-h-screen flex items-center bg-black">
+            <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden min-h-screen flex items-center bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                     <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
 
                         {/* Left Content */}
                         <div className="flex-1 text-left z-10 transition-all duration-700">
                             <div className="mb-6 animate-fade-in-up">
-                                <span className="text-white font-black text-xl flex items-center gap-2">
+                                <span className="text-gray-900 font-black text-xl flex items-center gap-2">
                                     fincore
                                 </span>
                             </div>
 
                             <div className="mb-12 animate-fade-in-up delay-100">
-                                <h1 className="text-7xl md:text-[11rem] font-black tracking-tighter leading-[0.75] uppercase italic mb-8 text-white">
+                                <h1 className="text-7xl md:text-[11rem] font-black tracking-tighter leading-[0.75] uppercase italic mb-8 text-gray-900">
                                     FINX
                                 </h1>
-                                <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-[0.9] text-white">
+                                <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-[0.9] text-gray-900">
                                     spending account <br />
                                     <span className="text-brand-yellow">for adults</span>
                                 </h2>
@@ -184,7 +206,7 @@ const Home = () => {
 
                             <Link
                                 to="/signup"
-                                className="inline-block bg-brand-yellow text-black px-12 py-5 text-xl rounded-full font-black uppercase tracking-widest hover:bg-yellow-400 hover:scale-105 transition-all shadow-[0_0_40px_rgba(252,207,8,0.3)] active:scale-95 animate-fade-in-up delay-200"
+                                className="inline-block bg-brand-yellow text-white px-12 py-5 text-xl rounded-full font-black uppercase tracking-widest hover:bg-blue-700 hover:scale-105 transition-all shadow-[0_0_40px_rgba(37,99,235,0.3)] active:scale-95 animate-fade-in-up delay-200"
                             >
                                 Open Account
                             </Link>
@@ -211,7 +233,7 @@ const Home = () => {
             </section>
 
             {/* Trust Banner - FamApp Style */}
-            <div className="bg-[#141414] border-y border-white/5" style={{ borderTop: '1px solid rgba(255,255,255,0.05)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+            <div className="bg-gray-50 border-y border-gray-200" style={{ borderTop: '1px solid rgba(0,0,0,0.05)', borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
                 <div className="max-w-7xl mx-auto px-6 sm:px-10 py-10 flex flex-wrap items-center gap-10 md:gap-0 md:justify-between">
 
                     {/* Left: User Trust Count with Shield */}
@@ -232,7 +254,7 @@ const Home = () => {
                                 <Check className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 text-gray-400" />
                             </div>
                             <div className="leading-tight">
-                                <p className="text-white font-black text-2xl leading-none">10 million</p>
+                                <p className="text-gray-900 font-black text-2xl leading-none">10 million</p>
                                 <p className="text-gray-500 text-xs font-bold uppercase tracking-widest">users love FineCore</p>
                             </div>
                         </div>
@@ -272,10 +294,10 @@ const Home = () => {
 
 
             {/* Marquee Section */}
-            <section className="py-10 border-y border-white/10 bg-brand-dark overflow-hidden">
+            <section className="py-10 border-y border-gray-100 bg-brand-dark overflow-hidden">
                 <div className="flex space-x-12 animate-marquee whitespace-nowrap">
                     {[...Array(10)].map((_, i) => (
-                        <div key={i} className="flex items-center space-x-2 text-2xl font-black text-white/20 uppercase tracking-tighter">
+                        <div key={i} className="flex items-center space-x-2 text-2xl font-black text-gray-900/10 uppercase tracking-tighter">
                             <Star className="w-6 h-6 fill-current text-brand-yellow/50" />
                             <span>High Interest Savings</span>
                             <Star className="w-6 h-6 fill-current text-brand-yellow/50" />
@@ -288,7 +310,7 @@ const Home = () => {
             </section>
 
             {/* Security Banner (PhonePe Inspired) */}
-            <section className="py-20 px-4 bg-[#121212]">
+            <section className="py-20 px-4 bg-white">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -296,7 +318,7 @@ const Home = () => {
                     transition={{ duration: 0.8 }}
                     className="max-w-6xl mx-auto"
                 >
-                    <div className="bg-gradient-to-r from-black via-zinc-900 to-black rounded-[2.5rem] p-8 md:p-12 flex flex-col md:flex-row items-center gap-10 shadow-3xl border border-white/5 relative overflow-hidden group">
+                    <div className="bg-gradient-to-r from-gray-50 via-white to-gray-50 rounded-[2.5rem] p-8 md:p-12 flex flex-col md:flex-row items-center gap-10 shadow-3xl border border-gray-100 relative overflow-hidden group">
                         <div className="absolute top-0 left-0 w-64 h-64 bg-brand-yellow/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
 
                         <div className="relative z-10 flex-shrink-0">
@@ -304,18 +326,18 @@ const Home = () => {
                         </div>
 
                         <div className="relative z-10 text-left flex-1">
-                            <h2 className="text-4xl md:text-5xl font-black text-white mb-4">Your money stays safe.</h2>
+                            <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">Your money stays safe.</h2>
                             <p className="text-gray-400 text-xl font-medium mb-8">
                                 FinCore protects your money with world-class security systems that help minimize frauds and keep your data private.
                             </p>
                             <div className="flex items-center gap-8 opacity-90">
-                                <div className="flex items-center gap-2 border-r border-white/10 pr-8">
+                                <div className="flex items-center gap-2 border-r border-gray-200 pr-8">
                                     <Shield className="w-6 h-6 text-brand-yellow" />
-                                    <span className="font-bold text-sm tracking-tighter text-white">PCI DSS <br /><span className="text-[10px] text-gray-500 uppercase">Compliant</span></span>
+                                    <span className="font-bold text-sm tracking-tighter text-gray-900">PCI DSS <br /><span className="text-[10px] text-gray-500 uppercase">Compliant</span></span>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <Zap className="w-6 h-6 text-brand-yellow" />
-                                    <span className="font-bold text-sm tracking-tighter text-white">ISO 27001 <br /><span className="text-[10px] text-gray-500 uppercase">Certified</span></span>
+                                    <span className="font-bold text-sm tracking-tighter text-gray-900">ISO 27001 <br /><span className="text-[10px] text-gray-500 uppercase">Certified</span></span>
                                 </div>
                             </div>
                         </div>
@@ -337,25 +359,25 @@ const Home = () => {
                 >
                     <div className="inline-flex items-center gap-2 mb-6">
                         <Zap className="text-brand-yellow w-8 h-8 fill-current" />
-                        <h2 className="text-4xl font-black text-white">FinCore Pulse</h2>
+                        <h2 className="text-4xl font-black text-gray-900">FinCore Pulse</h2>
                     </div>
                     <p className="text-gray-400 text-xl font-medium mb-16">Get the latest data trends & insights on digital banking across India.</p>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
                         <div className="flex flex-col items-center">
                             <span className="text-gray-500 text-xs font-bold uppercase tracking-widest mb-2">Trusted by</span>
-                            <h3 className="text-5xl font-black text-white mb-1">65 Crore<span className="text-brand-yellow">*</span></h3>
-                            <p className="text-gray-400 text-sm font-medium">Registered Users</p>
+                            <h3 className="text-5xl font-black text-gray-900 mb-1">65 Crore<span className="text-brand-yellow">*</span></h3>
+                            <p className="text-gray-600 text-sm font-medium">Registered Users</p>
                         </div>
                         <div className="flex flex-col items-center">
                             <span className="text-gray-500 text-xs font-bold uppercase tracking-widest mb-2">Accepted in</span>
-                            <h3 className="text-5xl font-black text-white mb-1">98%<span className="text-brand-yellow">*</span></h3>
-                            <p className="text-gray-400 text-sm font-medium">Postal Codes</p>
+                            <h3 className="text-5xl font-black text-gray-900 mb-1">98%<span className="text-brand-yellow">*</span></h3>
+                            <p className="text-gray-600 text-sm font-medium">Postal Codes</p>
                         </div>
                         <div className="flex flex-col items-center">
                             <span className="text-gray-500 text-xs font-bold uppercase tracking-widest mb-2">Accepted at over</span>
-                            <h3 className="text-5xl font-black text-white mb-1">4.7 Crore<span className="text-brand-yellow">*</span></h3>
-                            <p className="text-gray-400 text-sm font-medium">Merchants (Stores, Apps & websites)</p>
+                            <h3 className="text-5xl font-black text-gray-900 mb-1">4.7 Crore<span className="text-brand-yellow">*</span></h3>
+                            <p className="text-gray-600 text-sm font-medium">Merchants (Stores, Apps & websites)</p>
                         </div>
                     </div>
 
@@ -377,7 +399,7 @@ const Home = () => {
                         transition={{ duration: 0.8 }}
                         className="flex-1 text-left"
                     >
-                        <h2 className="text-5xl md:text-6xl font-black text-white mb-8 leading-tight">
+                        <h2 className="text-5xl md:text-6xl font-black text-gray-900 mb-8 leading-tight">
                             Smart <span className="text-brand-yellow">Wealth</span> <br /> Management.
                         </h2>
                         <p className="text-xl text-gray-400 mb-8 leading-relaxed">
@@ -397,7 +419,7 @@ const Home = () => {
                                     className="bg-white/5 p-6 rounded-2xl border border-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors"
                                 >
                                     <h3 className="text-2xl font-black text-brand-yellow mb-1">{item.title}</h3>
-                                    <p className="text-white font-medium">{item.subtitle}</p>
+                                    <p className="text-gray-900 font-medium">{item.subtitle}</p>
                                 </motion.div>
                             ))}
                         </div>
@@ -434,7 +456,7 @@ const Home = () => {
                         <div className="inline-flex items-center px-4 py-2 rounded-full border border-brand-yellow/20 bg-brand-yellow/5 text-brand-yellow text-xs font-black uppercase tracking-widest mb-6">
                             Unified Payments Interface
                         </div>
-                        <h2 className="text-5xl md:text-7xl font-black text-white mb-8 leading-tight italic uppercase tracking-tighter">
+                        <h2 className="text-5xl md:text-7xl font-black text-gray-900 mb-8 leading-tight italic uppercase tracking-tighter">
                             Lightning fast <br /> <span className="text-brand-yellow">UPI Payments.</span>
                         </h2>
                         <ul className="space-y-6 mb-10">
@@ -458,7 +480,7 @@ const Home = () => {
                                 </motion.li>
                             ))}
                         </ul>
-                        <button className="bg-brand-yellow text-black px-12 py-5 text-xl rounded-full font-black uppercase tracking-widest hover:bg-yellow-400 hover:scale-105 transition-all shadow-2xl active:scale-95 group">
+                        <button className="bg-brand-yellow text-white px-12 py-5 text-xl rounded-full font-black uppercase tracking-widest hover:bg-blue-700 hover:scale-105 transition-all shadow-2xl active:scale-95 group">
                             Pay Anyone Now
                             <ArrowRight className="inline-block ml-2 w-6 h-6 group-hover:translate-x-2 transition-transform" />
                         </button>
@@ -503,13 +525,13 @@ const Home = () => {
                     </div>
 
                     <div className="flex-1 text-left lg:pl-10">
-                        <h2 className="text-5xl md:text-7xl font-black text-white mb-6 leading-[0.9] italic uppercase tracking-tighter">
+                        <h2 className="text-5xl md:text-7xl font-black text-gray-900 mb-6 leading-[0.9] italic uppercase tracking-tighter">
                             Your card. <br /> <span className="text-brand-yellow">Your control.</span>
                         </h2>
                         <p className="text-xl text-gray-400 mb-10 leading-relaxed font-medium max-w-xl">
                             Lost your card? Tap a button to block it. Found it back? Tap again to unblock. Total control, zero stress.
                         </p>
-                        <button className="bg-white/5 border border-white/10 text-white px-10 py-5 rounded-full font-black uppercase tracking-widest hover:bg-white/10 transition-all flex items-center gap-4 group">
+                        <button className="bg-gray-100 border border-gray-200 text-gray-900 px-10 py-5 rounded-full font-black uppercase tracking-widest hover:bg-gray-200 transition-all flex items-center gap-4 group">
                             Learn more about safety
                             <div className="w-10 h-10 bg-brand-yellow rounded-full flex items-center justify-center group-hover:rotate-45 transition-transform">
                                 <ArrowRight className="text-black w-6 h-6" />
@@ -529,7 +551,7 @@ const Home = () => {
                         transition={{ duration: 0.6 }}
                         className="text-center mb-20"
                     >
-                        <h2 className="text-4xl md:text-6xl font-black text-white mb-6">ONE BANK. <span className="text-brand-yellow">LIMITLESS</span> POSSIBILITIES.</h2>
+                        <h2 className="text-4xl md:text-6xl font-black text-gray-900 mb-6">ONE BANK. <span className="text-brand-yellow">LIMITLESS</span> POSSIBILITIES.</h2>
                     </motion.div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -576,7 +598,7 @@ const Home = () => {
                         transition={{ duration: 0.8 }}
                         className="flex-1"
                     >
-                        <h2 className="text-4xl md:text-6xl font-black text-white mb-8">
+                        <h2 className="text-4xl md:text-6xl font-black text-gray-900 mb-8">
                             THE <span className="text-brand-yellow">FinCore</span> CARD.
                         </h2>
                         <p className="text-xl text-gray-400 mb-8 leading-relaxed">
@@ -584,13 +606,13 @@ const Home = () => {
                         </p>
                         <ul className="space-y-4 mb-10">
                             {["No Annual Fees", "Works everywhere", "Tap to Pay enabled"].map((item, i) => (
-                                <li key={i} className="flex items-center text-lg text-white font-medium">
+                                <li key={i} className="flex items-center text-lg text-gray-900 font-medium">
                                     <Shield className="w-6 h-6 text-brand-yellow mr-3" />
                                     {item}
                                 </li>
                             ))}
                         </ul>
-                        <button className="bg-white text-black px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-200 hover:scale-105 transition-all transform shadow-2xl">Order Now</button>
+                        <button className="bg-brand-yellow text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-blue-700 hover:scale-105 transition-all transform shadow-2xl">Order Now</button>
                     </motion.div>
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9, rotate: 10 }}
@@ -635,7 +657,7 @@ const Home = () => {
                     <p className="text-xl md:text-2xl font-medium mb-10 max-w-2xl mx-auto">
                         Over 10 million teenagers trust FineCore for their payments. Are you ready?
                     </p>
-                    <Link to="/signup" className="inline-block bg-black text-white px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform shadow-2xl">
+                    <Link to="/signup" className="inline-block bg-white text-brand-yellow px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform shadow-2xl">
                         Get Started Now
                     </Link>
                 </motion.div>
